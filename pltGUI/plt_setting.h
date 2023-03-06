@@ -26,14 +26,14 @@ public:
 /// @brief タイトルなどグラフ全体の設定
 class WholeSetting {
 public:
-	WithBool<String> title;
-	WithBool<String> xrange_min;
-	WithBool<String> xrange_max;
-	WithBool<String> yrange_min;
-	WithBool<String> yrange_max;
+	WithBool<TextEditState> title;
+	WithBool<TextEditState> xrange_min;
+	WithBool<TextEditState> xrange_max;
+	WithBool<TextEditState> yrange_min;
+	WithBool<TextEditState> yrange_max;
 	WithBool<void> logscale_x;
 	WithBool<void> logscale_y;
-	WithBool<String> sample;
+	WithBool<TextEditState> sample;
 };
 
 
@@ -42,7 +42,7 @@ public:
 class GraphSetting {
 	enum class LineTypeE;
 public:
-	String graph;
-	WithBool<String> label;
+	TextEditState graph;
+	WithBool<TextEditState> label;
 	WithBool<HSV> linecolor;
 };

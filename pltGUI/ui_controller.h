@@ -3,7 +3,7 @@
 #include "ui_plt_setting.h"
 
 
-
+/// @brief UI全体の管理
 class UIController {
 	int settingPageIndex = 0;
 
@@ -15,7 +15,7 @@ class UIController {
 
 	void drawSettingPage() {
 		if (settingPageIndex < 0)settingPageIndex = 0;
-		if (settingPageIndex > graphs.size()) settingPageIndex = graphs.size();
+		if (settingPageIndex > int(graphs.size())) settingPageIndex = graphs.size();
 		if (settingPageIndex == 0) whole.draw();
 		else graphs[settingPageIndex - 1].draw();
 	}
