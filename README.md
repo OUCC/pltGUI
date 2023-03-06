@@ -1,0 +1,2 @@
+# pltGUI
+gnuplotのpltファイルをGUIから作成できるツール
