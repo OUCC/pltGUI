@@ -424,3 +424,7 @@ gmon.out
 
 # Ignore all in emample folder
 **/example/*
+
+# Ignore output files
+pltGUI/App/result.plt
+pltGUI/App/result.png
