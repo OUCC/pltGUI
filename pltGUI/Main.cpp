@@ -4,7 +4,7 @@
 
 void Main()
 {
-	FontAsset::Register(U"main", 30);
+	FontAsset::Register(U"main", 20);
 
 	UIController ui;
 	Scene::SetBackground(ui.uiColor.background);

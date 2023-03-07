@@ -4,24 +4,32 @@
 class UIColor {
 public:
 	Color background = Palette::Lightgray;
-	Color tabColor_selected = Palette::White;
-	Color tabColor_unselected = Palette::Lightgray;
+
+	Color frame = Palette::Gray;
+
+
+	Color text = Palette::Black;
+	Color text_active = Palette::Black;
+	Color text_inactive = Palette::Dimgray;
+	Color text_(const bool& active) const { return active ? text_active : text_inactive; }
+
+	Color bg_active = Palette::White;
+	Color bg_midactive = Palette::Whitesmoke;
+	Color bg_inactive = Color{ 230 };
 };
 
 
 /// @brief FontAsset(...).draw(...)を毎回書くのだるいので。
 /// @param x, y, text 左上座標と描画テキスト。必須引数は以上。
 void drawText(Vec2 pos, String text, double fontSize = 20, Color color = Palette::Black, String fontAssetName = U"main") {
-	FontAsset(fontAssetName)(text).draw(fontSize, pos, color);
+	FontAsset(fontAssetName)(text).draw(fontSize,Arg::leftCenter = pos, color);
 }
 
 
 
 /// @brief スクロールするUIの基底クラス
 class ScrollableUI {
-	const double scrollSpeed = 10;
-	int32 yScrollMax;//スクロールできる最大値。描画後に入れる。
-	class DrawPos;
+	const double scrollSpeed = 20;
 protected:
 	/// @brief 描画の際のy座標移動の簡略化のためのクラス
 	class DrawPos {
@@ -55,11 +63,15 @@ protected:
 			return Vec2(pos);
 		}
 	}dpos;
-	int32 yScrool = 0;
-	void Scroll(int32 mouseWheel) {
-		yScrool += int32(mouseWheel * scrollSpeed);
-		if (yScrool < 0) yScrool = 0;
-		else if (yScrool > yScrollMax) yScrool = yScrollMax;
+
+	int32 yScroll = 0;
+	void Scroll() {
+		int32 yScrollMax = dpos.pos.y - 600 + yScroll;
+		yScroll += int32(Mouse::Wheel() * scrollSpeed);
+		if (yScroll < 0) yScroll = 0;
+		if (yScrollMax < 0) yScrollMax=0;
+		if (yScroll > yScrollMax) yScroll = yScrollMax;
+		dpos.pos.y = 150 - yScroll;
 	}
 	virtual void draw() = 0;
 };
