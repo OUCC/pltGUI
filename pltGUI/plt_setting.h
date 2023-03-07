@@ -8,11 +8,6 @@ class WithBool {
 public:
 	bool b = false;
 	T v;
-
-	WithBool() {}
-	WithBool(T _v) {
-		v = _v;
-	}
 };
 
 /// @brief void型の時の完全特殊化

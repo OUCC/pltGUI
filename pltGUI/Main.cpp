@@ -4,15 +4,18 @@
 
 void Main()
 {
-	Scene::SetBackground(UIColor().background);
 	FontAsset::Register(U"main", 30);
 
 	UIController ui;
+	Scene::SetBackground(ui.uiColor.background);
 
 	while (System::Update())
 	{
 
-		ui.draw();
+		ui.drawPage();
+
+		ui.drawCommon();
+
 	}
 }
 

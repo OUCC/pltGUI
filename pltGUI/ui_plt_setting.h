@@ -5,17 +5,16 @@
 
 /// @brief 全体設定の入力UI
 class WholeSettingUI : public ScrollableUI {
-	WholeSetting whole;
 public:
-
+	WholeSetting s;
 	void draw() {
 		dpos.pos.y = 70;
 
 		drawText(dpos+50, U"Whole Setting Page");
 
 
-		SimpleGUI::CheckBox(whole.title.b,U"Title", dpos);
-		SimpleGUI::TextBox(whole.title.v, dpos.xy(200,50),400,none,whole.title.b);
+		SimpleGUI::CheckBox(s.title.b,U"Title", dpos);
+		SimpleGUI::TextBox(s.title.v, dpos.xy(200,50),400,none,s.title.b);
 
 	}
 };
@@ -23,11 +22,14 @@ public:
 
 /// @brief 個別のグラフ設定の入力UI
 class GraphSettingUI : public ScrollableUI {
-	GraphSetting graph;
 public:
+	GraphSetting s;
 	void draw() {
 		dpos.pos.y = 70;
 
 		drawText(dpos+50, U"Graph Setting Page");
+
+		drawText(dpos, U"graph");
+		SimpleGUI::TextBox(s.graph, dpos.xy(200, 50), 400);
 	}
 };

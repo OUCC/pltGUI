@@ -313,6 +313,7 @@
     <Xml Include="App\example\xml\test.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="plt_create.h" />
     <ClInclude Include="plt_setting.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="ui_controller.h" />

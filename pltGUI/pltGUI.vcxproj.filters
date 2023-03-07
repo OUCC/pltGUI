@@ -788,5 +788,8 @@
     <ClInclude Include="ui_common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="plt_create.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
