@@ -12,12 +12,19 @@ public:
 		Scroll();
 
 
-		drawText(dpos+50, U"Whole Setting Page");
+		drawText(dpos.y(50), U"Whole Setting Page");
 
 
-		SimpleGUI::CheckBox(s.title.b,U"Title", dpos);
-		SimpleGUI::TextBox(s.title.v, dpos.xy(200,50),400,none,s.title.b);
+		SimpleGUI::CheckBox(s.title.b,U"Title", dpos.x(200));
+		SimpleGUI::TextBox(s.title.v, dpos.y(70),400,none,s.title.b);
 
+
+		MyGUI::CheckBox(s.xrange_min.b,dpos.x(20));
+		s.xrange_max.b = s.xrange_min.b;
+		MyGUI::Text(U"xrange",dpos.x(180));
+		MyGUI::TextBox(s.xrange_min, dpos.x(190),Size(180,36));
+		MyGUI::Text(U"～",dpos.x(30));
+		MyGUI::TextBox(s.xrange_max, dpos.y(50),Size(180,36));
 	}
 };
 
@@ -30,10 +37,10 @@ public:
 		Scroll();
 
 
-		drawText(dpos+50, U"Graph Setting Page");
+		drawText(dpos.y(50), U"Graph Setting Page");
 
 		drawText(dpos, U"graph");
-		SimpleGUI::TextBox(s.graph, dpos.xy(200, 50), 400);
+		SimpleGUI::TextBox(s.graph, dpos.y(50), 400);
 
 	}
 };
