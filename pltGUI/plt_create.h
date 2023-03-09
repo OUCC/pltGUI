@@ -22,19 +22,31 @@ void CreatePltFile(WholeSettingUI& whole, Array<GraphSettingUI>& graphs) {
 	WholeSetting& ws = whole.s;
 	writer << U"set terminal pngcairo";
 	writer << U"set output \"result.png\"";
-	writer << U"set title \"" << ws.title.v.text << U"\"";
+	if (ws.title.b) writer << U"set title \"" << ws.title.v.text << U"\"";
+	if (ws.xrange_min.b) writer << U"set xrange [" << ws.xrange_min.v.text << U":" << ws.xrange_max.v.text << U"]";
+	if (ws.yrange_min.b) writer << U"set yrange [" << ws.yrange_min.v.text << U":" << ws.yrange_max.v.text << U"]";
+	if (ws.logscale_x.b) writer << U"set logscale x";
+	if (ws.logscale_y.b) writer << U"set logscale y";
+	if (ws.sample.b) writer << U"set sample " << ws.sample.v.text;
 
+	String command = U"";
 	// 個別のグラフの書き込み
 	for (auto i : step(graphs.size())) {
 		GraphSetting& gs = graphs[i].s;
-		String command = U"";
 
-		command += i == 0 ? U"plot " : U"replot ";
+		command += i == 0 ? U"plot " : U"\\\n    , ";
 
-		command += gs.graph.text;
+		command += gs.graph.v.text += U" ";
 
-		writer << command;
+		if (gs.title.b) command += U"title \"" + gs.title.v.text += U"\" ";
+
+		if (gs.linecolor.b) {
+			command += U"with lines ";
+			if (gs.linecolor.b) command += U"linecolor rgb hsv2rgb({:.3f},{:.3f},{:.3f}) "_fmt(gs.linecolor.v.h/360,gs.linecolor.v.s,gs.linecolor.v.v);
+		}
+
 	}
+	writer << command;
 }
 
 

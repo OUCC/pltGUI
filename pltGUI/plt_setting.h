@@ -37,7 +37,8 @@ public:
 class GraphSetting {
 	enum class LineTypeE;
 public:
-	TextEditState graph;
-	WithBool<TextEditState> label;
+	GraphSetting() { graph.b = true; }
+	WithBool<TextEditState> graph;
+	WithBool<TextEditState> title;
 	WithBool<HSV> linecolor;
 };
