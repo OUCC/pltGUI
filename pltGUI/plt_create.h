@@ -50,6 +50,6 @@ void executePltFile() {
 	int size = MultiByteToWideChar(CP_UTF8, 0, "result.plt", -1, NULL, 0);
 	wchar_t* wstr = new wchar_t[size];
 	MultiByteToWideChar(CP_UTF8, 0, "result.plt", -1, wstr, size);
-	HINSTANCE result = ShellExecute(NULL, operation, wstr, parameters, directory, SW_HIDE);
+	ShellExecute(NULL, operation, wstr, parameters, directory, SW_HIDE);
 	delete[] wstr;
 }
