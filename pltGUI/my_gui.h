@@ -2,7 +2,7 @@
 #include "ui_common.h"
 
 
-// Siv3dのSimpleGUIを拡張したものや独自のものなど
+// Siv3dのSimpleGUIを改造したものや独自のものなど
 
 namespace MyGUI {
 

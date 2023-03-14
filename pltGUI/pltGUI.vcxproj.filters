@@ -794,5 +794,8 @@
     <ClInclude Include="my_gui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="app_option.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

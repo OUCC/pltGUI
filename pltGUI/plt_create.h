@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "plt_setting.h"
+#include "app_option.h"
 #include <windows.h>
 #include <shellapi.h>
 
@@ -38,11 +39,19 @@ void CreatePltFile(WholeSettingUI& whole, Array<GraphSettingUI>& graphs) {
 
 		command += gs.graph.v.text += U" ";
 
-		if (gs.title.b) command += U"title \"" + gs.title.v.text += U"\" ";
+		if (gs.title.b) command += U"title \"" + gs.title.v.text + U"\" ";
 
 		if (gs.linecolor.b) {
 			command += U"with lines ";
-			if (gs.linecolor.b) command += U"linecolor rgb hsv2rgb({:.3f},{:.3f},{:.3f}) "_fmt(gs.linecolor.v.h/360,gs.linecolor.v.s,gs.linecolor.v.v);
+			if (gs.linecolor.b) {
+				if (AppOption::colorAsHSV) {
+					command += U"linecolor rgb hsv2rgb({:.3f},{:.3f},{:.3f}) "_fmt(gs.linecolor.v.h / 360, gs.linecolor.v.s, gs.linecolor.v.v);
+				}
+				else {
+					Color rgb = gs.linecolor.v.toColor();
+					command += U"linecolor rgb \"#{:02X}{:02X}{:02X}\""_fmt(rgb.r,rgb.g,rgb.b);
+				}
+			}
 		}
 
 	}

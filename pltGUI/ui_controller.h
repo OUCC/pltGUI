@@ -8,7 +8,7 @@
 class UIController {
 	/// @brief plt設定ページ、plt閲覧ページ、グラフ画像閲覧ページ
 	enum class PageOfViewE {
-		PltSetting, PltView, ImageView
+		PltSetting, PltView, ImageView,AppOption,
 	} pageOfView;
 	/// @brief 全体設定0、グラフ1、グラフ2、...
 	int settingTabIndex = 0;
@@ -40,7 +40,7 @@ class UIController {
 
 	void drawImageViewPage() {
 		if (not pltImageTexture.isEmpty()) {
-			pltImageTexture.draw(Vec2(50, 50));
+			pltImageTexture.drawAt(Scene::Center() + Vec2(0, 30));
 		}
 		else {
 			FontAsset(U"main")(U"Failed to read result.png").draw(50,100,uiColor.text);
@@ -64,6 +64,9 @@ public:
 		case UIController::PageOfViewE::ImageView:
 			drawImageViewPage();
 			break;
+		case UIController::PageOfViewE::AppOption:
+			AppOption::draw();
+			break;
 		}
 
 	}
@@ -86,9 +89,13 @@ public:
 			readPltImage();
 			pageOfView = PageOfViewE::ImageView;
 		}
+		selected = pageOfView == PageOfViewE::AppOption;
+		if (MyGUI::TabButton(U"options", Vec2(550, 60), selected, Size(135,selected? 50:45))) {
+			pageOfView = PageOfViewE::AppOption;
+		}
 
 		// デバッグ用の一時的なボタン
-		if (SimpleGUI::Button(U"create plt", Vec2(600, 20))) {
+		if (SimpleGUI::Button(U"create plt", Vec2(650, 20))) {
 			CreatePltFile(whole, graphs);
 			executePltFile();
 		}
@@ -115,15 +122,15 @@ void UIController::drawPltSettingPage() {
 		graphs << GraphSettingUI();
 		settingTabIndex = int(graphs.size());
 	}
-	//if (KeySpace.pressed()) tabSpace.drawFrame(1, Palette::Blue);
 
 	//タブの横スクロール
-	if (tabSpace.mouseOver()){
+	if (tabSpace.mouseOver() && graphs.size() > 5){
 		int max = 100 * int(graphs.size() - 5);
 		settingTabScroll += int(Mouse::Wheel()) * 50;
 		if (max > 0) settingTabScroll = Clamp(settingTabScroll, 0, max);
 	}
 
+	// 設定のUI部分
 	if (settingTabIndex == 0) whole.draw();
 	else graphs[settingTabIndex - 1].draw();
 
