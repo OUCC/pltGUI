@@ -37,19 +37,34 @@ void CreatePltFile(WholeSettingUI& whole, Array<GraphSettingUI>& graphs) {
 
 		command += i == 0 ? U"plot " : U"\\\n    , ";
 
-		command += gs.graph.v.text += U" ";
+		switch (gs.graph_index)	{
+		case 0:
+			command += gs.graph_func.v.text + U" ";
+			break;
+		case 1:
+			command += U"\""+ gs.graph_data.v.text + U"\" ";
+			break;
+		default:
+			break;
+		}
 
 		if (gs.title.b) command += U"title \"" + gs.title.v.text + U"\" ";
+		else if (gs.graph_index == 1) command += U"title \"" + FileSystem::FileName(gs.graph_data.v.text) + U"\" ";
 
-		if (gs.linecolor.b) {
-			command += U"with lines ";
+		if (gs.withlines.b || gs.withpoints.b) {
+			command += U"with ";
+			if (gs.withlines.b) command += U"lines";
+			if (gs.withpoints.b) command += U"points";
+			command += U" ";
 			if (gs.linecolor.b) {
-				if (AppOption::colorAsHSV) {
-					command += U"linecolor rgb hsv2rgb({:.3f},{:.3f},{:.3f}) "_fmt(gs.linecolor.v.h / 360, gs.linecolor.v.s, gs.linecolor.v.v);
-				}
-				else {
+				switch (AppOption::colorTypeIndex) {
+				case 0:
 					Color rgb = gs.linecolor.v.toColor();
 					command += U"linecolor rgb \"#{:02X}{:02X}{:02X}\""_fmt(rgb.r,rgb.g,rgb.b);
+					break;
+				case 1:
+					command += U"linecolor rgb hsv2rgb({:.3f},{:.3f},{:.3f}) "_fmt(gs.linecolor.v.h / 360, gs.linecolor.v.s, gs.linecolor.v.v);
+					break;
 				}
 			}
 		}

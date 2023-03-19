@@ -11,36 +11,37 @@ public:
 	void draw() {
 		Scroll();
 
-		drawText(dpos.y(50), U"Whole Setting Page");
+		MyGUI::Text(U"Whole Setting Page",dpos.y(50));
 
-		MyGUI::CheckBox(s.title.b, dpos.x(20));
+		MyGUI::CheckBoxArea(s.title.b, dpos.x(20));
 		MyGUI::Text(U"title", dpos.x(180));
-		MyGUI::TextBox(s.title, dpos.y(50), Size(400, 36));
+		MyGUI::TextBox(s.title, dpos.y(55), Size(400, 36));
 
-		MyGUI::CheckBox(s.xrange_min.b, dpos.x(20));
+		MyGUI::CheckBoxArea(s.xrange_min.b, dpos.x(20));
 		s.xrange_max.b = s.xrange_min.b;
 		MyGUI::Text(U"xrange", dpos.x(180));
 		MyGUI::TextBox(s.xrange_min, dpos.x(190), Size(180, 36));
 		MyGUI::Text(U"～", dpos.x(30));
-		MyGUI::TextBox(s.xrange_max, dpos.y(50), Size(180, 36));
+		MyGUI::TextBox(s.xrange_max, dpos.y(55), Size(180, 36));
 
-		MyGUI::CheckBox(s.yrange_min.b, dpos.x(20));
+		MyGUI::CheckBoxArea(s.yrange_min.b, dpos.x(20));
 		s.yrange_max.b = s.yrange_min.b;
 		MyGUI::Text(U"yrange", dpos.x(180));
 		MyGUI::TextBox(s.yrange_min, dpos.x(190), Size(180, 36));
 		MyGUI::Text(U"～", dpos.x(30));
-		MyGUI::TextBox(s.yrange_max, dpos.y(50), Size(180, 36));
+		MyGUI::TextBox(s.yrange_max, dpos.y(55), Size(180, 36));
 
 		dpos.x(20);
 		MyGUI::Text(U"logscale", dpos.x(200));
-		MyGUI::CheckBox(s.logscale_x.b, dpos.x(20));
-		MyGUI::Text(U"x", dpos.x(50));
-		MyGUI::CheckBox(s.logscale_y.b, dpos.x(20));
-		MyGUI::Text(U"y", dpos.y(50));
+		MyGUI::CheckBoxArea(s.logscale_x.b, dpos.x(20),Size(30,50));
+		MyGUI::Text(U"x", dpos.x(70));
+		MyGUI::CheckBoxArea(s.logscale_y.b, dpos.x(20),Size(30,50));
+		MyGUI::Text(U"y", dpos.y(55));
 
-		MyGUI::CheckBox(s.sample.b, dpos.x(20));
+		MyGUI::CheckBoxArea(s.sample.b, dpos.x(20), Vec2(400, 50));
 		MyGUI::Text(U"sample", dpos.x(180));
-		MyGUI::TextBox(s.sample, dpos.y(20));
+		MyGUI::TextBox(s.sample, dpos.y(55));
+
 	}
 };
 
@@ -53,18 +54,48 @@ public:
 		Scroll();
 
 
-		drawText(dpos.y(50), U"Graph Setting Page");
+		MyGUI::Text(U"Graph Setting Page",dpos.y(50));
 
-		dpos.x(20);
-		MyGUI::Text(U"graph", dpos.x(180));
-		MyGUI::TextBox(s.graph, dpos.y(50), Size(400, 36));
+		//s3d::RoundRect{ dpos.x(20) - Vec2(25,25),Vec2(638,100),10 }.draw(UIColor::bg_midactive);
+		MyGUI::RadioButtonAreas(s.graph_index, Array{ dpos.pos + Vec2(0,0), dpos.pos + Vec2(0,55) }, Array{ Vec2(600,50) });
+		s.graph_func.b = s.graph_index == 0;
+		s.graph_data.b = s.graph_index == 1;
+		MyGUI::Text(U"function", dpos.x(200) + Vec2(20,0));
+		MyGUI::TextBox(s.graph_func, dpos.y(55), Size(400, 36));
+		Line{ dpos.pos - Vec2(0,41),dpos.pos - Vec2(0,14) }.draw(2, UIColor::frame);
+		MyGUI::Text(U"datafile", dpos.x(200) + Vec2(20,0));
+		//MyGUI::TextBox(s.graph_data, dpos.x(380), Size(350, 36));
+		//MyGUI::Text(s.graph_data.v.text.isEmpty() ?U"": s.graph_data.v.text.split(U'/').back(), dpos.x(380));
+		MyGUI::Text(FileSystem::FileName(s.graph_data.v.text), dpos.x(380));
+		if (MyGUI::DrawFolderIconButton(dpos.y(55))) {
+			Optional<String> file = Dialog::OpenFile();
+			if (file) s.graph_data.v.text = *file;
+		}
 
-		MyGUI::CheckBox(s.title.b, dpos.x(20));
+		MyGUI::CheckBoxArea(s.title.b, dpos.x(20),Vec2(600,50));
 		MyGUI::Text(U"title", dpos.x(180));
-		MyGUI::TextBox(s.title, dpos.y(50));
+		MyGUI::TextBox(s.title, dpos.y(55), Size(400, 36));
 
-		MyGUI::CheckBox(s.linecolor.b, dpos.x(20));
-		MyGUI::Text(U"linecolor", dpos.x(200));
-		SimpleGUI::ColorPicker(s.linecolor.v, dpos.pos - Vec2(0, 20));
+		MyGUI::CheckBoxArea(s.withlines.b, dpos.x(20),s.withlines.b?Vec2(600,185):Vec2(600,50));
+		MyGUI::Text(U"with lines", dpos.y(55));
+		if (s.withlines.b) {
+			dpos.x(50);
+			MyGUI::CheckBoxArea(s.linecolor.b, dpos.x(20), Vec2(400, 125));
+			MyGUI::Text(U"linecolor", dpos.x(200));
+			SimpleGUI::ColorPicker(s.linecolor.v, dpos.y(130) - Vec2(0, 20), s.linecolor.b);
+
+			dpos.y(5);
+		}
+
+		MyGUI::CheckBoxArea(s.withpoints.b, dpos.x(20), s.withlines.b ? Vec2(600, 185) : Vec2(600, 50));
+		MyGUI::Text(U"with points", dpos.y(55));
+		if (s.withpoints.b) {
+			dpos.x(50);
+			MyGUI::CheckBoxArea(s.linecolor.b, dpos.x(20), Vec2(400, 125));
+			MyGUI::Text(U"linecolor", dpos.x(200));
+			SimpleGUI::ColorPicker(s.linecolor.v, dpos.y(130) - Vec2(0, 20), s.linecolor.b);
+
+			dpos.y(5);
+		}
 	}
 };

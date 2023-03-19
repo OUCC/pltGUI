@@ -23,7 +23,7 @@ class UIController {
 
 	void readPltFile() {
 		TextReader reader(U"result.plt");
-		if (reader.readAll(pltFileString)) {
+		if (reader && reader.readAll(pltFileString)) {
 			return;
 		}
 		else {
@@ -31,16 +31,19 @@ class UIController {
 		}
 	}
 	void readPltImage() {
+	tabSpaceRect.draw(Palette::Gray);
 		pltImageTexture = Texture(U"result.png");
 	}
 
 	void drawPltViewPage() {
-		FontAsset(U"main")(pltFileString).draw(Rect(50, 100, 700, 500), Palette::Black);
+		tabSpaceRect.draw(Palette::Gray);
+		FontAsset(U"main")(pltFileString).draw(Rect(50, 130, 700, 500), Palette::Black);
 	}
 
 	void drawImageViewPage() {
+		tabSpaceRect.draw(Palette::Gray);
 		if (not pltImageTexture.isEmpty()) {
-			pltImageTexture.drawAt(Scene::Center() + Vec2(0, 30));
+			pltImageTexture.drawAt(Scene::Center() + Vec2(0, 50));
 		}
 		else {
 			FontAsset(U"main")(U"Failed to read result.png").draw(50,100,uiColor.text);
@@ -73,6 +76,7 @@ public:
 
 	/// @brief タブなどの共通部分を描画
 	void drawCommon() {
+
 		// タブ
 		bool selected;
 		selected = pageOfView == PageOfViewE::PltSetting;
@@ -104,6 +108,12 @@ public:
 
 void UIController::drawPltSettingPage() {
 
+	// 設定のUI部分
+	if (settingTabIndex == 0) whole.draw();
+	else graphs[settingTabIndex - 1].draw();
+
+	tabSpaceRect.draw(Palette::Gray);
+
 	// タブ
 	Rect tabSpace {50,65,700,35};
 	bool selected;
@@ -130,8 +140,5 @@ void UIController::drawPltSettingPage() {
 		if (max > 0) settingTabScroll = Clamp(settingTabScroll, 0, max);
 	}
 
-	// 設定のUI部分
-	if (settingTabIndex == 0) whole.draw();
-	else graphs[settingTabIndex - 1].draw();
 
 }

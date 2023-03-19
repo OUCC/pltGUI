@@ -37,8 +37,11 @@ public:
 class GraphSetting {
 	enum class LineTypeE;
 public:
-	GraphSetting() { graph.b = true; }
-	WithBool<TextEditState> graph;
+	int graph_index = 0;
+	WithBool<TextEditState> graph_func;
+	WithBool<TextEditState> graph_data;
 	WithBool<TextEditState> title;
+	WithBool<void> withlines;
 	WithBool<HSV> linecolor;
+	WithBool<void> withpoints;
 };

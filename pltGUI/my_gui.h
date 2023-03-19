@@ -7,17 +7,17 @@
 namespace MyGUI {
 
 
-	bool TabButton(const StringView label, const Vec2& bottomCenter, const bool& selected, const SizeF& size = Size(120,40))
+	bool TabButton(const StringView label, const Vec2& bottomCenter, const bool& selected, const SizeF& size = Size(120, 40))
 	{
 		const Font& font = FontAsset(U"main");
 		const auto dtext = font(label);
 
 		const RectF rect{ Arg::bottomCenter = bottomCenter, size.x, size.y };
-		const Vec2 labelPos{ bottomCenter.x, bottomCenter.y - size.y/2.0 };
+		const Vec2 labelPos{ bottomCenter.x, bottomCenter.y - size.y / 2.0 };
 
-		const bool mouseOver = rect.mouseOver() && Cursor::OnClientRect();
+		const bool mouseOver = rect.mouseOver() && Cursor::OnClientRect() && Window::GetState().focused;
 		const bool pushed = (mouseOver && Cursor::OnClientRect() && MouseL.down());
-		const s3d::Polygon tabrect = rect.rounded(10,10,0,0);
+		const s3d::Polygon tabrect = rect.rounded(10, 10, 0, 0);
 
 		tabrect.draw(selected ? UIColor::bg_active : (mouseOver ? UIColor::bg_midactive : UIColor::bg_inactive));
 
@@ -43,13 +43,14 @@ namespace MyGUI {
 		const double size = 24;
 		const RectF rect{ Arg::center = center, size };
 		const s3d::RoundRect rrect = rect.rounded(3.2);
-		const bool mouseOver = rect.mouseOver() && Cursor::OnClientRect() ;
+		const bool mouseOver = rect.mouseOver() && Cursor::OnClientRect();
+		const UIState uistate = UIStateFromBools(checked, mouseOver);
 
-		rrect.draw(checked ? UIColor::Accent :(mouseOver?UIColor::bg_midactive :UIColor::bg_inactive));
+		rrect.draw(checked ? UIColor::Accent : (mouseOver ? UIColor::bg_midactive : UIColor::bg_inactive));
 		rrect.drawFrame(1, UIColor::frame);
 
 		if (checked) {
-			DrawCheck(rect.center(),UIColor::text_onAccent);
+			DrawCheck(rect.center(), UIColor::text_onAccent);
 		}
 
 		if (mouseOver) {
@@ -65,18 +66,56 @@ namespace MyGUI {
 		return previousValue != checked;
 	}
 
-	RectF Text(const String& text, const Vec2& leftCenter) {
-		const DrawableText dtext = FontAsset(U"main")(text);
-		return dtext.draw(Arg::leftCenter = leftCenter, UIColor::text);
+	bool CheckBoxArea(bool& checked, const Vec2& topLeftCenter, const Vec2& areaSize = Vec2(600, 50)) {
+		const RectF area{ topLeftCenter - Vec2(25,25), areaSize + Vec2(38,0) };
+		const s3d::RoundRect rarea = area.rounded(10);
+		const bool canMouseOver = scrollSpaceRect.mouseOver() && Window::GetState().focused;
+		const bool mouseOver = area.mouseOver() && canMouseOver;
+		const UIState uistate = UIStateFromBools(checked, mouseOver);
+
+		rarea.draw((checked || mouseOver) ? UIColor::bg_midactive : UIColor::bg_inactive);
+
+		const double cbsize = 24;
+		const RectF cbrect{ Arg::center = topLeftCenter, cbsize };
+		const s3d::RoundRect cbrrect = cbrect.rounded(3.2);
+
+		cbrrect.draw(checked ? UIColor::Accent : (mouseOver ? UIColor::bg_midactive : UIColor::bg_inactive));
+		cbrrect.drawFrame(1, (checked && !cbrect.mouseOver()) ? UIColor::frame_active : UIColor::frame);
+
+		if (checked) {
+			DrawCheck(cbrect.center(), UIColor::text_onAccent);
+		}
+
+		const bool previousValue = checked;
+		if (canMouseOver) {
+			if (cbrect.mouseOver() || (mouseOver && !checked)) {
+				Cursor::RequestStyle(CursorStyle::Hand);
+			}
+
+			if (cbrect.leftClicked()) {
+				checked = !checked;
+			}
+			else if (area.leftClicked()) {
+				checked = true;
+			}
+		}
+
+		return previousValue != checked;
 	}
 
-	bool TextBox(WithBool<TextEditState>& wbtext, const Vec2& leftCenter, const Size& size = Size(200,36)) {
+
+	RectF Text(const String& text, const Vec2& leftCenter, const UIState& uistate = UIState::active) {
+		const DrawableText dtext = FontAsset(U"main")(text);
+		return dtext.draw(Arg::leftCenter = leftCenter, UIColor::text_(uistate));
+	}
+
+	bool TextBox(WithBool<TextEditState>& wbtext, const Vec2& leftCenter, const Size& size = Size(200, 36)) {
 		TextEditState& text = wbtext.v;
 		bool& enabled = wbtext.b;
 		const Optional<size_t>& maxChars = none;
 		const Font& font = FontAsset(U"main");
 		const RectF region{ Arg::leftCenter = leftCenter, size };
-		const Vec2 textPos{ (region.x + 8), region.centerY() - font.height()/2};
+		const Vec2 textPos{ (region.x + 8), region.centerY() - font.height() / 2 };
 		const ColorF textColor = UIColor::text_(enabled);
 		const String previousText = text.text;
 		const String editingText = ((text.active && enabled) ? TextInput::GetEditingText() : U"");
@@ -164,7 +203,7 @@ namespace MyGUI {
 
 				if (showCursor)
 				{
-					const RectF cursor(Arg::leftCenter(Vec2(cursorPosX,region.centerY()).asPoint()), 1, 26);
+					const RectF cursor(Arg::leftCenter(Vec2(cursorPosX, region.centerY()).asPoint()), 1, 26);
 					cursor.draw(textColor);
 				}
 			}
@@ -314,5 +353,59 @@ namespace MyGUI {
 		return text.textChanged;
 	}
 
+	void RadioButtonCircle(const bool& selected, const Vec2& center) {
+		const double size = 24;
+		const Circle outerCiecle{ center,size / 2 };
+		const Circle innerCiecle{ center,size / 3 };
 
+		outerCiecle.draw(selected ? UIColor::bg_active : UIColor::bg_inactive)
+			.drawFrame(2, selected ? UIColor::frame_active: UIColor::frame);
+		if(selected) innerCiecle.draw(UIColor::Accent);
+	}
+
+	bool RadioButtonAreas(int& index, const Array<Vec2>& leftCenters,const Array<Vec2>& areaSizes) {
+		const int dataSize = leftCenters.size();
+		const bool canMouseOver = scrollSpaceRect.mouseOver() && Window::GetState().focused;
+		const int previousValue = index;
+
+
+		for (auto i : step(dataSize)) {
+			const RectF area{ leftCenters[i] - Vec2(25,25), areaSizes.fetch(i,areaSizes.back()) + Vec2(38,0)};
+			const s3d::RoundRect rarea = area.rounded(10);
+			const bool mouseOver = area.mouseOver() && canMouseOver;
+			const bool selected = index == i;
+			const UIState uistate = UIStateFromBools(selected, mouseOver);
+			rarea.draw((selected || mouseOver) ? UIColor::bg_midactive : UIColor::bg_inactive);
+
+			RadioButtonCircle(selected, leftCenters[i]);
+			if (mouseOver) {
+				if (!selected) {
+					Cursor::RequestStyle(CursorStyle::Hand);
+				}
+				if (area.leftClicked()) {
+					index = i;
+				}
+			}
+		}
+		return previousValue != index;
+	}
+
+	bool DrawFolderIconButton(const Vec2& center) {
+		const int size = 30;
+		const RectF rect{ Arg::center = center,size };
+		static const s3d::Polygon backFolder = s3d::Polygon{ Vec2(-15,15),Vec2(-15,-12),Vec2(0,-12),Vec2(0,-5),Vec2(15,-5),Vec2(15,15) }.calculateRoundBuffer(3);
+		static const s3d::Polygon openFrontFolder = s3d::Polygon{ Vec2(-15,15),Vec2(-15,-0),Vec2(15,-0),Vec2(15,15) }.calculateRoundBuffer(3);
+		static const s3d::Polygon closeFrontFolder = s3d::Polygon{ Vec2(-15,15),Vec2(-15,-5),Vec2(15,-5),Vec2(15,15) }.calculateRoundBuffer(3);
+		
+		backFolder.movedBy(center).draw(UIColor::bg_inactive).drawFrame(2, UIColor::text);
+
+		if (rect.mouseOver() && scrollSpaceRect.mouseOver() && Window::GetState().focused) {
+			Cursor::RequestStyle(CursorStyle::Hand);
+			openFrontFolder.movedBy(center).draw(UIColor::bg_midactive).drawFrame(2, UIColor::text);
+		}
+		else {
+			closeFrontFolder.movedBy(center).draw(UIColor::bg_midactive).drawFrame(2, UIColor::text);
+		}
+		return rect.leftClicked();
+	}
 }
