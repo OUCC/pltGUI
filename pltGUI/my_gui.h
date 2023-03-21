@@ -380,7 +380,7 @@ namespace MyGUI {
 	}
 
 	bool RadioButtonAreas(int& index, const Array<Vec2>& leftCenters,const Array<Vec2>& areaSizes) {
-		const int dataSize = leftCenters.size();
+		const size_t dataSize = leftCenters.size();
 		const bool canMouseOver = scrollSpaceRect.mouseOver() && Window::GetState().focused;
 		const int previousValue = index;
 
@@ -399,7 +399,7 @@ namespace MyGUI {
 					Cursor::RequestStyle(CursorStyle::Hand);
 				}
 				if (area.leftClicked()) {
-					index = i;
+					index = int(i);
 				}
 			}
 		}

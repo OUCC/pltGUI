@@ -18,6 +18,7 @@ public:
 				: (mouseover ? midactive : inactive))
 			: disabled;
 	}
+	UIState(const E& e_) :e(e_) {}
 	operator E() {
 		return e;
 	}
@@ -46,6 +47,7 @@ public:
 			return ratio(0.9);
 		case UIState::midactive:
 		case UIState::overactive:
+		default:
 			return Accent;
 		}
 	}
@@ -61,6 +63,7 @@ public:
 		case UIState::overactive:
 			return ratio(0.9);
 		case UIState::onAccent:
+		default:
 			return ratio(0);
 		}
 	}
@@ -75,6 +78,7 @@ public:
 			return ratio(0.1);
 		case UIState::active:
 		case UIState::overactive:
+		default:
 			return ratio(0);
 		}
 	}
@@ -132,10 +136,10 @@ protected:
 
 	}dpos;
 
-	int32 yScroll = 0;
+	double yScroll = 0;
 	void Scroll() {
-		int32 yScrollMax = dpos.pos.y - 600 + yScroll;
-		yScroll += int32(Mouse::Wheel() * scrollSpeed);
+		double yScrollMax = dpos.pos.y - 600 + yScroll;
+		yScroll += Mouse::Wheel() * scrollSpeed;
 		if (yScroll < 0) yScroll = 0;
 		if (yScrollMax < 0) yScrollMax=0;
 		if (yScroll > yScrollMax) yScroll = yScrollMax;

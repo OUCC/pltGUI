@@ -22,20 +22,20 @@ public:
 		MyGUI::CheckBoxArea(shortword, Vec2(100, 205), Size(170, 50));
 		MyGUI::Text(U"short keywords", Vec2(120,205));
 
-		HSV base{ UIColor::Base };
-		HSV main{ UIColor::Main };
-		HSV accent{ UIColor::Accent };
+		HSV base_{ UIColor::Base };
+		HSV main_{ UIColor::Main };
+		HSV accent_{ UIColor::Accent };
 		FontAsset(U"main")(U"Base").drawAt(Vec2(200,260),UIColor::ratio(0.9));
 		FontAsset(U"main")(U"Main").drawAt(Vec2(380,260), UIColor::ratio(0.9));
 		FontAsset(U"main")(U"Accent").drawAt(Vec2(560,260), UIColor::ratio(0.9));
-		if (SimpleGUI::ColorPickerAt(base, Vec2(200, 330))) {
-			UIColor::Base = base.toColor();
+		if (SimpleGUI::ColorPickerAt(base_, Vec2(200, 330))) {
+			UIColor::Base = base_.toColor();
 		}
-		if (SimpleGUI::ColorPickerAt(main, Vec2(380, 330))) {
-			UIColor::Main = main.toColor();
+		if (SimpleGUI::ColorPickerAt(main_, Vec2(380, 330))) {
+			UIColor::Main = main_.toColor();
 		}
-		if (SimpleGUI::ColorPickerAt(accent, Vec2(560, 330))) {
-			UIColor::Accent = accent.toColor();
+		if (SimpleGUI::ColorPickerAt(accent_, Vec2(560, 330))) {
+			UIColor::Accent = accent_.toColor();
 			UpdateWaveImage();
 		}
 	}
