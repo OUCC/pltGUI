@@ -54,20 +54,19 @@ public:
 		Scroll();
 
 
-		MyGUI::Text(U"Graph Setting Page",dpos.y(50));
+		MyGUI::Text(U"Graph Setting Page", dpos.y(50));
 
-		//s3d::RoundRect{ dpos.x(20) - Vec2(25,25),Vec2(638,100),10 }.draw(UIColor::bg_midactive);
 		MyGUI::RadioButtonAreas(s.graph_index, Array{ dpos.pos + Vec2(0,0), dpos.pos + Vec2(0,55) }, Array{ Vec2(600,50) });
 		s.graph_func.b = s.graph_index == 0;
 		s.graph_data.b = s.graph_index == 1;
-		MyGUI::Text(U"function", dpos.x(200) + Vec2(20,0));
+		MyGUI::Text(U"function", dpos.x(200) + Vec2(20, 0));
 		MyGUI::TextBox(s.graph_func, dpos.y(55), Size(400, 36));
-		Line{ dpos.pos - Vec2(0,41),dpos.pos - Vec2(0,14) }.draw(2, UIColor::frame);
-		MyGUI::Text(U"datafile", dpos.x(200) + Vec2(20,0));
-		//MyGUI::TextBox(s.graph_data, dpos.x(380), Size(350, 36));
-		//MyGUI::Text(s.graph_data.v.text.isEmpty() ?U"": s.graph_data.v.text.split(U'/').back(), dpos.x(380));
+		Line{ dpos.pos - Vec2(0,41),dpos.pos - Vec2(0,14) }.draw(2, UIColor::frame());
+		MyGUI::Text(U"datafile", dpos.x(200) + Vec2(20, 0));
 		MyGUI::Text(FileSystem::FileName(s.graph_data.v.text), dpos.x(380));
-		if (MyGUI::DrawFolderIconButton(dpos.y(55))) {
+
+		
+		if (MyGUI::FolderIconButton(dpos.y(55))) {
 			Optional<String> file = Dialog::OpenFile();
 			if (file) s.graph_data.v.text = *file;
 		}

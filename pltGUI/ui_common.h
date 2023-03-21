@@ -1,14 +1,33 @@
 ﻿#pragma once
 
+class UIState {
+public:
+	enum E{
+		disabled,
+		inactive,
+		midactive,//inactive && mouseover
+		active,
+		overactive,//active && mouseover
+		onAccent,
+	}e;
 
-enum class UIState {
-	disabled,
-	inactive,
-	midactive,//inactive && mouseover
-	active,
-	overactive,//active && mouseover
+	UIState(const bool mouseover = false, const bool active = true, const bool enabled = true) {
+		e = enabled
+			? (active
+				? (mouseover ? overactive : E::active)
+				: (mouseover ? midactive : inactive))
+			: disabled;
+	}
+	operator E() {
+		return e;
+	}
+	bool isActive() {
+		return e == active || e == overactive;
+	}
+	bool isMouseOver() {
+		return e == midactive || e == overactive;
+	}
 };
-UIState UIStateFromBools(const bool&, const bool&, const bool& =true);
 
 /// @brief 全てのUIの色をここで定義。そのうちダークテーマとか切り替えたい。
 class UIColor {
@@ -17,91 +36,71 @@ public:
 	static Color Main;
 	static Color Accent;
 
-	static Color background;
-
-	static Color frame;
-	static Color frame_disabled;
-	static Color frame_inactive;
-	static Color frame_midactive;
-	static Color frame_active;
-	static Color frame_(const UIState& uis) {
+	static Color frame(const UIState::E uis = UIState::inactive) {
 		switch (uis) {
 		case UIState::disabled:
-			return frame_disabled;
+			return ratio(0.5);
 		case UIState::inactive:
-			return frame_inactive;
-		case UIState::midactive:
-			return frame_midactive;
+			return ratio(0.8);
 		case UIState::active:
+			return ratio(0.9);
+		case UIState::midactive:
 		case UIState::overactive:
-			return frame_active;
+			return Accent;
 		}
 	}
 
-	static Color text;
-	static Color text_disabled;
-	static Color text_inactive;
-	static Color text_active;
-	static Color text_onAccent;
-	static Color text_(const bool& active) { return active ? text_active : text_inactive; }
-	static Color text_(const UIState& uis) {
+	static Color text(const UIState::E uis = UIState::active) {
 		switch (uis){
 		case UIState::disabled:
-			return text_disabled;
+			return ratio(0.7);
 		case UIState::inactive:
-			return text_inactive;
+			return ratio(0.8);
 		case UIState::midactive:
 		case UIState::active:
 		case UIState::overactive:
-			return text_active;
+			return ratio(0.9);
+		case UIState::onAccent:
+			return ratio(0);
 		}
 	}
 
-	static Color bg_disabled;
-	static Color bg_inactive;
-	static Color bg_midactive;
-	static Color bg_active;
-	static Color bg_(const UIState& uis) {
+	static Color bg(const UIState::E uis = UIState::inactive) {
 		switch (uis) {
 		case UIState::disabled:
-			return bg_disabled;
+			return ratio(0.3);
 		case UIState::inactive:
-			return bg_inactive;
+			return ratio(0.2);
 		case UIState::midactive:
-			return bg_midactive;
+			return ratio(0.1);
 		case UIState::active:
 		case UIState::overactive:
-			return bg_active;
+			return ratio(0);
 		}
 	}
 
 
-	UIColor() { setTheme(Palette::White, Palette::Black, ColorF{ 0.35, 0.7, 1.0 }); }
 
-	void setTheme(const Color& base,const Color& main, const Color& accent) {
-		Base = base;
-		Main = main;
-		Accent = accent;
-
-		background = base.lerp(main,0.1);
-
-		frame = base.lerp(main, 0.5);
-		frame_active = accent;
-
-		text = main;
-		text_active = main;
-		text_inactive = main.lerp(base, 0.1);
-		text_onAccent = base;
-
-		bg_active = base;
-		bg_midactive = base.lerp(main,0.05);
-		bg_inactive = base.lerp(main, 0.1);
-
+	static Color ratio(const double& ratio) {
+		return Base.lerp(Main, ratio);
 	}
 };
 
+Color UIColor::Base;
+Color UIColor::Main;
+Color UIColor::Accent;
 
-
+Texture UpdateWaveImage() {
+	static DynamicTexture wavet{70,50};
+	Image wavei{70,50};
+	for (int32 y = 0; y < wavei.height(); ++y) {
+		for (int32 x = 0; x < wavei.width(); ++x) {
+			wavei[y][x] = ColorF{ UIColor::Accent, ( 1.0-Math::Cos(Math::Pi* x/35.0))/2 };
+		}
+	}
+	wavet.fill(wavei);
+	return wavet;
+}
 
 /// @brief スクロールするUIの基底クラス
 class ScrollableUI {
@@ -145,5 +144,6 @@ protected:
 };
 
 
-extern s3d::Rect tabSpaceRect;
-extern s3d::Rect scrollSpaceRect;
+Rect tabSpaceRect{ 0,0,800,110 };
+Rect scrollSpaceRect{ 0,111,800,490 };
+Color tabSpaceColor;

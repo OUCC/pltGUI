@@ -5,12 +5,25 @@
 void Main()
 {
 	FontAsset::Register(U"main", 20);
+	FontAsset::Register(U"bold", 20,Typeface::Bold);
+	TextureAsset::Register(U"save", 0xf0c7_icon,30);
+	TextureAsset::Register(U"reload", 0xf2f9_icon,30);
+	TextureAsset::Register(U"gear", 0xf013_icon,40);
+	TextureAsset::Register(U"xmark", 0xf00d_icon,30);
+	TextureAsset::Register(U"plus", 0x2b_icon,30);
+	TextureAsset::Register(U"folder_close", 0xf07b_icon,40);
+	TextureAsset::Register(U"folder_open", 0xf07c_icon,40);
+
+	UIColor::Base = Palette::White;
+	UIColor::Main = Palette::Black;
+	UIColor::Accent = ColorF{ 0.35, 0.7, 1.0 };
 
 	UIController ui;
-	Scene::SetBackground(ui.uiColor.background);
 
 	while (System::Update())
 	{
+		Scene::SetBackground(UIColor::bg());
+		tabSpaceColor = UIColor::ratio(0.3).lerp(UIColor::Accent, 0.1);
 
 		ui.drawPage();
 

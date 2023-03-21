@@ -31,29 +31,46 @@ class UIController {
 		}
 	}
 	void readPltImage() {
-	tabSpaceRect.draw(Palette::Gray);
 		pltImageTexture = Texture(U"result.png");
 	}
 
 	void drawPltViewPage() {
-		tabSpaceRect.draw(Palette::Gray);
-		FontAsset(U"main")(pltFileString).draw(Rect(50, 130, 700, 500), Palette::Black);
+		tabSpaceRect.draw(tabSpaceColor);
+
+		if (MyGUI::ReloadIconButton(Vec2(550, 85))) {
+			readPltFile();
+		}
+		if (MyGUI::SaveIconButton(Vec2(700, 85))) {
+			Optional<String> path = Dialog::SaveFile(Array{ FileFilter{U"gnuplot",{U"plt"}} });
+			if (path) FileSystem::Copy(U"result.plt", *path, CopyOption::OverwriteExisting);
+		}
+
+		// pltファイルの中身表示。要改良
+		FontAsset(U"main")(pltFileString).draw(Rect(50, 130, 700, 500), UIColor::text());
 	}
 
 	void drawImageViewPage() {
-		tabSpaceRect.draw(Palette::Gray);
+		tabSpaceRect.draw(tabSpaceColor);
+
+		if (MyGUI::ReloadIconButton(Vec2(550, 85))) {
+			readPltImage();
+		}
+		if (MyGUI::SaveIconButton(Vec2(700, 85))) {
+			Optional<String> path = Dialog::SaveFile(Array{ FileFilter::PNG()});
+			if (path) FileSystem::Copy(U"result.png", *path, CopyOption::OverwriteExisting);
+		}
+
 		if (not pltImageTexture.isEmpty()) {
 			pltImageTexture.drawAt(Scene::Center() + Vec2(0, 50));
 		}
 		else {
-			FontAsset(U"main")(U"Failed to read result.png").draw(50,100,uiColor.text);
+			FontAsset(U"main")(U"Failed to read result.png").draw(50,100,UIColor::text());
 		}
 	}
 
 	void drawPltSettingPage();
 
 public:
-	UIColor uiColor;
 
 	/// @brief 設定などページによって変わる部分を描画
 	void drawPage() {
@@ -76,6 +93,7 @@ public:
 
 	/// @brief タブなどの共通部分を描画
 	void drawCommon() {
+		static Stopwatch watch1,watch2;
 
 		// タブ
 		bool selected;
@@ -84,25 +102,27 @@ public:
 			pageOfView = PageOfViewE::PltSetting;
 		}
 		selected = pageOfView == PageOfViewE::PltView;
-		if (MyGUI::TabButton( U"plt File", Vec2(250, 60), selected, Size(135,selected? 50:45))) {
+		if (MyGUI::TabButton( U"plt File", Vec2(350, 60), selected, Size(135,selected? 50:45))) {
 			readPltFile();
 			pageOfView = PageOfViewE::PltView;
 		}
 		selected = pageOfView == PageOfViewE::ImageView;
-		if (MyGUI::TabButton(U"image", Vec2(400, 60), selected, Size(135,selected? 50:45))) {
+		if (MyGUI::TabButton(U"Image", Vec2(600, 60), selected, Size(135,selected? 50:45))) {
 			readPltImage();
 			pageOfView = PageOfViewE::ImageView;
 		}
 		selected = pageOfView == PageOfViewE::AppOption;
-		if (MyGUI::TabButton(U"options", Vec2(550, 60), selected, Size(135,selected? 50:45))) {
+		if (MyGUI::GearIconButton(Vec2(750,35),selected)) {
 			pageOfView = PageOfViewE::AppOption;
 		}
 
-		// デバッグ用の一時的なボタン
-		if (SimpleGUI::Button(U"create plt", Vec2(650, 20))) {
+		if (MyGUI::ArrowIconButton(Vec2(230, 35),watch1)) {
 			CreatePltFile(whole, graphs);
+		}
+		if (MyGUI::ArrowIconButton(Vec2(480, 35),watch2)) {
 			executePltFile();
 		}
+
 	}
 };
 
@@ -112,7 +132,7 @@ void UIController::drawPltSettingPage() {
 	if (settingTabIndex == 0) whole.draw();
 	else graphs[settingTabIndex - 1].draw();
 
-	tabSpaceRect.draw(Palette::Gray);
+	tabSpaceRect.draw(tabSpaceColor);
 
 	// タブ
 	Rect tabSpace {50,65,700,35};
