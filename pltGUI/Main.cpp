@@ -9,6 +9,7 @@ void Main()
 	TextureAsset::Register(U"save", 0xf0c7_icon,30);
 	TextureAsset::Register(U"reload", 0xf2f9_icon,30);
 	TextureAsset::Register(U"gear", 0xf013_icon,40);
+	TextureAsset::Register(U"trash", 0xf1f8_icon,40);
 	TextureAsset::Register(U"xmark", 0xf00d_icon,30);
 	TextureAsset::Register(U"plus", 0x2b_icon,30);
 	TextureAsset::Register(U"folder_close", 0xf07b_icon,40);

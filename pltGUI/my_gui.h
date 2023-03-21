@@ -478,6 +478,21 @@ namespace MyGUI {
 		return false;
 	}
 
+	bool TrashIconButton(const Vec2& center) {
+		const RectF rect{ Arg::center = center, 40 };
+		UIState uis{ rect.mouseOver() && Window::GetState().focused };
+
+		TextureAsset(U"trash").drawAt(center, uis.isMouseOver()? UIColor::Accent : UIColor::ratio(0.5));
+
+		if (rect.mouseOver() && Window::GetState().focused) {
+			Cursor::RequestStyle(CursorStyle::Hand);
+			if (rect.leftClicked()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	bool ArrowIconButton(const Vec2& center,Stopwatch& watch) {
 		const s3d::Polygon arrow = Shape2D::Arrow(Line{center - Vec2(35,0),center + Vec2(35,0)},20,Vec2(25,30)).asPolygon();
 		const RectF rect = arrow.boundingRect();

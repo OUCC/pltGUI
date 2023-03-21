@@ -130,7 +130,15 @@ void UIController::drawPltSettingPage() {
 
 	// 設定のUI部分
 	if (settingTabIndex == 0) whole.draw();
-	else graphs[settingTabIndex - 1].draw();
+	else {
+		graphs[settingTabIndex - 1].draw();
+		if (graphs.size() > 1) {
+			if (MyGUI::TrashIconButton(Vec2(750,150))) {
+				graphs.remove_at(settingTabIndex - 1);
+				if(graphs.size() < settingTabIndex) settingTabIndex --;
+			}
+		}
+	}
 
 	tabSpaceRect.draw(tabSpaceColor);
 

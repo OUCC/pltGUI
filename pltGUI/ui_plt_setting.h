@@ -49,6 +49,11 @@ public:
 /// @brief 個別のグラフ設定の入力UI
 class GraphSettingUI : public ScrollableUI {
 public:
+	GraphSettingUI operator = (const GraphSettingUI& other) {
+		s = other.s;
+		return *this;
+	}
+
 	GraphSetting s;
 	void draw() {
 		Scroll();
