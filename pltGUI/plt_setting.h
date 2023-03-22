@@ -40,8 +40,14 @@ public:
 	int graph_index = 0;
 	WithBool<TextEditState> graph_func;
 	WithBool<TextEditState> graph_data;
+	WithBool<TextEditState> using_x;
+	WithBool<TextEditState> using_y;
 	WithBool<TextEditState> title;
-	WithBool<void> withlines;
 	WithBool<HSV> linecolor;
+	WithBool<void> withlines;
+	WithBool<TextEditState> linewidth;
+	WithBool<TextEditState> linetype;
 	WithBool<void> withpoints;
+	WithBool<TextEditState> pointsize;
+	WithBool<TextEditState> pointtype;
 };
