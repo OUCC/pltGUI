@@ -99,7 +99,7 @@ namespace MyGUI {
 		const bool mouseOver = area.mouseOver() && canMouseOver;
 		UIState uis{ mouseOver, checked };
 
-		rarea.draw(UIColor::bg( (checked || mouseOver) ? UIState::midactive : UIState::inactive));
+		rarea.draw(UIColor::bg((checked || mouseOver) ? UIState::midactive : UIState::inactive));
 
 		const double cbsize = 24;
 		const RectF cbrect{ Arg::center = topLeftCenter, cbsize };
@@ -144,7 +144,7 @@ namespace MyGUI {
 		const Font& font = FontAsset(U"main");
 		const RectF region{ Arg::leftCenter = leftCenter, size };
 		const Vec2 textPos{ (region.x + 8), region.centerY() - font.height() / 2 };
-		UIState uis{ region.mouseOver() && scrollSpaceRect.mouseOver() && Window::GetState().focused ,text.active, enabled};
+		UIState uis{ region.mouseOver() && scrollSpaceRect.mouseOver() && Window::GetState().focused ,text.active, enabled };
 		const ColorF textColor = UIColor::text(uis);
 		const String previousText = text.text;
 		const String editingText = ((text.active && enabled) ? TextInput::GetEditingText() : U"");
@@ -376,17 +376,17 @@ namespace MyGUI {
 
 		outerCiecle.draw(UIColor::bg(uis))
 			.drawFrame(2, uis == UIState::inactive ? UIColor::frame(uis) : UIColor::Accent);
-		if(uis.isActive()) innerCiecle.draw(UIColor::Accent);
+		if (uis.isActive()) innerCiecle.draw(UIColor::Accent);
 	}
 
-	bool RadioButtonAreas(int& index, const Array<Vec2>& leftCenters,const Array<Vec2>& areaSizes) {
+	bool RadioButtonAreas(int& index, const Array<Vec2>& leftCenters, const Array<Vec2>& areaSizes) {
 		const size_t dataSize = leftCenters.size();
 		const bool canMouseOver = scrollSpaceRect.mouseOver() && Window::GetState().focused;
 		const int previousValue = index;
 
 
 		for (auto i : step(dataSize)) {
-			const RectF area{ leftCenters[i] - Vec2(25,25), areaSizes.fetch(i,areaSizes.back()) + Vec2(38,0)};
+			const RectF area{ leftCenters[i] - Vec2(25,25), areaSizes.fetch(i,areaSizes.back()) + Vec2(38,0) };
 			const s3d::RoundRect rarea = area.rounded(10);
 			const bool mouseOver = area.mouseOver() && canMouseOver;
 			const bool selected = index == i;
@@ -407,16 +407,17 @@ namespace MyGUI {
 	}
 
 	bool FolderIconButton(const Vec2& center) {
-		const RectF rect{Arg::center = center, 40};
-		
+		const RectF rect{ Arg::center = center, 40 };
+
 		if (rect.mouseOver() && Window::GetState().focused) {
-			TextureAsset(U"folder_open").drawAt(center+Vec2(3,0), UIColor::ratio(0.5));
+			TextureAsset(U"folder_open").drawAt(center + Vec2(3, 0), UIColor::ratio(0.5));
 			Cursor::RequestStyle(CursorStyle::Hand);
 			if (rect.leftClicked()) {
 				return true;
 			}
-		} else {
-			TextureAsset(U"folder_close").drawAt(center,UIColor::ratio(0.5));
+		}
+		else {
+			TextureAsset(U"folder_close").drawAt(center, UIColor::ratio(0.5));
 		}
 		return false;
 	}
@@ -426,8 +427,8 @@ namespace MyGUI {
 		UIState uis{ rect.mouseOver() && Window::GetState().focused, false };
 		rect.rounded(10).draw(UIColor::bg(uis));
 
-		TextureAsset(U"save").drawAt(center - Vec2(40,0), UIColor::text(uis));
-		FontAsset(U"bold")(U"Save as").drawAt(center + Vec2(20, 0),UIColor::text(uis));
+		TextureAsset(U"save").drawAt(center - Vec2(40, 0), UIColor::text(uis));
+		FontAsset(U"bold")(U"Save as").drawAt(center + Vec2(20, 0), UIColor::text(uis));
 
 		if (uis.isMouseOver()) {
 			rect.rounded(10).drawFrame(2, UIColor::frame(uis));
@@ -445,9 +446,9 @@ namespace MyGUI {
 	bool ReloadIconButton(const Vec2& center) {
 		const RectF rect{ Arg::center = center, 130,40 };
 		UIState uis{ rect.mouseOver() && Window::GetState().focused , false };
-		rect.rounded(10).draw( UIColor::bg(uis));
+		rect.rounded(10).draw(UIColor::bg(uis));
 
-		TextureAsset(U"reload").drawAt(center - Vec2(40, 0),UIColor::text());
+		TextureAsset(U"reload").drawAt(center - Vec2(40, 0), UIColor::text());
 		FontAsset(U"bold")(U"Reload").drawAt(center + Vec2(20, 0), UIColor::text(uis));
 
 		if (rect.mouseOver() && Window::GetState().focused) {
@@ -465,7 +466,7 @@ namespace MyGUI {
 
 	bool GearIconButton(const Vec2& center, const bool& selected) {
 		const RectF rect{ Arg::center = center, 40 };
-		UIState uis{ rect.mouseOver() && Window::GetState().focused , selected};
+		UIState uis{ rect.mouseOver() && Window::GetState().focused , selected };
 
 		TextureAsset(U"gear").drawAt(center, UIColor::bg(uis));
 
@@ -482,7 +483,7 @@ namespace MyGUI {
 		const RectF rect{ Arg::center = center, 40 };
 		UIState uis{ rect.mouseOver() && Window::GetState().focused };
 
-		TextureAsset(U"trash").drawAt(center, uis.isMouseOver()? UIColor::Accent : UIColor::ratio(0.5));
+		TextureAsset(U"trash").drawAt(center, uis.isMouseOver() ? UIColor::Accent : UIColor::ratio(0.5));
 
 		if (rect.mouseOver() && Window::GetState().focused) {
 			Cursor::RequestStyle(CursorStyle::Hand);
@@ -493,8 +494,8 @@ namespace MyGUI {
 		return false;
 	}
 
-	bool ArrowIconButton(const Vec2& center,Stopwatch& watch) {
-		const s3d::Polygon arrow = Shape2D::Arrow(Line{center - Vec2(35,0),center + Vec2(35,0)},20,Vec2(25,30)).asPolygon();
+	bool ArrowIconButton(const Vec2& center, Stopwatch& watch) {
+		const s3d::Polygon arrow = Shape2D::Arrow(Line{ center - Vec2(35,0),center + Vec2(35,0) }, 20, Vec2(25, 30)).asPolygon();
 		const RectF rect = arrow.boundingRect();
 		const bool mouseOver = rect.mouseOver() && Window::GetState().focused;
 		UIState uis{ mouseOver , false };
@@ -502,11 +503,11 @@ namespace MyGUI {
 		static const Texture& wavet = UpdateWaveImage();
 
 		arrow.draw(UIColor::bg(uis));
-		arrow.toBuffer2D(center + Vec2(watch.ms()/1000.0 * 80 - 100, 0), wavet.size()).draw(wavet);
-		
+		arrow.toBuffer2D(center + Vec2(watch.ms() / 1000.0 * 80 - 100, 0), wavet.size()).draw(wavet);
+
 
 		if (mouseOver) {
-			arrow.drawFrame(2,UIColor::frame(uis));
+			arrow.drawFrame(2, UIColor::frame(uis));
 			Cursor::RequestStyle(CursorStyle::Hand);
 			if (rect.leftClicked()) {
 				watch.restart();

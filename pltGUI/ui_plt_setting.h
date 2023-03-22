@@ -11,7 +11,7 @@ public:
 	void draw() {
 		Scroll();
 
-		MyGUI::Text(U"Whole Setting Page",dpos.y(50));
+		MyGUI::Text(U"Whole Setting Page", dpos.y(50));
 
 		MyGUI::CheckBoxArea(s.title.b, dpos.x(20));
 		MyGUI::Text(U"title", dpos.x(180));
@@ -33,9 +33,9 @@ public:
 
 		dpos.x(20);
 		MyGUI::Text(U"logscale", dpos.x(200));
-		MyGUI::CheckBoxArea(s.logscale_x.b, dpos.x(20),Size(30,50));
+		MyGUI::CheckBoxArea(s.logscale_x.b, dpos.x(20), Size(30, 50));
 		MyGUI::Text(U"x", dpos.x(70));
-		MyGUI::CheckBoxArea(s.logscale_y.b, dpos.x(20),Size(30,50));
+		MyGUI::CheckBoxArea(s.logscale_y.b, dpos.x(20), Size(30, 50));
 		MyGUI::Text(U"y", dpos.y(55));
 
 		MyGUI::CheckBoxArea(s.sample.b, dpos.x(20), Vec2(400, 50));
@@ -73,9 +73,9 @@ public:
 			Optional<String> file = Dialog::OpenFile();
 			if (file) s.graph_data.v.text = *file;
 		}
-		if (s.graph_index==1) {
+		if (s.graph_index == 1) {
 			dpos.x(50);
-			MyGUI::CheckBoxArea(s.using_x.b, dpos.x(20),Size(550,50));
+			MyGUI::CheckBoxArea(s.using_x.b, dpos.x(20), Size(550, 50));
 			s.using_y.b = s.using_x.b;
 			MyGUI::Text(U"using", dpos.x(130));
 			MyGUI::TextBox(s.using_x, dpos.x(190), Size(180, 36));
@@ -83,11 +83,11 @@ public:
 			MyGUI::TextBox(s.using_y, dpos.y(55), Size(180, 36));
 		}
 
-		MyGUI::CheckBoxArea(s.title.b, dpos.x(20),Vec2(600,50));
+		MyGUI::CheckBoxArea(s.title.b, dpos.x(20), Vec2(600, 50));
 		MyGUI::Text(U"title", dpos.x(180));
 		MyGUI::TextBox(s.title, dpos.y(55), Size(400, 36));
 
-		MyGUI::CheckBoxArea(s.withlines.b, dpos.x(20),s.withlines.b?(s.linecolor.b ? Vec2(600,295):Vec2(600,220)):Vec2(600,50));
+		MyGUI::CheckBoxArea(s.withlines.b, dpos.x(20), s.withlines.b ? (s.linecolor.b ? Vec2(600, 295) : Vec2(600, 220)) : Vec2(600, 50));
 		MyGUI::Text(U"with lines", dpos.y(55));
 		if (s.withlines.b) {
 			dpos.x(50);
@@ -109,13 +109,13 @@ public:
 			dpos.y(5);
 		}
 
-		MyGUI::CheckBoxArea(s.withpoints.b, dpos.x(20), s.withpoints.b ?(s.linecolor.b ? Vec2(600, 295) : Vec2(600, 220)) : Vec2(600, 50));
+		MyGUI::CheckBoxArea(s.withpoints.b, dpos.x(20), s.withpoints.b ? (s.linecolor.b ? Vec2(600, 295) : Vec2(600, 220)) : Vec2(600, 50));
 		MyGUI::Text(U"with points", dpos.y(55));
 		if (s.withpoints.b) {
 			dpos.x(50);
 			MyGUI::CheckBoxArea(s.linecolor.b, dpos.x(20), Vec2(545, s.linecolor.b ? 125 : 50));
 			MyGUI::Text(U"linecolor", dpos.x(130));
-			if(s.linecolor.b) SimpleGUI::ColorPicker(s.linecolor.v, dpos.pos - Vec2(0, 20), s.linecolor.b);
+			if (s.linecolor.b) SimpleGUI::ColorPicker(s.linecolor.v, dpos.pos - Vec2(0, 20), s.linecolor.b);
 			dpos.y(s.linecolor.b ? 130 : 55);
 
 			dpos.x(50);

@@ -2,7 +2,7 @@
 
 class UIState {
 public:
-	enum E{
+	enum E {
 		disabled,
 		inactive,
 		midactive,//inactive && mouseover
@@ -53,7 +53,7 @@ public:
 	}
 
 	static Color text(const UIState::E uis = UIState::active) {
-		switch (uis){
+		switch (uis) {
 		case UIState::disabled:
 			return ratio(0.7);
 		case UIState::inactive:
@@ -95,11 +95,11 @@ Color UIColor::Main;
 Color UIColor::Accent;
 
 Texture UpdateWaveImage() {
-	static DynamicTexture wavet{70,50};
-	Image wavei{70,50};
+	static DynamicTexture wavet{ 70,50 };
+	Image wavei{ 70,50 };
 	for (int32 y = 0; y < wavei.height(); ++y) {
 		for (int32 x = 0; x < wavei.width(); ++x) {
-			wavei[y][x] = ColorF{ UIColor::Accent, ( 1.0-Math::Cos(Math::Pi* x/35.0))/2 };
+			wavei[y][x] = ColorF{ UIColor::Accent, (1.0 - Math::Cos(Math::Pi * x / 35.0)) / 2 };
 		}
 	}
 	wavet.fill(wavei);
@@ -114,7 +114,7 @@ protected:
 	class DrawPos {
 		const int32 start_x = 100;
 	public:
-		Vec2 pos = Vec2(100,0);
+		Vec2 pos = Vec2(100, 0);
 		/// @brief x方向に移動して、移動前の座標返却
 		/// @param x 移動量
 		Vec2 x(const int32& x) {
@@ -141,7 +141,7 @@ protected:
 		double yScrollMax = dpos.pos.y - 600 + yScroll;
 		yScroll += Mouse::Wheel() * scrollSpeed;
 		if (yScroll < 0) yScroll = 0;
-		if (yScrollMax < 0) yScrollMax=0;
+		if (yScrollMax < 0) yScrollMax = 0;
 		if (yScroll > yScrollMax) yScroll = yScrollMax;
 		dpos.pos.y = 150 - yScroll;
 	}

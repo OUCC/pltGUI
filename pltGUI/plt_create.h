@@ -7,11 +7,10 @@
 /// @brief pltファイルを作成する。場所は開発中は./pltGUI/App/
 /// @param whole, graphs はUIの方
 void CreatePltFile(WholeSettingUI& whole, Array<GraphSettingUI>& graphs) {
-	TextWriter writer(U"result.plt",TextEncoding::UTF8_NO_BOM);//BOM付きだとgnuplotで読めない模様
+	TextWriter writer(U"result.plt", TextEncoding::UTF8_NO_BOM);//BOM付きだとgnuplotで読めない模様
 
 	// オープンに失敗
-	if (not writer)
-	{
+	if (not writer) {
 		throw Error{ U"Failed to open `result.plt`" };
 	}
 
@@ -37,14 +36,14 @@ void CreatePltFile(WholeSettingUI& whole, Array<GraphSettingUI>& graphs) {
 
 		command += i == 0 ? U"plot " : U"\\\n    , ";
 
-		switch (gs.graph_index)	{
+		switch (gs.graph_index) {
 		case 0:
 			command += gs.graph_func.v.text + U" ";
 			break;
 		case 1:
-			command += U"\""+ gs.graph_data.v.text + U"\" ";
+			command += U"\"" + gs.graph_data.v.text + U"\" ";
 			if (gs.using_x.b) {
-				command += U"using " + gs.using_x.v.text +U":" + gs.using_x.v.text+U" ";
+				command += U"using " + gs.using_x.v.text + U":" + gs.using_x.v.text + U" ";
 			}
 			break;
 		default:
