@@ -62,21 +62,21 @@ void CreatePltFile(WholeSettingUI& whole, Array<GraphSettingUI>& graphs) {
 				switch (AppOption::colorTypeIndex) {
 				case 0:
 					Color rgb = gs.linecolor.v.toColor();
-					command += U"linecolor rgb \"#{:02X}{:02X}{:02X}\" "_fmt(rgb.r, rgb.g, rgb.b);
+					command += (AppOption::shortword ? U"lc" : U"linecolor") + U" rgb \"#{:02X}{:02X}{:02X}\" "_fmt(rgb.r, rgb.g, rgb.b);
 					break;
 				case 1:
-					command += U"linecolor rgb hsv2rgb({:.3f},{:.3f},{:.3f}) "_fmt(gs.linecolor.v.h / 360, gs.linecolor.v.s, gs.linecolor.v.v);
+					command += (AppOption::shortword ? U"lc" : U"linecolor") + U" rgb hsv2rgb({:.3f},{:.3f},{:.3f}) "_fmt(gs.linecolor.v.h / 360, gs.linecolor.v.s, gs.linecolor.v.v);
 					break;
 				}
 			}
 		}
 		if (gs.withlines.b) {
-			if (gs.linetype.b) command += U"linetype " + gs.linetype.v.text + U" ";
-			if (gs.linewidth.b) command += U"linewidth " + gs.linewidth.v.text + U" ";
+			if (gs.linetype.b) command += (AppOption::shortword ? U"lt " : U"linetype ") + gs.linetype.v.text + U" ";
+			if (gs.linewidth.b) command += (AppOption::shortword ? U"lw " : U"linewidth ") + gs.linewidth.v.text + U" ";
 		}
 		if (gs.withpoints.b) {
-			if (gs.pointtype.b) command += U"pointtype " + gs.pointtype.v.text + U" ";
-			if (gs.pointsize.b) command += U"pointsize " + gs.pointsize.v.text + U" ";
+			if (gs.pointtype.b) command += (AppOption::shortword ? U"pt " : U"pointtype ") + gs.pointtype.v.text + U" ";
+			if (gs.pointsize.b) command += (AppOption::shortword ? U"ps " : U"pointsize ") + gs.pointsize.v.text + U" ";
 		}
 
 
