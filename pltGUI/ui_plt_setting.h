@@ -17,6 +17,14 @@ public:
 		MyGUI::Text(U"title", dpos.x(180));
 		MyGUI::TextBox(s.title, dpos.y(55), Size(400, 36));
 
+		MyGUI::CheckBoxArea(s.xlabel.b, dpos.x(20));
+		MyGUI::Text(U"xlabel", dpos.x(180));
+		MyGUI::TextBox(s.xlabel, dpos.y(55), Size(400, 36));
+
+		MyGUI::CheckBoxArea(s.ylabel.b, dpos.x(20));
+		MyGUI::Text(U"ylabel", dpos.x(180));
+		MyGUI::TextBox(s.ylabel, dpos.y(55), Size(400, 36));
+
 		MyGUI::CheckBoxArea(s.xrange_min.b, dpos.x(20));
 		s.xrange_max.b = s.xrange_min.b;
 		MyGUI::Text(U"xrange", dpos.x(180));

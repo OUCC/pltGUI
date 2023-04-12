@@ -23,6 +23,8 @@ void CreatePltFile(WholeSettingUI& whole, Array<GraphSettingUI>& graphs) {
 	writer << U"set terminal pngcairo";
 	writer << U"set output \"result.png\"";
 	if (ws.title.b) writer << U"set title \"" << ws.title.v.text << U"\"";
+	if (ws.xlabel.b) writer << U"set xlabel \"" << ws.xlabel.v.text << U"\"";
+	if (ws.ylabel.b) writer << U"set ylabel \"" << ws.ylabel.v.text << U"\"";
 	if (ws.xrange_min.b) writer << U"set xrange [" << ws.xrange_min.v.text << U":" << ws.xrange_max.v.text << U"]";
 	if (ws.yrange_min.b) writer << U"set yrange [" << ws.yrange_min.v.text << U":" << ws.yrange_max.v.text << U"]";
 	if (ws.logscale_x.b) writer << U"set logscale x";
@@ -43,7 +45,7 @@ void CreatePltFile(WholeSettingUI& whole, Array<GraphSettingUI>& graphs) {
 		case 1:
 			command += U"\"" + gs.graph_data.v.text + U"\" ";
 			if (gs.using_x.b) {
-				command += U"using " + gs.using_x.v.text + U":" + gs.using_x.v.text + U" ";
+				command += U"using " + gs.using_x.v.text + U":" + gs.using_y.v.text + U" ";
 			}
 			break;
 		default:
