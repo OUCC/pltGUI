@@ -22,6 +22,8 @@ public:
 class WholeSetting {
 public:
 	WithBool<TextEditState> title;
+	WithBool<TextEditState> xlabel;
+	WithBool<TextEditState> ylabel;
 	WithBool<TextEditState> xrange_min;
 	WithBool<TextEditState> xrange_max;
 	WithBool<TextEditState> yrange_min;
