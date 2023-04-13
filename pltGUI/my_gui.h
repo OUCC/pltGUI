@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "ui_common.h"
 
+// This file is based on https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/src/Siv3D/SimpleGUI/SivSimpleGUI.cpp (Siv3D version 0.6.6)
 
 // Siv3dのSimpleGUIを改造したものや独自のものなど
 
@@ -37,21 +38,18 @@ namespace MyGUI {
 		const Font& font = FontAsset(U"main");
 		const auto dtext = font(label);
 
-		const RectF rect{ Arg::bottomCenter = center, size.x, size.y };
-		const Vec2 labelPos{ center - Vec2{0,size.y / 2.0 } };
+		const RectF rect{ Arg::leftCenter = center, size.x, size.y };
 
 		const bool mouseOver = rect.mouseOver() && Cursor::OnClientRect() && Window::GetState().focused;
-		const bool pushed = mouseOver && Cursor::OnClientRect() && MouseL.down();
+		const bool pushed = mouseOver && MouseL.down();
 		const s3d::RoundRect rrect = rect.rounded(10);
-		UIState uis{ mouseOver,pushed };
+		UIState uis{ mouseOver,true };
 
-		rrect.draw(UIColor::bg(uis));
+		rrect.draw(UIColor::ratio(mouseOver? 0 : 0.1));
 
-		if (not pushed) {
-			rrect.drawFrame(1, UIColor::frame(uis));
-		}
+		rrect.drawFrame(1, UIColor::frame(uis));
 
-		dtext.drawAt(labelPos, UIColor::text(uis));
+		dtext.drawAt(rect.center(), UIColor::text(uis));
 
 		if (mouseOver) {
 			Cursor::RequestStyle(CursorStyle::Hand);

@@ -14,27 +14,39 @@ public:
 
 		tabSpaceRect.draw(tabSpaceColor);
 
-		MyGUI::RadioButtonAreas(colorTypeIndex, Array{ Vec2(260, 150),Vec2(370,150) }, Array{ Vec2(60, 50) });
-		MyGUI::Text(U"plt color as ", Vec2(120, 150));
-		MyGUI::Text(U"RGB", Vec2(280, 150));
-		MyGUI::Text(U"HSV", Vec2(390, 150));
+		Vec2 dpos{100,150};
 
-		MyGUI::CheckBoxArea(shortword, Vec2(100, 205), Size(170, 50));
-		MyGUI::Text(U"short keywords", Vec2(120, 205));
+		RectF{ Arg::leftCenter= dpos, Size(600,60) }.draw(UIColor::ratio(0.1)).drawFrame(3,UIColor::ratio(0.9));
+		MyGUI::Text(U"Lisence", dpos+Vec2(20, 0));
+		if (MyGUI::Button(U"View in Browser", dpos + Vec2(150, 0),Size(170,40))) {
+			System::LaunchBrowser(U"./Licenses.html");
+		}
 
+		dpos += Vec2(0,100);
+		MyGUI::RadioButtonAreas(colorTypeIndex, Array{ dpos+Vec2(160, 0),dpos+Vec2(270,0) }, Array{ Vec2(60, 50) });
+		MyGUI::Text(U"plt color as ", dpos+Vec2(20, 0));
+		MyGUI::Text(U"RGB", dpos+Vec2(180, 0));
+		MyGUI::Text(U"HSV", dpos+Vec2(290, 0));
+
+		dpos += Vec2(0, 55);
+		MyGUI::CheckBoxArea(shortword, dpos, Size(170, 50));
+		MyGUI::Text(U"short keywords", dpos+Vec2(20, 0));
+
+		dpos += Vec2(0, 45);
 		HSV base_{ UIColor::Base };
 		HSV main_{ UIColor::Main };
 		HSV accent_{ UIColor::Accent };
-		FontAsset(U"main")(U"Base").drawAt(Vec2(200, 260), UIColor::ratio(0.9));
-		FontAsset(U"main")(U"Main").drawAt(Vec2(380, 260), UIColor::ratio(0.9));
-		FontAsset(U"main")(U"Accent").drawAt(Vec2(560, 260), UIColor::ratio(0.9));
-		if (SimpleGUI::ColorPickerAt(base_, Vec2(200, 330))) {
+		FontAsset(U"main")(U"Base").drawAt(dpos+Vec2(100, 0), UIColor::ratio(0.9));
+		FontAsset(U"main")(U"Main").drawAt(dpos+Vec2(280, 0), UIColor::ratio(0.9));
+		FontAsset(U"main")(U"Accent").drawAt(dpos+Vec2(460, 0), UIColor::ratio(0.9));
+		dpos += Vec2(0, 70);
+		if (SimpleGUI::ColorPickerAt(base_, dpos+Vec2(100, 0))) {
 			UIColor::Base = base_.toColor();
 		}
-		if (SimpleGUI::ColorPickerAt(main_, Vec2(380, 330))) {
+		if (SimpleGUI::ColorPickerAt(main_, dpos+Vec2(280, 0))) {
 			UIColor::Main = main_.toColor();
 		}
-		if (SimpleGUI::ColorPickerAt(accent_, Vec2(560, 330))) {
+		if (SimpleGUI::ColorPickerAt(accent_, dpos+Vec2(460, 0))) {
 			UIColor::Accent = accent_.toColor();
 			UpdateWaveImage();
 		}
