@@ -19,7 +19,7 @@ public:
 		RectF{ Arg::leftCenter= dpos, Size(600,60) }.draw(UIColor::ratio(0.1)).drawFrame(3,UIColor::ratio(0.9));
 		MyGUI::Text(U"Lisence", dpos+Vec2(20, 0));
 		if (MyGUI::Button(U"View in Browser", dpos + Vec2(150, 0),Size(170,40))) {
-			LicenseManager::ShowInBrowser();
+			System::LaunchBrowser(U"./Licenses.html");
 		}
 
 		dpos += Vec2(0,100);

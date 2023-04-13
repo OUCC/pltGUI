@@ -5,6 +5,7 @@
 void Main()
 {
 	Window::SetTitle(U"pltGUI");
+	LicenseManager::DisableDefaultTrigger();
 
 	FontAsset::Register(U"main", 20);
 	FontAsset::Register(U"bold", 20, Typeface::Bold);
