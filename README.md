@@ -7,7 +7,7 @@ gnuplot 5.4 patchlevel 6
 OpenSiv3D 0.6.6
 
 ## 使い方
-
+0. https://github.com/OUCC/pltGUI/releases よりzipファイルをダウンロード、展開。
 1. plt Settingのwhole,graphに入力していく。
 （複数のグラフを重ねて描写したいなら＋マークで増やす）
 2. plt Settingからplt Fileへの矢印を押してpltファイルを生成。
