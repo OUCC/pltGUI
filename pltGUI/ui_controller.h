@@ -17,17 +17,16 @@ class UIController {
 	WholeSettingUI whole;
 	Array<GraphSettingUI> graphs{ 1 };
 
-	String pltFileString;
+	TextAreaEditState pltFileTES;
 	Texture pltImageTexture;
 
 
 	void readPltFile() {
 		TextReader reader(U"result.plt");
-		if (reader && reader.readAll(pltFileString)) {
-			return;
-		}
-		else {
-			pltFileString = U"Failed to read result.plt";
+
+		if (reader){
+			reader.readAll(pltFileTES.text);
+			pltFileTES.rebuildGlyphs();
 		}
 	}
 	void readPltImage() {
@@ -37,16 +36,24 @@ class UIController {
 	void drawPltViewPage() {
 		tabSpaceRect.draw(tabSpaceColor);
 
+		/*
 		if (MyGUI::ReloadIconButton(Vec2(550, 85))) {
 			readPltFile();
 		}
+		*/
 		if (MyGUI::SaveIconButton(Vec2(700, 85))) {
 			Optional<String> path = Dialog::SaveFile(Array{ FileFilter{U"gnuplot",{U"plt"}},FileFilter::AllFiles() });
 			if (path) FileSystem::Copy(U"result.plt", *path, CopyOption::OverwriteExisting);
 		}
 
-		// pltファイルの中身表示。要改良
-		FontAsset(U"main")(pltFileString).draw(Rect(50, 130, 700, 500), UIColor::text());
+		if (SimpleGUI::TextArea(pltFileTES, Vec2(50, 130), Size(700, 450), Math::Inf)) {
+			TextWriter writer(U"result.plt", TextEncoding::UTF8_NO_BOM);
+			if (not writer) {
+				throw Error{ U"Failed to open `result.plt`" };
+			}
+			writer.write(pltFileTES.text);
+		}
+
 	}
 
 	void drawImageViewPage() {
@@ -56,7 +63,7 @@ class UIController {
 			readPltImage();
 		}
 		if (MyGUI::SaveIconButton(Vec2(700, 85))) {
-			Optional<String> path = Dialog::SaveFile(Array{ FileFilter::PNG(),FileFilter::JPEG(),FileFilter::AllFiles() });
+			Optional<String> path = Dialog::SaveFile(Array{ FileFilter::PNG(),FileFilter::JPEG(), FileFilter::AllFiles() });
 			if (path) FileSystem::Copy(U"result.png", *path, CopyOption::OverwriteExisting);
 		}
 
@@ -118,6 +125,7 @@ public:
 
 		if (MyGUI::ArrowIconButton(Vec2(230, 35), watch1)) {
 			CreatePltFile(whole, graphs);
+			readPltFile();
 		}
 		if (MyGUI::ArrowIconButton(Vec2(480, 35), watch2)) {
 			executePltFile();
