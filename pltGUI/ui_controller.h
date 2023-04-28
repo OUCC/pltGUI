@@ -41,7 +41,7 @@ class UIController {
 			readPltFile();
 		}
 		if (MyGUI::SaveIconButton(Vec2(700, 85))) {
-			Optional<String> path = Dialog::SaveFile(Array{ FileFilter{U"gnuplot",{U"plt"}} });
+			Optional<String> path = Dialog::SaveFile(Array{ FileFilter{U"gnuplot",{U"plt"}},FileFilter::AllFiles() });
 			if (path) FileSystem::Copy(U"result.plt", *path, CopyOption::OverwriteExisting);
 		}
 
@@ -56,7 +56,7 @@ class UIController {
 			readPltImage();
 		}
 		if (MyGUI::SaveIconButton(Vec2(700, 85))) {
-			Optional<String> path = Dialog::SaveFile(Array{ FileFilter::PNG() });
+			Optional<String> path = Dialog::SaveFile(Array{ FileFilter::PNG(),FileFilter::JPEG(),FileFilter::AllFiles() });
 			if (path) FileSystem::Copy(U"result.png", *path, CopyOption::OverwriteExisting);
 		}
 
