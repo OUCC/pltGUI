@@ -50,6 +50,13 @@ public:
 		MyGUI::Text(U"sample", dpos.x(180));
 		MyGUI::TextBox(s.sample, dpos.y(55));
 
+		MyGUI::CheckBoxArea(s.loadfile.b, dpos.x(20), Vec2(600, 50));
+		MyGUI::Text(U"load", dpos.x(180));
+		MyGUI::Text(FileSystem::FileName(s.loadfile.v), dpos.x(380));
+		if (MyGUI::FolderIconButton(dpos.y(55))) {
+			Optional<String> file = Dialog::OpenFile(Array{ FileFilter{U"gnuplot",{U"plt"}},FileFilter::AllFiles() });
+			if (file) s.loadfile.v = *file;
+		}
 	}
 };
 

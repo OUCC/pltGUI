@@ -31,6 +31,11 @@ void CreatePltFile(WholeSettingUI& whole, Array<GraphSettingUI>& graphs) {
 	if (ws.logscale_y.b) writer << U"set logscale y";
 	if (ws.sample.b) writer << U"set sample " << ws.sample.v.text;
 
+
+	// 全体設定の最後
+	if (ws.loadfile.b) writer << U"load \"" << ws.loadfile.v << U"\"";
+
+
 	String command = U"";
 	// 個別のグラフの書き込み
 	for (auto i : step(graphs.size())) {

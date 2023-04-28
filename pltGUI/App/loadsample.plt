@@ -1,0 +1,1 @@
+set xrange[-5:5]
