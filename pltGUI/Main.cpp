@@ -5,6 +5,7 @@
 void Main()
 {
 	Window::SetTitle(U"pltGUI");
+	addLicense();
 	LicenseManager::DisableDefaultTrigger();
 
 	FontAsset::Register(U"main", 20);

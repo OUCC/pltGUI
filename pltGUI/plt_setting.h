@@ -31,6 +31,7 @@ public:
 	WithBool<void> logscale_x;
 	WithBool<void> logscale_y;
 	WithBool<TextEditState> sample;
+	WithBool<FilePath> loadfile;
 };
 
 

@@ -31,6 +31,11 @@ void CreatePltFile(WholeSettingUI& whole, Array<GraphSettingUI>& graphs) {
 	if (ws.logscale_y.b) writer << U"set logscale y";
 	if (ws.sample.b) writer << U"set sample " << ws.sample.v.text;
 
+
+	// 全体設定の最後
+	if (ws.loadfile.b) writer << U"load \"" << ws.loadfile.v << U"\"";
+
+
 	String command = U"";
 	// 個別のグラフの書き込み
 	for (auto i : step(graphs.size())) {
@@ -90,15 +95,5 @@ void CreatePltFile(WholeSettingUI& whole, Array<GraphSettingUI>& graphs) {
 /// @brief pltファイルを実行する。
 /// @brief 実行にかかる時間も特に停止しないので注意
 void executePltFile() {
-	//system("result.plt");
-
-	//LPCSTR file = "C:\\path\\to\\file.txt"; //開くファイルのパス
-	LPCWSTR operation = NULL; //"open"; //アクション（open、edit、printなど）
-	LPCWSTR parameters = NULL; //パラメータ（任意）
-	LPCWSTR directory = NULL; //作業ディレクトリ（既定値を使用する場合はNULL）
-	int size = MultiByteToWideChar(CP_UTF8, 0, "result.plt", -1, NULL, 0);
-	wchar_t* wstr = new wchar_t[size];
-	MultiByteToWideChar(CP_UTF8, 0, "result.plt", -1, wstr, size);
-	ShellExecute(NULL, operation, wstr, parameters, directory, SW_HIDE);
-	delete[] wstr;
+	System::LaunchFile(U"result.plt");
 }

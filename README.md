@@ -7,13 +7,13 @@ gnuplot 5.4 patchlevel 6
 OpenSiv3D 0.6.6
 
 ## 使い方
-0. https://github.com/OUCC/pltGUI/releases よりzipファイルをダウンロード、展開。
-1. plt Settingのwhole,graphに入力していく。
+0. https://github.com/OUCC/pltGUI/releases よりzipファイルをダウンロード、展開、`pltGUI.exe`を実行。
+1. plt Settingのwhole,graphに入力していく。  
 （複数のグラフを重ねて描写したいなら＋マークで増やす）
 2. plt Settingからplt Fileへの矢印を押してpltファイルを生成。
-3. （plt Fileのタブをクリックして中身を確認、保存）
+3. plt Fileのタブをクリックして中身を確認、必要に応じて保存。
 4. plt FileからImageへの矢印を押して画像を生成。
-5. 画像を確認、1.に戻って修正。
+5. Imageから画像を確認、1.に戻って修正。
 6. 気に入ったら保存。
 
 ## 画面構成
@@ -26,15 +26,10 @@ OpenSiv3D 0.6.6
     ![see readme_images/graph1.png](readme_images/graph1.png)
     - graph2  
     ![see readme_images/graph2.png](readme_images/graph2.png)
-    - graph3  
-    ![see readme_images/graph3.png](readme_images/graph3.png)
 - plt File  
 ![see readme_images/pltfile.png](readme_images/pltfile.png)
 - plt File  
 ![see readme_images/pltimage.png](readme_images/pltimage.png)
-- app options  
-![see readme_images/appoption.png](readme_images/appoption.png)
-![see readme_images/appoption_theme.png](readme_images/appoption_theme.png)
 
 ### 説明
 
@@ -54,7 +49,8 @@ OpenSiv3D 0.6.6
 - plt Setting  
 詳細は後述
 - plt File  
-作成したpltファイル  
+作成したpltファイル。  
+この画面で編集することも可能。  
 右上のSave asで保存できる。
 - Image  
 作成したpltファイルから生成したグラフの画像  
@@ -77,54 +73,80 @@ whole,graph の中身は下記入力項目を参照。
 **注意**：データファイルを指定して描画する場合、生成されるplt Fileでは絶対パスで書かれるため、ユーザー名の流出などに注意。
 
 ### 入力項目
-チェックなしは今後追加したいもの
+チェックなしは今後追加したいもの。  
+`vX.X.X`は追加されたバージョン、無表記は`v1.0.0`。
 
 - plt setting
     - whole
-        - [x] title
-        - [x] xrange, yrange
-        - [x] logscale x, y
-        - [x] sample
-        - [x] xlabel, ylabel
+        - title
+        - xrange, yrange
+        - logscale x, y
+        - sample
+        - xlabel, ylabel
+        - load `v1.1.0`
     - graph
-        - [x] 削除ボタン
-        - [x] plot
-        - [x] plot "datafile" 
-			- [x] using x:y
-        - [ ] splot
-        - [x] title
-        - [x] with lines
-            - [x] linecolor
-            - [x] linetype
-            - [x] linewidth
-        - [x] with points
-            - [x] linecolor
-            - [x] pointtype
-            - [x] pointsize
+        - 削除ボタン
+        - plot (function)
+        - plot "datafile" 
+			- using x:y
+        - title
+        - with lines
+            - linecolor
+            - linetype
+            - linewidth
+        - with points
+            - linecolor
+            - pointtype
+            - pointsize
         
         ※with linesとwith pointsは同時に指定できる（with linespoints）  
         また、linecolorはwith pointsとwith linesで共通のため、両方に存在するが中身は同じ。
 - plt file
-    - [x] reload
-    - [x] save as
+    - save as
 - image
-    - [x] reload
-    - [x] save as
+    - reload
+    - save as
 - app options
-    - [x] ライセンスの表示
-    - [x] pltファイルでの色の指定がrgbかhsvか
-    - [x] キーワードの省略
-    - [x] アプリのテーマカラーの指定（Base,Main,Accent）
-- その他UI
-    - [x] (plt setting -> plt file)のボタン
-    - [x] (plt file -> image)のボタン
-    - [x] optionsのタブをアイコンに
-    - [x] チェック範囲拡大でつけやすく
-    - [x] スクロールの範囲
-    - [x] タブ部分と重なったときのクリック排除
-    - [ ] データファイルのドラッグ＆ドロップ
-    - [ ] 拡張子の設定
-    - [ ] plt Fileの編集、スクロール
-    - [ ] テーマカラーなどの保存
-    - [ ] ボタン一つでplt生成と画像生成を行うオプション
+    - ライセンスの表示
+    - pltファイルでの色の指定がrgbかhsvか
+    - キーワードの省略(部分的)
+    - アプリのテーマカラーの指定（Base,Main,Accent）(サポート終了)
+- その他
+    - (plt setting -> plt file)のボタン
+    - (plt file -> image)のボタン
 
+
+## 今後の予定
+要望があれば積極的に取り入れます。  
+上のやつからやるつもり。
+- 凡例の有無と位置の調整
+- グリッド
+- logscaleの指数表記
+- UI周りのコードの整理
+- カラーテピッカーのスペース改善
+- 矢印ボタンを右クリックでplt生成と画像生成を自動で続けて行う
+- 入力欄に大量の文字を入れるとはみ出る対策
+- データファイルのドラッグ＆ドロップ
+- カラーテーマの完全削除
+- アプリの大きさを変えられるようにする
+- with linesとかの開くやつの閉じる機能
+- フォント指定
+- 複数pltファイル読み込み
+- グルーピング機能
+- ドキュメント作成...要る？
+- splot
+
+
+## 更新履歴  
+#### v1.1.0 2023-04-30
+Siv3Dバージョンアップ (v0.6.6 → v0.6.9)  
+pltファイルを編集可能に  
+pltファイルの実行を公式機能で行えるように  
+ライセンス更新  
+plt Filesのreloadを削除  
+Save asの拡張子選択でAll Filesを選択可能に  
+カラーテーマ変更機能のサポート終了(今回以降追加の機能にカラーテーマは適用されない)  
+
+#### v1.0.0 2023-04-13
+初リリース  
+内容は省略  
