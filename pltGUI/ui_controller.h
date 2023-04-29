@@ -46,7 +46,7 @@ class UIController {
 			if (path) FileSystem::Copy(U"result.plt", *path, CopyOption::OverwriteExisting);
 		}
 
-		if (SimpleGUI::TextArea(pltFileTES, Vec2(50, 130), Size(700, 450), Math::Inf)) {
+		if (SimpleGUI::TextArea(pltFileTES, Vec2(50, 130), Size(700, 450), 1e10)) {
 			TextWriter writer(U"result.plt", TextEncoding::UTF8_NO_BOM);
 			if (not writer) {
 				throw Error{ U"Failed to open `result.plt`" };
