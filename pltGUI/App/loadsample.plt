@@ -1,1 +1,1 @@
-set xrange[-5:5]
+set ylabel "loadsample"
