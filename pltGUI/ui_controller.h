@@ -36,11 +36,6 @@ class UIController {
 	void drawPltViewPage() {
 		tabSpaceRect.draw(tabSpaceColor);
 
-		/*
-		if (MyGUI::ReloadIconButton(Vec2(550, 85))) {
-			readPltFile();
-		}
-		*/
 		if (MyGUI::SaveIconButton(Vec2(700, 85))) {
 			Optional<String> path = Dialog::SaveFile(Array{ FileFilter{U"gnuplot",{U"plt"}},FileFilter::AllFiles() });
 			if (path) FileSystem::Copy(U"result.plt", *path, CopyOption::OverwriteExisting);
