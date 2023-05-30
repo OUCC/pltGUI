@@ -50,6 +50,17 @@ public:
 		MyGUI::Text(U"sample", dpos.x(180));
 		MyGUI::TextBox(s.sample, dpos.y(55));
 
+		MyGUI::CheckBoxArea(s.key.b, dpos.x(20), s.key.v.pos.isOpen() ? Vec2(600, 250) : Vec2(600, 50));
+		MyGUI::Text(U"key", dpos.x(180));
+		s.key.v.pos.setPos((dpos.x(250) - Vec2(0, 15)).asPoint());
+		s.key.v.pos.update();
+		s.key.v.pos.draw();
+		MyGUI::CheckBox(s.key.v.box, dpos.x(20));
+		MyGUI::Text(U"box", dpos.y(55));
+		if (s.key.v.pos.isOpen()) {
+			dpos.y(200);
+		}
+
 		MyGUI::CheckBoxArea(s.loadfile.b, dpos.x(20), Vec2(600, 50));
 		MyGUI::Text(U"load", dpos.x(180));
 		MyGUI::Text(FileSystem::FileName(s.loadfile.v), dpos.x(380));
@@ -57,6 +68,10 @@ public:
 			Optional<String> file = Dialog::OpenFile(Array{ FileFilter{U"gnuplot",{U"plt"}},FileFilter::AllFiles() });
 			if (file) s.loadfile.v = *file;
 		}
+
+
+
+		dpos.y(200);
 	}
 };
 
