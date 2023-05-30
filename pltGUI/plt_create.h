@@ -29,6 +29,8 @@ void CreatePltFile(WholeSettingUI& whole, Array<GraphSettingUI>& graphs) {
 	if (ws.yrange_min.b) writer << U"set yrange [" << ws.yrange_min.v.text << U":" << ws.yrange_max.v.text << U"]";
 	if (ws.logscale_x.b) writer << U"set logscale x";
 	if (ws.logscale_y.b) writer << U"set logscale y";
+	if (ws.logscale_x_exp_not.b) writer << U"set format x \"10^{%L}\"";
+	if (ws.logscale_y_exp_not.b) writer << U"set format y \"10^{%L}\"";
 	if (ws.sample.b) writer << U"set sample " << ws.sample.v.text;
 	if (ws.key.b) {
 		writer << U"set key " << ws.key.v.pos.getItem() << (ws.key.v.box ? U" box" : U"");

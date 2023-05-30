@@ -43,8 +43,17 @@ public:
 		MyGUI::Text(U"logscale", dpos.x(200));
 		MyGUI::CheckBoxArea(s.logscale_x.b, dpos.x(20), Size(30, 50));
 		MyGUI::Text(U"x", dpos.x(70));
+		MyGUI::CheckBoxArea(s.logscale_x_exp_not.b, dpos.x(20), Size(150, 50));
+		FontAsset(U"main")(U"n").drawAt(20.0, Vec2(dpos) + Vec2(30, -10), UIColor::text());
+		MyGUI::Text(U"10   notation", dpos);
+		dpos.y(55);
+		dpos.x(220);
 		MyGUI::CheckBoxArea(s.logscale_y.b, dpos.x(20), Size(30, 50));
-		MyGUI::Text(U"y", dpos.y(55));
+		MyGUI::Text(U"y", dpos.x(70));
+		MyGUI::CheckBoxArea(s.logscale_y_exp_not.b, dpos.x(20), Size(150, 50));
+		FontAsset(U"main")(U"n").drawAt(20.0, Vec2(dpos) + Vec2(30, -10), UIColor::text());
+		MyGUI::Text(U"10   notation", dpos);
+		dpos.y(55);
 
 		MyGUI::CheckBoxArea(s.sample.b, dpos.x(20), Vec2(400, 50));
 		MyGUI::Text(U"sample", dpos.x(180));

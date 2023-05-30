@@ -185,6 +185,8 @@ public:
 	WithBool<TextEditState> yrange_max;
 	WithBool<void> logscale_x;
 	WithBool<void> logscale_y;
+	WithBool<void> logscale_x_exp_not;//exponential notation
+	WithBool<void> logscale_y_exp_not;//exponential notation
 	WithBool<TextEditState> sample;
 	WithBool<PltKey> key{ true };
 	WithBool<FilePath> loadfile;
