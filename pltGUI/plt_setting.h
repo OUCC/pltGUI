@@ -191,6 +191,7 @@ public:
 	WithBool<PltKey> key{ true };
 	WithBool<TextEditState> xtics;
 	WithBool<TextEditState> ytics;
+	WithBool<void> grid;
 	WithBool<FilePath> loadfile;
 };
 

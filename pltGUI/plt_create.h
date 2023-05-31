@@ -36,6 +36,7 @@ void CreatePltFile(WholeSettingUI& whole, Array<GraphSettingUI>& graphs) {
 	else writer << U"unset key";
 	if (ws.xtics.b) writer << U"set xtics " << ws.xtics.v.text;
 	if (ws.ytics.b) writer << U"set ytics " << ws.ytics.v.text;
+	if (ws.grid.b) writer << U"set grid";
 
 
 	// 全体設定の最後
