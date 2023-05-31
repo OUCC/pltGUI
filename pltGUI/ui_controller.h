@@ -119,11 +119,31 @@ public:
 		}
 
 		if (MyGUI::ArrowIconButton(Vec2(230, 35), watch1)) {
-			CreatePltFile(whole, graphs);
-			readPltFile();
+			if (MouseL.down()) {
+				watch1.restart();
+				CreatePltFile(whole, graphs);
+				readPltFile();
+			}
+			if (MouseR.down()) {
+				watch1.restart();
+				CreatePltFile(whole, graphs);
+				readPltFile();
+				watch2.restart();
+				executePltFile();
+			}
 		}
 		if (MyGUI::ArrowIconButton(Vec2(480, 35), watch2)) {
-			executePltFile();
+			if (MouseL.down()) {
+				watch2.restart();
+				executePltFile();
+			}
+			if (MouseR.down()) {
+				watch1.restart();
+				CreatePltFile(whole, graphs);
+				readPltFile();
+				watch2.restart();
+				executePltFile();
+			}
 		}
 
 	}

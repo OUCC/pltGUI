@@ -507,11 +507,7 @@ namespace MyGUI {
 		if (mouseOver) {
 			arrow.drawFrame(2, UIColor::frame(uis));
 			Cursor::RequestStyle(CursorStyle::Hand);
-			if (rect.leftClicked()) {
-				watch.restart();
-				return true;
-			}
 		}
-		return false;
+		return mouseOver;
 	}
 }
