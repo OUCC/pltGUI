@@ -32,13 +32,10 @@ void CreatePltFile(WholeSettingUI& whole, Array<GraphSettingUI>& graphs) {
 	if (ws.logscale_x_exp_not.b) writer << U"set format x \"10^{%L}\"";
 	if (ws.logscale_y_exp_not.b) writer << U"set format y \"10^{%L}\"";
 	if (ws.sample.b) writer << U"set sample " << ws.sample.v.text;
-	if (ws.key.b) {
-		writer << U"set key " << ws.key.v.pos.getItem() << (ws.key.v.box ? U" box" : U"");
-	}
-	else {
-		writer << U"unset key";
-	}
-
+	if (ws.key.b) writer << U"set key " << ws.key.v.pos.getItem() << (ws.key.v.box ? U" box" : U"");
+	else writer << U"unset key";
+	if (ws.xtics.b) writer << U"set xtics " << ws.xtics.v.text;
+	if (ws.ytics.b) writer << U"set ytics " << ws.ytics.v.text;
 
 
 	// 全体設定の最後

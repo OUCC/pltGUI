@@ -189,6 +189,8 @@ public:
 	WithBool<void> logscale_y_exp_not;//exponential notation
 	WithBool<TextEditState> sample;
 	WithBool<PltKey> key{ true };
+	WithBool<TextEditState> xtics;
+	WithBool<TextEditState> ytics;
 	WithBool<FilePath> loadfile;
 };
 

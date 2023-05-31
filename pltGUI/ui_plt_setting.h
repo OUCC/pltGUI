@@ -70,6 +70,15 @@ public:
 			dpos.y(200);
 		}
 
+		dpos.x(20);
+		MyGUI::Text(U"tics", dpos.x(200));
+		MyGUI::CheckBoxArea(s.xtics.b, dpos.x(20), Size(160, 50));
+		MyGUI::Text(U"x", dpos.x(20));
+		MyGUI::TextBox(s.xtics, dpos.x(170), Size(120, 36));
+		MyGUI::CheckBoxArea(s.ytics.b, dpos.x(20), Size(160, 50));
+		MyGUI::Text(U"y", dpos.x(20));
+		MyGUI::TextBox(s.ytics, dpos.y(55), Size(120, 36));
+
 		MyGUI::CheckBoxArea(s.loadfile.b, dpos.x(20), Vec2(600, 50));
 		MyGUI::Text(U"load", dpos.x(180));
 		MyGUI::Text(FileSystem::FileName(s.loadfile.v), dpos.x(380));
