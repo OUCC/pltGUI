@@ -4,6 +4,8 @@
 #include <windows.h>
 #include <shellapi.h>
 
+#pragma comment( lib, "shell32.lib" )
+
 /// @brief pltファイルを作成する。場所は開発中は./pltGUI/App/
 /// @param whole, graphs はUIの方
 void CreatePltFile(WholeSettingUI& whole, Array<GraphSettingUI>& graphs) {
@@ -102,5 +104,6 @@ void CreatePltFile(WholeSettingUI& whole, Array<GraphSettingUI>& graphs) {
 /// @brief pltファイルを実行する。
 /// @brief 実行にかかる時間も特に停止しないので注意
 void executePltFile() {
-	System::LaunchFile(U"result.plt");
+	//cf: https://www.lisz-works.com/entry/2016/11/16/224520
+	ShellExecute(NULL, L"open", L"cmd.exe", L"/c executeplot.bat", L"", SW_HIDE);
 }
