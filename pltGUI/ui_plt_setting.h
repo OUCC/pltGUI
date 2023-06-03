@@ -13,6 +13,22 @@ public:
 
 		MyGUI::Text(U"Whole Setting Page", dpos.y(50));
 
+		dpos.x(20);
+		MyGUI::Text(U"terminal", dpos.x(180));
+		s.terminal.pd.setPos(dpos.x(170).asPoint() - Point(0, 15))->update()->draw();
+		MyGUI::Text(U"default size : "+s.terminal.getInfo().defSize, dpos.y(55));
+		Terminal::ext = s.terminal.getInfo().ext;
+		if (s.terminal.pd.isOpen()) {
+			MyGUI::Text(U"* : unable to preview\n      in this app", Vec2(dpos) + Vec2(370,30));
+			dpos.y(130);
+		}
+		MyGUI::CheckBoxArea(s.sizex.b, dpos.x(20));
+		s.sizey.b = s.sizex.b;
+		MyGUI::Text(U"size", dpos.x(180));
+		MyGUI::TextBox(s.sizex, dpos.x(190), Size(180, 36));
+		MyGUI::Text(U" ,", dpos.x(30));
+		MyGUI::TextBox(s.sizey, dpos.y(55), Size(180, 36));
+
 		MyGUI::CheckBoxArea(s.title.b, dpos.x(20));
 		MyGUI::Text(U"title", dpos.x(180));
 		MyGUI::TextBox(s.title, dpos.y(55), Size(400, 36));

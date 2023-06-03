@@ -1,1 +1,1 @@
-gnuplot result.plt
+gnuplot plot.plt

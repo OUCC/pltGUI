@@ -41,16 +41,21 @@ public:
 		return m_items.empty();
 	}
 
-	void update()
+	Pulldown* update()
 	{
 		if (isEmpty())
 		{
-			return;
+			return this;
+		}
+
+		if (m_nextClose) {
+			m_isOpen = (not m_isOpen);
+			m_nextClose = false;
 		}
 
 		if (m_rect.leftClicked())
 		{
-			m_isOpen = (not m_isOpen);
+			m_nextClose = true;
 		}
 
 		Point pos = m_rect.pos.movedBy(0, m_rect.h);
@@ -63,13 +68,14 @@ public:
 					rect.leftClicked())
 				{
 					m_index = i;
-					m_isOpen = false;
+					m_nextClose = true;
 					break;
 				}
 
 				pos.y += m_rect.h;
 			}
 		}
+		return this;
 	}
 
 	void draw() const
@@ -115,9 +121,10 @@ public:
 		}
 	}
 
-	void setPos(const Point& pos)
+	Pulldown* setPos(const Point& pos)
 	{
 		m_rect.setPos(pos);
+		return this;
 	}
 
 	const Rect& getRect() const
@@ -163,6 +170,8 @@ private:
 	int32 m_downButtonSize = 16;
 
 	bool m_isOpen = false;
+
+	bool m_nextClose = false;
 };
 
 
@@ -173,9 +182,42 @@ public:
 	bool box;
 };
 
+class Terminal {
+public:
+	struct Info{
+		String display;
+		String ext;
+		String command;
+		bool canLoad;
+		String defSize;
+	};
+	Array<Info> infolist;
+	Terminal(const Array<Terminal::Info>& infos) {
+		infolist = infos;
+		ext = infolist[0].ext;
+		Array<String> dispset;
+		for (Info& i : infolist)
+			dispset << i.display;
+		pd = Pulldown{ dispset };
+	};
+	inline static String ext;
+	Info getInfo() {
+		return infolist[pd.getIndex()];
+	};
+	Pulldown pd;
+};
+
 /// @brief タイトルなどグラフ全体の設定
 class WholeSetting {
 public:
+	Terminal terminal{ Array<Terminal::Info>{
+		{U"pngcairo",U"png",U"pngcairo enhanced",true, U"640 , 480"},
+		{U"gif",U"gif",U"gif enhanced", true, U"640 , 480"},
+		{U"svg *",U"svg",U"svg enhanced", false, U"640 , 480"},
+		{U"pdfcairo *",U"pdf",U"pdfcairo enhanced",false, U"5in , 3in"},
+	}};
+	WithBool<TextEditState> sizex;
+	WithBool<TextEditState> sizey;
 	WithBool<TextEditState> title;
 	WithBool<TextEditState> xlabel;
 	WithBool<TextEditState> ylabel;

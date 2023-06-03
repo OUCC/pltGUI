@@ -22,7 +22,7 @@ class UIController {
 
 
 	void readPltFile() {
-		TextReader reader(U"result.plt");
+		TextReader reader(U"plot.plt");
 
 		if (reader){
 			reader.readAll(pltFileTES.text);
@@ -30,7 +30,7 @@ class UIController {
 		}
 	}
 	void readPltImage() {
-		pltImageTexture = Texture(U"result.png");
+		pltImageTexture = Texture(U"output.{}"_fmt(Terminal::ext));
 	}
 
 	void drawPltViewPage() {
@@ -38,13 +38,13 @@ class UIController {
 
 		if (MyGUI::SaveIconButton(Vec2(700, 85))) {
 			Optional<String> path = Dialog::SaveFile(Array{ FileFilter{U"gnuplot",{U"plt"}},FileFilter::AllFiles() });
-			if (path) FileSystem::Copy(U"result.plt", *path, CopyOption::OverwriteExisting);
+			if (path) FileSystem::Copy(U"plot.plt", *path, CopyOption::OverwriteExisting);
 		}
 
 		if (SimpleGUI::TextArea(pltFileTES, Vec2(50, 130), Size(700, 450), 1e10)) {
-			TextWriter writer(U"result.plt", TextEncoding::UTF8_NO_BOM);
+			TextWriter writer(U"plot.plt", TextEncoding::UTF8_NO_BOM);
 			if (not writer) {
-				throw Error{ U"Failed to open `result.plt`" };
+				throw Error{ U"Failed to open `plot.plt`" };
 			}
 			writer.write(pltFileTES.text);
 		}
@@ -53,20 +53,32 @@ class UIController {
 
 	void drawImageViewPage() {
 		tabSpaceRect.draw(tabSpaceColor);
+		FilePath file = U"output.{}"_fmt(Terminal::ext);
 
 		if (MyGUI::ReloadIconButton(Vec2(550, 85))) {
 			readPltImage();
 		}
 		if (MyGUI::SaveIconButton(Vec2(700, 85))) {
-			Optional<String> path = Dialog::SaveFile(Array{ FileFilter::PNG(),FileFilter::JPEG(), FileFilter::AllFiles() });
-			if (path) FileSystem::Copy(U"result.png", *path, CopyOption::OverwriteExisting);
+			Optional<String> path = Dialog::SaveFile(Array{ FileFilter{whole.s.terminal.pd.getItem(),{Terminal::ext}}, FileFilter::AllFiles()});
+			if (path) FileSystem::Copy(file, *path, CopyOption::OverwriteExisting);
 		}
-
-		if (not pltImageTexture.isEmpty()) {
-			pltImageTexture.drawAt(Scene::Center() + Vec2(0, 50));
+		if (not FileSystem::Exists(file)) {
+			FontAsset(U"main")(file + U" is not exists.").drawAt(Scene::CenterF(), UIColor::text());
+		}
+		else if (whole.s.terminal.getInfo().canLoad) {
+			if (not pltImageTexture.isEmpty()) {
+				pltImageTexture.drawAt(Scene::Center() + Vec2(0, 50));
+			}
+			else {
+				FontAsset(U"main")(U"Failed to read "+file).drawAt(Scene::CenterF(), UIColor::text());
+			}
 		}
 		else {
-			FontAsset(U"main")(U"Failed to read result.png").draw(50, 100, UIColor::text());
+			FontAsset(U"main")(U"This {} file is unable to preview in this app."_fmt(Terminal::ext)).drawAt(Scene::CenterF(),UIColor::text());
+			if (SimpleGUI::ButtonAt(U"Open with default app", Scene::CenterF() + Vec2(0, 50))) {
+				System::LaunchFile( file);
+			}
+
 		}
 	}
 

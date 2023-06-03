@@ -9,11 +9,11 @@
 /// @brief pltファイルを作成する。場所は開発中は./pltGUI/App/
 /// @param whole, graphs はUIの方
 void CreatePltFile(WholeSettingUI& whole, Array<GraphSettingUI>& graphs) {
-	TextWriter writer(U"result.plt", TextEncoding::UTF8_NO_BOM);//BOM付きだとgnuplotで読めない模様
+	TextWriter writer(U"plot.plt", TextEncoding::UTF8_NO_BOM);//BOM付きだとgnuplotで読めない模様
 
 	// オープンに失敗
 	if (not writer) {
-		throw Error{ U"Failed to open `result.plt`" };
+		throw Error{ U"Failed to open `plot.plt`"};
 	}
 
 
@@ -22,8 +22,9 @@ void CreatePltFile(WholeSettingUI& whole, Array<GraphSettingUI>& graphs) {
 
 	// 全体設定の書き込み
 	WholeSetting& ws = whole.s;
-	writer << U"set terminal pngcairo";
-	writer << U"set output \"result.png\"";
+	if (ws.sizex.b) writer << U"set terminal " << ws.terminal.getInfo().command << U" size " << ws.sizex.v.text << U"," << ws.sizey.v.text;
+	else writer << U"set terminal " << ws.terminal.getInfo().command;
+	writer << U"set output \"output.{}\""_fmt(Terminal::ext);
 	if (ws.title.b) writer << U"set title \"" << ws.title.v.text << U"\"";
 	if (ws.xlabel.b) writer << U"set xlabel \"" << ws.xlabel.v.text << U"\"";
 	if (ws.ylabel.b) writer << U"set ylabel \"" << ws.ylabel.v.text << U"\"";

@@ -426,5 +426,5 @@ gmon.out
 **/example/*
 
 # Ignore output files
-pltGUI/App/result.plt
-pltGUI/App/result.png
+pltGUI/App/output.*
+pltGUI/App/plot.plt
