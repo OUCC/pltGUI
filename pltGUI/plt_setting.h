@@ -1,22 +1,6 @@
 ﻿#pragma once
+#include "my_gui.h"
 
-
-/// @brief T型の値と、bool値を保持
-/// @brief pltのオプションの値とは別にそれを使用するかどうかに使う
-template <class T>
-class WithBool {
-public:
-	WithBool(bool _b=false) :b(_b) {};
-	bool b = false;
-	T v;
-};
-
-/// @brief void型の時の完全特殊化
-template <>
-class WithBool <void> {
-public:
-	bool b = false;
-};
 
 class Pulldown
 {
@@ -218,7 +202,7 @@ public:
 	}};
 	WithBool<TextEditState> sizex;
 	WithBool<TextEditState> sizey;
-	WithBool<TextEditState> title;
+	WithBool<MyGUI::TextAreaEditState> title;
 	WithBool<TextEditState> xlabel;
 	WithBool<TextEditState> ylabel;
 	WithBool<TextEditState> xrange_min;

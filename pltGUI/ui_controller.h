@@ -17,7 +17,7 @@ class UIController {
 	WholeSettingUI whole;
 	Array<GraphSettingUI> graphs{ 1 };
 
-	TextAreaEditState pltFileTES;
+	WithBool<MyGUI::TextAreaEditState> pltFileTES{true};
 	Texture pltImageTexture;
 
 
@@ -25,8 +25,8 @@ class UIController {
 		TextReader reader(U"plot.plt");
 
 		if (reader){
-			reader.readAll(pltFileTES.text);
-			pltFileTES.rebuildGlyphs();
+			reader.readAll(pltFileTES.v.text);
+			pltFileTES.v.rebuildGlyphs();
 		}
 	}
 	void readPltImage() {
@@ -40,13 +40,13 @@ class UIController {
 			Optional<String> path = Dialog::SaveFile(Array{ FileFilter{U"gnuplot",{U"plt"}},FileFilter::AllFiles() });
 			if (path) FileSystem::Copy(U"plot.plt", *path, CopyOption::OverwriteExisting);
 		}
-
-		if (SimpleGUI::TextArea(pltFileTES, Vec2(50, 130), Size(700, 450), 1e10)) {
+		
+		if (MyGUI::TextAreaAt(pltFileTES, Scene::CenterF()+Vec2(0,50), Size(700, 450))) {
 			TextWriter writer(U"plot.plt", TextEncoding::UTF8_NO_BOM);
 			if (not writer) {
 				throw Error{ U"Failed to open `plot.plt`" };
 			}
-			writer.write(pltFileTES.text);
+			writer.write(pltFileTES.v.text);
 		}
 
 	}
