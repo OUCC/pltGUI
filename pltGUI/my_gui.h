@@ -17,6 +17,28 @@ namespace MyGUI {
 	/// @brief テキストエリアの編集情報 | Text area editing information
 	struct TextAreaEditState
 	{
+
+		TextAreaEditState operator = (const TextAreaEditState& other) {
+			text = other.text;
+			cursorPos = other.cursorPos;
+			rangeSelectFrom = other.rangeSelectFrom;
+			rangeSelecting = other.rangeSelecting;
+			scrollY = other.scrollY;
+			refreshScroll = other.refreshScroll;
+			active = other.active;
+			textChanged = other.textChanged;
+			lineNum = other.lineNum;
+			leftPressStopwatch = other.leftPressStopwatch;
+			rightPressStopwatch = other.rightPressStopwatch;
+			cursorStopwatch = other.cursorStopwatch;
+			upPressStopwatch = other.upPressStopwatch;
+			downPressStopwatch = other.downPressStopwatch;
+			glyphs = other.glyphs;
+			glyphPositions = other.glyphPositions;
+			clipInfos = other.clipInfos;
+			return *this;
+		}
+
 		/// @brief テキスト | Text
 		String text;
 
@@ -33,7 +55,7 @@ namespace MyGUI {
 
 		bool textChanged = false;
 
-		size_t lineNum;
+		int32 lineNum = 0;
 
 		Stopwatch leftPressStopwatch, rightPressStopwatch, cursorStopwatch;
 
@@ -62,10 +84,8 @@ namespace MyGUI {
 
 		const size_t TextAreaTabSize = 12;
 
-		SIV3D_NODISCARD_CXX20
 		TextAreaEditState() = default;
 
-		SIV3D_NODISCARD_CXX20
 		TextAreaEditState(const String& defaultText)
 			: text{ defaultText }
 			, cursorPos{ defaultText.size() }
@@ -73,7 +93,6 @@ namespace MyGUI {
 			rebuildGlyphs();
 		}
 
-		SIV3D_NODISCARD_CXX20
 		TextAreaEditState(String&& defaultText) noexcept
 			: text{ std::move(defaultText) }
 			, cursorPos{ text.size() }
@@ -122,6 +141,10 @@ namespace MyGUI {
 		String getSelectingString()
 		{
 			return text.substr(Min(cursorPos, rangeSelectFrom), AbsDiff(cursorPos, rangeSelectFrom));
+		}
+
+		Size size(const size_t& width=600) {
+			return Size(width, 36 + 30 * lineNum);
 		}
 	};
 
@@ -818,7 +841,6 @@ namespace MyGUI {
 				// 改行の場合、描画位置を下にずらす
 				if (glyph.codePoint == U'\n')
 				{
-					text.lineNum++;
 					isLF = true;
 					penPos.x = textRenderRegion.x;
 					penPos.y += fontHeight;
@@ -857,6 +879,10 @@ namespace MyGUI {
 					}
 
 					glyphPos = (penPos + glyph.getOffset() + Vec2{ 0, text.scrollY });
+				}
+
+				if (isLF or isLineBreak) {
+					text.lineNum++;
 				}
 
 				/*
@@ -1285,7 +1311,7 @@ namespace MyGUI {
 			text.rangeSelectFrom = text.cursorPos;
 		}
 
-		const double maxScroll = Min(-((maxRow + 1.5) * fontHeight - region.h), 0.0);
+		const double maxScroll = Min(-((maxRow) * fontHeight - region.h), 0.0);
 		text.scrollY = Clamp(newScrollY, maxScroll, 0.0);
 
 		//描画
@@ -1313,7 +1339,7 @@ namespace MyGUI {
 		if (uis.isActive()) innerCiecle.draw(UIColor::Accent);
 	}
 
-	bool RadioButtonAreas(int& index, const Array<Vec2>& leftCenters, const Array<Vec2>& areaSizes) {
+	bool RadioButtonAreas(int& index, const Array<Vec2>& leftCenters, const Array<Size>& areaSizes) {
 		const size_t dataSize = leftCenters.size();
 		const bool canMouseOver = scrollSpaceRect.mouseOver() && Window::GetState().focused;
 		const int previousValue = index;

@@ -200,23 +200,23 @@ public:
 		{U"svg *",U"svg",U"svg enhanced", false, U"640 , 480"},
 		{U"pdfcairo *",U"pdf",U"pdfcairo enhanced",false, U"5in , 3in"},
 	}};
-	WithBool<TextEditState> sizex;
-	WithBool<TextEditState> sizey;
+	WithBool<MyGUI::TextAreaEditState> sizex;
+	WithBool<MyGUI::TextAreaEditState> sizey;
 	WithBool<MyGUI::TextAreaEditState> title;
-	WithBool<TextEditState> xlabel;
-	WithBool<TextEditState> ylabel;
-	WithBool<TextEditState> xrange_min;
-	WithBool<TextEditState> xrange_max;
-	WithBool<TextEditState> yrange_min;
-	WithBool<TextEditState> yrange_max;
+	WithBool<MyGUI::TextAreaEditState> xlabel;
+	WithBool<MyGUI::TextAreaEditState> ylabel;
+	WithBool<MyGUI::TextAreaEditState> xrange_min;
+	WithBool<MyGUI::TextAreaEditState> xrange_max;
+	WithBool<MyGUI::TextAreaEditState> yrange_min;
+	WithBool<MyGUI::TextAreaEditState> yrange_max;
 	WithBool<void> logscale_x;
 	WithBool<void> logscale_y;
 	WithBool<void> logscale_x_exp_not;//exponential notation
 	WithBool<void> logscale_y_exp_not;//exponential notation
-	WithBool<TextEditState> sample;
+	WithBool<MyGUI::TextAreaEditState> sample;
 	WithBool<PltKey> key{ true };
-	WithBool<TextEditState> xtics;
-	WithBool<TextEditState> ytics;
+	WithBool<MyGUI::TextAreaEditState> xtics;
+	WithBool<MyGUI::TextAreaEditState> ytics;
 	WithBool<void> grid;
 	WithBool<FilePath> loadfile;
 };
@@ -225,19 +225,35 @@ public:
 
 /// @brief 色などグラフごとの設定
 class GraphSetting {
-	enum class LineTypeE;
 public:
+	GraphSetting operator = (const GraphSetting& other) {
+		graph_index = other.graph_index;
+		graph_func = other.graph_func;
+		graph_data = other.graph_data;
+		using_x = other.using_x;
+		using_y = other.using_y;
+		title = other.title;
+		linecolor = other.linecolor;
+		withlines = other.withlines;
+		linewidth = other.linewidth;
+		linetype = other.linetype;
+		withpoints = other.withpoints;
+		pointsize = other.pointsize;
+		pointtype = other.pointtype;
+		return *this;
+	}
+
 	int graph_index = 0;
-	WithBool<TextEditState> graph_func;
-	WithBool<TextEditState> graph_data;
-	WithBool<TextEditState> using_x;
-	WithBool<TextEditState> using_y;
-	WithBool<TextEditState> title;
+	WithBool<MyGUI::TextAreaEditState> graph_func;
+	WithBool<MyGUI::TextAreaEditState> graph_data;
+	WithBool<MyGUI::TextAreaEditState> using_x;
+	WithBool<MyGUI::TextAreaEditState> using_y;
+	WithBool<MyGUI::TextAreaEditState> title;
 	WithBool<HSV> linecolor;
 	WithBool<void> withlines;
-	WithBool<TextEditState> linewidth;
-	WithBool<TextEditState> linetype;
+	WithBool<MyGUI::TextAreaEditState> linewidth;
+	WithBool<MyGUI::TextAreaEditState> linetype;
 	WithBool<void> withpoints;
-	WithBool<TextEditState> pointsize;
-	WithBool<TextEditState> pointtype;
+	WithBool<MyGUI::TextAreaEditState> pointsize;
+	WithBool<MyGUI::TextAreaEditState> pointtype;
 };

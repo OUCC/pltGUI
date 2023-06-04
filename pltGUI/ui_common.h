@@ -5,6 +5,11 @@
 template <class T>
 class WithBool {
 public:
+	WithBool operator = (const WithBool& other) {
+		b = other.b;
+		v = other.v;
+		return *this;
+	}
 	WithBool(bool _b = false) :b(_b) {};
 	bool b = false;
 	T v;
@@ -14,6 +19,10 @@ public:
 template <>
 class WithBool <void> {
 public:
+	WithBool operator = (const WithBool& other) {
+		b = other.b;
+		return *this;
+	}
 	bool b = false;
 };
 

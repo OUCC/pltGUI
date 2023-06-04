@@ -23,7 +23,7 @@ public:
 		}
 
 		dpos += Vec2(0,100);
-		MyGUI::RadioButtonAreas(colorTypeIndex, Array{ dpos+Vec2(160, 0),dpos+Vec2(270,0) }, Array{ Vec2(60, 50) });
+		MyGUI::RadioButtonAreas(colorTypeIndex, Array{ dpos+Vec2(160, 0),dpos+Vec2(270,0) }, Array{ Size(60, 50) });
 		MyGUI::Text(U"plt color as ", dpos+Vec2(20, 0));
 		MyGUI::Text(U"RGB", dpos+Vec2(180, 0));
 		MyGUI::Text(U"HSV", dpos+Vec2(290, 0));
