@@ -76,15 +76,16 @@ public:
 		MyGUI::Text(U"sample", dpos.x(180));
 		MyGUI::TextArea(s.sample, dpos.y(55+ s.sample.v.lineNum*30),s.sample.v.size(400));
 
-		MyGUI::CheckBoxArea(s.key.b, dpos.x(20), s.key.v.pos.isOpen() ? Vec2(600, 250) : Vec2(600, 50));
+		MyGUI::CheckBoxArea(s.key.b, dpos.x(20), Size(600, (s.key.b ? 60 : 0) + (s.key.v.pos.isOpen() ? 250 : 50)));
 		MyGUI::Text(U"key", dpos.x(180));
-		s.key.v.pos.setPos((dpos.x(250) - Vec2(0, 15)).asPoint());
-		s.key.v.pos.update();
-		s.key.v.pos.draw();
-		MyGUI::CheckBox(s.key.v.box, dpos.x(20));
-		MyGUI::Text(U"box", dpos.y(55));
+		s.key.v.pos.setPos((dpos.y(55) - Vec2(0, 15)).asPoint())->update()->draw();
 		if (s.key.v.pos.isOpen()) {
 			dpos.y(200);
+		}
+		if (s.key.b) {
+			dpos.x(220);
+			MyGUI::CheckBoxArea(s.key.v.box, dpos.x(20), Size(50, 50));
+			MyGUI::Text(U"box", dpos.y(55));
 		}
 
 		dpos.x(20);

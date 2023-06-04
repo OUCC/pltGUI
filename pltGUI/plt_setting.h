@@ -71,7 +71,7 @@ public:
 			return;
 		}
 
-		m_rect.drawFrame(1, 0, m_isOpen ? UIColor::Accent : UIColor::frame());
+		m_rect.drawFrame(m_isOpen ? 2.5:2, 0, m_isOpen ? UIColor::Accent : Color{ 128 });
 
 		Point pos = m_rect.pos;
 
@@ -86,7 +86,7 @@ public:
 		{
 			const Rect backRect{ pos, m_rect.w, (m_rect.h * m_items.size()) };
 
-			backRect.drawShadow({ 1, 1 }, 4, 1).draw();
+			backRect/*.drawShadow({1, 1}, 4, 1)*/.draw();
 
 			for (const auto& item : m_items)
 			{
@@ -101,7 +101,7 @@ public:
 				pos.y += m_rect.h;
 			}
 
-			backRect.drawFrame(1, 0, Palette::Gray);
+			backRect.drawFrame(2, 0, ColorF{ 0.5 });
 		}
 	}
 

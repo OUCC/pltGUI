@@ -519,7 +519,7 @@ namespace MyGUI {
 			{
 				region
 					.draw()
-					.drawFrame(0.0, 1.5, ColorF{ 0.35, 0.7, 1.0, 0.75 })
+					//.drawFrame(0.0, 1.5, ColorF{ 0.35, 0.7, 1.0, 0.75 })
 					.drawFrame(2.5, 0.0, ColorF{ 0.35, 0.7, 1.0 });
 
 				// 範囲選択領域の背景色描画

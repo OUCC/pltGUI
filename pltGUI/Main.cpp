@@ -4,7 +4,7 @@
 
 void Main()
 {
-	Window::SetTitle(U"pltGUI");
+	Window::SetTitle(U"pltGUI v1.2.0");
 	addLicense();
 	LicenseManager::DisableDefaultTrigger();
 
