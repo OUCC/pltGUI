@@ -17,20 +17,20 @@ class UIController {
 	WholeSettingUI whole;
 	Array<GraphSettingUI> graphs{ 1 };
 
-	TextAreaEditState pltFileTES;
+	WithBool<MyGUI::TextAreaEditState> pltFileTES{true};
 	Texture pltImageTexture;
 
 
 	void readPltFile() {
-		TextReader reader(U"result.plt");
+		TextReader reader(U"plot.plt");
 
 		if (reader){
-			reader.readAll(pltFileTES.text);
-			pltFileTES.rebuildGlyphs();
+			reader.readAll(pltFileTES.v.text);
+			pltFileTES.v.rebuildGlyphs();
 		}
 	}
 	void readPltImage() {
-		pltImageTexture = Texture(U"result.png");
+		pltImageTexture = Texture(U"output.{}"_fmt(Terminal::ext));
 	}
 
 	void drawPltViewPage() {
@@ -38,35 +38,47 @@ class UIController {
 
 		if (MyGUI::SaveIconButton(Vec2(700, 85))) {
 			Optional<String> path = Dialog::SaveFile(Array{ FileFilter{U"gnuplot",{U"plt"}},FileFilter::AllFiles() });
-			if (path) FileSystem::Copy(U"result.plt", *path, CopyOption::OverwriteExisting);
+			if (path) FileSystem::Copy(U"plot.plt", *path, CopyOption::OverwriteExisting);
 		}
-
-		if (SimpleGUI::TextArea(pltFileTES, Vec2(50, 130), Size(700, 450), 1e10)) {
-			TextWriter writer(U"result.plt", TextEncoding::UTF8_NO_BOM);
+		
+		if (MyGUI::TextAreaAt(pltFileTES, Scene::CenterF()+Vec2(0,50), Size(700, 450))) {
+			TextWriter writer(U"plot.plt", TextEncoding::UTF8_NO_BOM);
 			if (not writer) {
-				throw Error{ U"Failed to open `result.plt`" };
+				throw Error{ U"Failed to open `plot.plt`" };
 			}
-			writer.write(pltFileTES.text);
+			writer.write(pltFileTES.v.text);
 		}
 
 	}
 
 	void drawImageViewPage() {
 		tabSpaceRect.draw(tabSpaceColor);
+		FilePath file = U"output.{}"_fmt(Terminal::ext);
 
 		if (MyGUI::ReloadIconButton(Vec2(550, 85))) {
 			readPltImage();
 		}
 		if (MyGUI::SaveIconButton(Vec2(700, 85))) {
-			Optional<String> path = Dialog::SaveFile(Array{ FileFilter::PNG(),FileFilter::JPEG(), FileFilter::AllFiles() });
-			if (path) FileSystem::Copy(U"result.png", *path, CopyOption::OverwriteExisting);
+			Optional<String> path = Dialog::SaveFile(Array{ FileFilter{whole.s.terminal.pd.getItem(),{Terminal::ext}}, FileFilter::AllFiles()});
+			if (path) FileSystem::Copy(file, *path, CopyOption::OverwriteExisting);
 		}
-
-		if (not pltImageTexture.isEmpty()) {
-			pltImageTexture.drawAt(Scene::Center() + Vec2(0, 50));
+		if (not FileSystem::Exists(file)) {
+			FontAsset(U"main")(file + U" is not exists.").drawAt(Scene::CenterF(), UIColor::text());
+		}
+		else if (whole.s.terminal.getInfo().canLoad) {
+			if (not pltImageTexture.isEmpty()) {
+				pltImageTexture.drawAt(Scene::Center() + Vec2(0, 50));
+			}
+			else {
+				FontAsset(U"main")(U"Failed to read "+file).drawAt(Scene::CenterF(), UIColor::text());
+			}
 		}
 		else {
-			FontAsset(U"main")(U"Failed to read result.png").draw(50, 100, UIColor::text());
+			FontAsset(U"main")(U"This {} file is unable to preview in this app."_fmt(Terminal::ext)).drawAt(Scene::CenterF(),UIColor::text());
+			if (SimpleGUI::ButtonAt(U"Open with default app", Scene::CenterF() + Vec2(0, 50))) {
+				System::LaunchFile( file);
+			}
+
 		}
 	}
 
@@ -119,11 +131,31 @@ public:
 		}
 
 		if (MyGUI::ArrowIconButton(Vec2(230, 35), watch1)) {
-			CreatePltFile(whole, graphs);
-			readPltFile();
+			if (MouseL.down()) {
+				watch1.restart();
+				CreatePltFile(whole, graphs);
+				readPltFile();
+			}
+			if (MouseR.down()) {
+				watch1.restart();
+				CreatePltFile(whole, graphs);
+				readPltFile();
+				watch2.restart();
+				executePltFile();
+			}
 		}
 		if (MyGUI::ArrowIconButton(Vec2(480, 35), watch2)) {
-			executePltFile();
+			if (MouseL.down()) {
+				watch2.restart();
+				executePltFile();
+			}
+			if (MouseR.down()) {
+				watch1.restart();
+				CreatePltFile(whole, graphs);
+				readPltFile();
+				watch2.restart();
+				executePltFile();
+			}
 		}
 
 	}

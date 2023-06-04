@@ -1,10 +1,10 @@
-﻿# include <Siv3D.hpp> // OpenSiv3D v0.6.6
+﻿# include <Siv3D.hpp> // OpenSiv3D v0.6.9
 #include "ui_common.h"
 #include "ui_controller.h"
 
 void Main()
 {
-	Window::SetTitle(U"pltGUI");
+	Window::SetTitle(U"pltGUI v1.2.0");
 	addLicense();
 	LicenseManager::DisableDefaultTrigger();
 
