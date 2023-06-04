@@ -26,10 +26,11 @@ Twitterの[@OUCC](https://twitter.com/OUCC)へのDM、またはGitHubの[Issues]
 
 ## 画面構成
 
-### スクショ (v1.1.0)
+### スクショ
 - plt Setting
     - whole  
-    ![see readme_images/whole.png](readme_images/whole.png)
+    ![see readme_images/whole1.png](readme_images/whole1.png)
+    ![see readme_images/whole2.png](readme_images/whole2.png)
     - graph1  
     ![see readme_images/graph1.png](readme_images/graph1.png)
     - graph2  
@@ -38,6 +39,8 @@ Twitterの[@OUCC](https://twitter.com/OUCC)へのDM、またはGitHubの[Issues]
 ![see readme_images/pltfile.png](readme_images/pltfile.png)
 - plt File  
 ![see readme_images/pltimage.png](readme_images/pltimage.png)
+- option
+![see readme_images/option.png](readme_images/option.png)
 
 ### 説明
 

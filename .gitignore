@@ -428,3 +428,6 @@ gmon.out
 # Ignore output files
 pltGUI/App/output.*
 pltGUI/App/plot.plt
+
+#Ignore sampledata
+pltGUI/App/sampledata.csv

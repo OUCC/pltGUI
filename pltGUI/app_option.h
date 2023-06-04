@@ -26,7 +26,7 @@ public:
 		dpos += Vec2(0,50);
 		MyGUI::Text(U"Links", dpos+Vec2(20,0));
 		if (MyGUI::Button(U"Online README", dpos + Vec2(100, 0), Size(170, 40))) {
-			System::LaunchBrowser(U"https://github.com/OUCC/pltGUI/releases");
+			System::LaunchBrowser(U"https://github.com/OUCC/pltGUI#readme");
 		}
 		if (MyGUI::Button(U"pltGUI releases", dpos + Vec2(280, 0), Size(170, 40))) {
 			System::LaunchBrowser(U"https://github.com/OUCC/pltGUI/releases");
