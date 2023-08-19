@@ -785,5 +785,8 @@
     <ClInclude Include="InputPlus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MenuBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,21 +1,24 @@
-﻿# include <Siv3D.hpp> // OpenSiv3D v0.6.11
+﻿#include <Siv3D.hpp> // OpenSiv3D v0.6.11
 
-# include "InputPlus.h"
-# include "GUI.h"
-# include "MiniWindow.h"
+#define DEBUG if(true)
 
+#include "InputPlus.h"
+#include "GUI.h"
+#include "MiniWindow.h"
+
+#include "MenuBar.h"
 
 void Main()
 {
 
 	Window::SetStyle(WindowStyle::Sizable);
-
+	Scene::SetBackground(ColorF{1});
 
 	while (System::Update())
 	{
 		//ClearPrint();
 
-		windowA.draw();
+		MenuBar.draw();
 
 	}
 }

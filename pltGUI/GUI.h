@@ -1,5 +1,9 @@
 ﻿#pragma once
 
+DrawableText Text(String text) {
+	return SimpleGUI::GetFont()(text);
+}
+
 class GUI
 {
 public:

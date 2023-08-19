@@ -2,15 +2,13 @@
 
 class MiniWindow
 {
-public:
+protected:
 	Rect windowRect;
 	bool mouseOverWindow = false;
 
-	MiniWindow(Rect rect) : windowRect(rect) {}
-	MiniWindow(Rect rect, std::function<void()> func) : windowRect(rect), func(func) {}
+	virtual void layout();
 
-	std::function<void()> func;
-
+public:
 	void draw() {
 
 		const ScopedViewport2D viewport{ windowRect };
@@ -21,25 +19,8 @@ public:
 		// マウスカーソル座標だけ移動させる
 		const Transformer2D transformer{ Mat3x2::Identity(), Mat3x2::Translate(windowRect.tl()) };
 
-		func();
+		layout();
 
 		MouseLeft.setLocalLock(false);
-	}
-};
-
-MiniWindow windowA{ Rect{300,300,400,300},[]() {
-
-		Circle{ 200, 150, 200 }.draw();
-		Circle{ Cursor::PosF(), 40 }.draw(Palette::Orange);
-
-		if (SimpleGUI::Button(U"Button", Vec2{ 20,-20 }))
-		{
-			Print << U"Pushed";
-		}
-
-		if (GUI::TextButton(U"My Button", Rect{ -20,20,100,50 }))
-		{
-			Print << U"Pushed";
-		}
 	}
 };
