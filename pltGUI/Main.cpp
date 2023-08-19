@@ -1,10 +1,21 @@
 ﻿# include <Siv3D.hpp> // OpenSiv3D v0.6.11
 
+# include "InputPlus.h"
+# include "GUI.h"
+# include "MiniWindow.h"
+
+
 void Main()
 {
 
+	Window::SetStyle(WindowStyle::Sizable);
+
+
 	while (System::Update())
 	{
+		//ClearPrint();
+
+		windowA.draw();
 
 	}
 }
