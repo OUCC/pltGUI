@@ -16,10 +16,26 @@ void Main()
 
 	while (System::Update())
 	{
-		//ClearPrint();
+		ClearPrint();
 
-		MenuBar.draw();
+		MouseLeft.setGlobalLock(not popupWindows.empty());
 
+		menuBar.draw();
+
+		sampleWindow.draw();
+
+
+		MouseLeft.setGlobalLock(false);//要調整
+
+		//Popup描画
+		for (auto itr = popupWindows.begin(); itr!=popupWindows.end();) {
+			if (not (*itr)->active) {
+				itr=popupWindows.erase(itr);
+				continue;
+			}
+			(*itr)->draw();
+			itr++;
+		}
 	}
 }
 

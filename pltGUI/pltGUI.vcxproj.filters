@@ -788,5 +788,11 @@
     <ClInclude Include="MenuBar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AppSave.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PopupWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

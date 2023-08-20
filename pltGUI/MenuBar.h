@@ -1,8 +1,10 @@
 ﻿#pragma once
 
 #include "MiniWindow.h"
+#include "PopupWindow.h"
 
-class MenuBar_ : public MiniWindow {
+
+class MenuBar : public MiniWindow {
 
 	struct ButtonInfo{
 		bool pushed;
@@ -19,6 +21,28 @@ class MenuBar_ : public MiniWindow {
 		return ButtonInfo{false,rect.w};
 	}
 
+	//要整理
+	class FileMenu : public PopupWindow {
+	public:
+		FileMenu() {
+			windowRect= Rect{ 0,30,100,100 };
+		}
+		void popupLayout() override {
+			Rect{ 0,0,100,100 }.draw(ColorF{ 0.9 }).drawFrame(1,1, ColorF{ 0.5 });
+		}
+	};
+	class EditMenu : public PopupWindow {
+	public:
+		EditMenu() {
+			windowRect= Rect{ 0,30,100,100 };
+		}
+		void popupLayout() override {
+			Rect{ 0,0,100,100 }.draw(ColorF{ 0.9 }).drawFrame(1,1, ColorF{ 0.5 });
+		}
+	};
+	static inline FileMenu fileMenu;
+	static inline EditMenu editMenu;
+
 	void layout() {
 		windowRect = Rect{0,0,Scene::Size().x,30};
 
@@ -29,17 +53,29 @@ class MenuBar_ : public MiniWindow {
 
 		Vec2 lc{10,15};//left center
 		info=MenuBarButton(U"File",lc);
-		if (info.pushed) Print << U"FileMenuOpen";
+		if (info.pushed) {
+			fileMenu.windowRect.x = lc.x;
+			//要整理
+			fileMenu.open();
+			editMenu.close();
+			MouseL.clearInput();
+		}
 
 		lc.x += info.width;
 		info=MenuBarButton(U"Edit",lc);
-		if (info.pushed) Print << U"EditMenuOpen";
+		if (info.pushed) {
+			editMenu.windowRect.x = lc.x;
+			editMenu.open();
+			fileMenu.close();
+			MouseL.clearInput();
+		}
 
 		lc.x += info.width;
 		info=MenuBarButton(U"Help",lc);
 		if (info.pushed) Print << U"HelpMenuOpen";
 	};
 
+
 };
 
-MenuBar_ MenuBar;
+MenuBar menuBar;

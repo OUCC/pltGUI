@@ -315,10 +315,12 @@
     <Xml Include="App\example\xml\test.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AppSave.h" />
     <ClInclude Include="InputPlus.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="MenuBar.h" />
     <ClInclude Include="MiniWindow.h" />
+    <ClInclude Include="PopupWindow.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>

@@ -3,12 +3,13 @@
 class MiniWindow
 {
 protected:
-	Rect windowRect;
 	bool mouseOverWindow = false;
 
-	virtual void layout();
+	virtual void layout() = 0;
 
 public:
+	Rect windowRect;
+
 	void draw() {
 
 		const ScopedViewport2D viewport{ windowRect };
@@ -24,3 +25,19 @@ public:
 		MouseLeft.setLocalLock(false);
 	}
 };
+
+
+class SampleWindow : public MiniWindow
+{
+	void layout() override
+	{
+		windowRect = Rect{ 300, 100, 200, 200 };
+
+		Rect(0, 0, 100, 100).draw(ColorF(0.8, 0.9, 1.0));
+		if (GUI::TextButton(U"AAAAA", Rect{ -50,20,100,30 })) {
+			Print << U"AAAAA";
+		}
+	}
+};
+
+SampleWindow sampleWindow;
