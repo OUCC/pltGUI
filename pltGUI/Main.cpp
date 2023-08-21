@@ -3,6 +3,7 @@
 #define DEBUG if(true)
 
 #include "InputPlus.h"
+#include "AppSetting.h"
 #include "GUI.h"
 #include "MiniWindow.h"
 
