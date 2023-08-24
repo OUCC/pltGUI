@@ -5,7 +5,7 @@ class AppSetting
 {
 
 public:
-	bool darkMode = false;
+	bool Eng_Jp = true;//true:English, false:Japanese
 
 	static FilePath GetAppSettingPath() {
 		return FileSystem::GetFolderPath(SpecialFolder::LocalAppData)+U"/pltGUI/setting.json";
@@ -17,17 +17,22 @@ public:
 			return false;
 		}
 
-		darkMode= json[U"DarkMode"].get<bool>();
+		if (json[U"Language"].get<String>() == U"Japanese") {
+			Eng_Jp = false;
+		}
+		else {
+			Eng_Jp = true;
+		}
 
 		return true;
 	}
 	bool save() {
 		JSON json;
 
-		json[U"DarkMode"] = darkMode;
+		json[U"Language"] = Eng_Jp ? U"English" : U"Japanese";
 
 		return json.save(GetAppSettingPath());
 	}
 };
 
-AppSetting appSetting;
+AppSetting app;

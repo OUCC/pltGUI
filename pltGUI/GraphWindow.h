@@ -16,7 +16,7 @@ class GraphWindow : public MiniWindow
 			pos.y += pltSettings[i].function.size.y + vSpace;
 		}
 
-		if (SimpleGUI::Button(U"Add Graph", pos + Vec2(100, 0))) {
+		if (SimpleGUI::Button(app.Eng_Jp?U"Add Graph":U"グラフを追加", pos + Vec2(100, 0))) {
 			pltSettings.push_back(PltSetting{});
 		}
 		pos.y += 40 + vSpace;

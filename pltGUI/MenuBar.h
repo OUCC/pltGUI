@@ -51,13 +51,13 @@ class MenuBar : public MiniWindow {
 			windowRect.w = 200;
 		}
 		void menuPopupLayout() override {
-			if (MenuItemButton(U"Load AppSetting", Vec2{ 0,0 })) {
-				appSetting.load();
+			if (MenuItemButton(app.Eng_Jp ? U"Load AppSetting":U"アプリ設定を読み込む", Vec2{0,0})) {
+				app.load();
 			}
-			if (MenuItemButton(U"Save AppSetting", Vec2{ 0,30 })) {
-				appSetting.save();
+			if (MenuItemButton(app.Eng_Jp?U"Save AppSetting":U"アプリ設定を保存する", Vec2{0,30})) {
+				app.save();
 			}
-			if (MenuItemButton(U"Open AppSetting File", Vec2{ 0,60 })) {
+			if (MenuItemButton(app.Eng_Jp ? U"Open AppSetting File":U"アプリ設定ファイルを開く", Vec2{0,60})) {
 				System::LaunchFile(AppSetting::GetAppSettingPath());
 			}
 		}
@@ -72,6 +72,10 @@ class MenuBar : public MiniWindow {
 	public:
 		ViewMenu() :MenuPopupWindow() { itemNum = 1; }
 		void menuPopupLayout() override {
+			if (MenuItemButton(app.Eng_Jp ? U"日本語" : U"English", Vec2{ 0,0 })) {
+				app.Eng_Jp ^= true;
+				close();
+			}
 		}
 	};
 	class HelpMenu : public MenuPopupWindow {
@@ -102,7 +106,7 @@ class MenuBar : public MiniWindow {
 		ButtonInfo info;
 
 		Vec2 lc{10,15};//left center
-		info=MenuBarButton(U"File",lc);
+		info=MenuBarButton(app.Eng_Jp?U"File":U"ファイル", lc);
 		if (info.pushed) {
 			fileMenu.windowRect.x = lc.x;
 			closeAllMenu();
@@ -111,7 +115,7 @@ class MenuBar : public MiniWindow {
 		}
 
 		lc.x += info.width;
-		info=MenuBarButton(U"Edit",lc);
+		info=MenuBarButton(app.Eng_Jp?U"Edit":U"編集", lc);
 		if (info.pushed) {
 			editMenu.windowRect.x = lc.x;
 			closeAllMenu();
@@ -120,7 +124,7 @@ class MenuBar : public MiniWindow {
 		}
 
 		lc.x += info.width;
-		info=MenuBarButton(U"View",lc);
+		info = MenuBarButton(app.Eng_Jp?U"View":U"表示", lc);
 		if (info.pushed) {
 			viewMenu.windowRect.x = lc.x;
 			closeAllMenu();
@@ -129,7 +133,7 @@ class MenuBar : public MiniWindow {
 		}
 
 		lc.x += info.width;
-		info=MenuBarButton(U"Help",lc);
+		info=MenuBarButton(app.Eng_Jp?U"Help":U"ヘルプ", lc);
 		if (info.pushed) {
 			helpMenu.windowRect.x = lc.x;
 			closeAllMenu();
