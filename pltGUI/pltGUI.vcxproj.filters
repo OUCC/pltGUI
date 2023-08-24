@@ -794,5 +794,14 @@
     <ClInclude Include="PopupWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GraphWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextArea.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Const.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

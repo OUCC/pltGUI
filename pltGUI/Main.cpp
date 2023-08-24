@@ -2,9 +2,11 @@
 
 #define DEBUG if(true)
 
+#include "Const.h"
 #include "InputPlus.h"
 #include "AppSetting.h"
 #include "GUI.h"
+#include "TextArea.h"
 #include "MiniWindow.h"
 
 #include "MenuBar.h"
@@ -12,8 +14,14 @@
 void Main()
 {
 
+	Window::SetTitle(U"pltGUI");
 	Window::SetStyle(WindowStyle::Sizable);
 	Scene::SetBackground(ColorF{1});
+	Window::Maximize();
+
+	TextArea textArea1, textArea2;
+	textArea2.oneLined = false;
+	
 
 	while (System::Update())
 	{
@@ -24,6 +32,9 @@ void Main()
 		menuBar.draw();
 
 		sampleWindow.draw();
+
+		textArea1.draw(Vec2{100,100});
+		textArea2.draw(Vec2{100,150});
 
 
 		MouseLeft.setGlobalLock(false);//要調整

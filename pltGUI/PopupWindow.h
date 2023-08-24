@@ -26,12 +26,6 @@ public:
 	virtual void popupLayout() = 0;
 };
 
-class NullPopupWindow : public PopupWindow
-{
-	void popupLayout() override {
-	}
-};
-
 Array<PopupWindow*> popupWindows;
 
 void PopupWindow::open(){
