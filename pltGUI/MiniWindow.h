@@ -5,6 +5,14 @@ class MiniWindow
 protected:
 	bool mouseOverWindow = false;
 
+	Vec2 scroll;
+	void scrollY(double maxY) {
+		if (mouseOverWindow) {
+			double scroll_v = Mouse::Wheel() * scrollSpeed;
+			scroll.y = Clamp(scroll.y + scroll_v, 0.0, Max(0.0, maxY + scroll.y - windowRect.h));
+		}
+	}
+
 	virtual void layout() = 0;
 
 public:

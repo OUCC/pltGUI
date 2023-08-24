@@ -322,6 +322,7 @@
     <ClInclude Include="MenuBar.h" />
     <ClInclude Include="MiniWindow.h" />
     <ClInclude Include="GraphWindow.h" />
+    <ClInclude Include="PltSetting.h" />
     <ClInclude Include="PopupWindow.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TextArea.h" />

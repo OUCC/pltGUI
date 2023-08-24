@@ -11,3 +11,6 @@ constexpr ColorF GetTextColor(bool enabled)
 {
 	return enabled ? ActiveTextColor : DisabledTextColor;
 }
+
+constexpr double vSpace = 10.0;
+constexpr double scrollSpeed = 10.0;

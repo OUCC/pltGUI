@@ -9,7 +9,10 @@
 #include "TextArea.h"
 #include "MiniWindow.h"
 
+#include "PltSetting.h"
+
 #include "MenuBar.h"
+#include "GraphWindow.h"
 
 void Main()
 {
@@ -19,10 +22,6 @@ void Main()
 	Scene::SetBackground(ColorF{1});
 	Window::Maximize();
 
-	TextArea textArea1, textArea2;
-	textArea2.oneLined = false;
-	
-
 	while (System::Update())
 	{
 		ClearPrint();
@@ -31,11 +30,9 @@ void Main()
 
 		menuBar.draw();
 
-		sampleWindow.draw();
+		//sampleWindow.draw();
 
-		textArea1.draw(Vec2{100,100});
-		textArea2.draw(Vec2{100,150});
-
+		graphWindow.draw();
 
 		MouseLeft.setGlobalLock(false);//要調整
 
