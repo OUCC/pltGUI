@@ -2,10 +2,10 @@
 
 #include "TextArea.h"
 
-class PltSetting
+class PlotSetting
 {
 public:
-	PltSetting() {}
+	PlotSetting() {}
 
 	enum class GraphSource {
 		function,dataFile
@@ -14,7 +14,8 @@ public:
 	TextArea function;
 	FilePath dataFile;
 
+	TextArea title;
 
 };
 
-Array<PltSetting> pltSettings{ 1 };
+Array<PlotSetting> plotSettings{ 1 };

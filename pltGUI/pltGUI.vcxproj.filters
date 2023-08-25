@@ -794,7 +794,7 @@
     <ClInclude Include="PopupWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GraphWindow.h">
+    <ClInclude Include="PlotDataWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TextArea.h">
@@ -803,7 +803,10 @@
     <ClInclude Include="Const.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PltSetting.h">
+    <ClInclude Include="PlotSetting.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlotSettingWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

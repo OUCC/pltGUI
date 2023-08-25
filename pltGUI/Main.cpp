@@ -9,10 +9,11 @@
 #include "TextArea.h"
 #include "MiniWindow.h"
 
-#include "PltSetting.h"
+#include "PlotSetting.h"
 
 #include "MenuBar.h"
-#include "GraphWindow.h"
+#include "PlotDataWindow.h"
+#include "PlotSettingWindow.h"
 
 void Main()
 {
@@ -32,7 +33,9 @@ void Main()
 
 		//sampleWindow.draw();
 
-		graphWindow.draw();
+		plotDataWindow.draw();
+
+		plotSettingWindow.draw();
 
 		MouseLeft.setGlobalLock(false);//要調整
 
