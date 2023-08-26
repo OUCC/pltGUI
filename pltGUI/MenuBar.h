@@ -2,7 +2,7 @@
 
 #include "MiniWindow.h"
 #include "PopupWindow.h"
-
+#include "PltFile.h"
 
 class MenuBar : public MiniWindow {
 
@@ -25,7 +25,8 @@ class MenuBar : public MiniWindow {
 	protected:
 		int itemNum = 0;
 		void popupLayout() final {
-			Rect{ 0,0,windowRect.w,30*itemNum }.draw(ColorF{ 1 }).drawFrame(1,1, ColorF{ 0.5 });
+			windowRect.h = 30 * itemNum;
+			Rect{ windowRect.size }.draw(ColorF{1}).drawFrame(1, 1, ColorF{0.5});
 			menuPopupLayout();
 		}
 		bool MenuItemButton(String text, Vec2 tl) {
@@ -47,7 +48,7 @@ class MenuBar : public MiniWindow {
 	class FileMenu : public MenuPopupWindow {
 	public:
 		FileMenu() :MenuPopupWindow() {
-			itemNum = 3;
+			itemNum = 5;
 			windowRect.w = 200;
 		}
 		void menuPopupLayout() override {
@@ -59,6 +60,12 @@ class MenuBar : public MiniWindow {
 			}
 			if (MenuItemButton(app.Eng_Jp ? U"Open AppSetting File":U"アプリ設定ファイルを開く", Vec2{0,60})) {
 				System::LaunchFile(AppSetting::GetAppSettingPath());
+			}
+			if (MenuItemButton(app.Eng_Jp ? U"Create .plt File":U".pltファイルを作成する", Vec2{0,90})) {
+				pltFile.create();
+			}
+			if (MenuItemButton(app.Eng_Jp ? U"Open LoaclAppData Directory":U"LoaclAppDataディレクトリを開く", Vec2{0,120})) {
+				System::LaunchFile(FileSystem::GetFolderPath(SpecialFolder::LocalAppData)+U"/pltGUI");
 			}
 		}
 	};

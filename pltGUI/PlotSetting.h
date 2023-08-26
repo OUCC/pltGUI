@@ -16,6 +16,8 @@ public:
 
 	TextArea title;
 
+	bool color_enabled;
+	HSV color;
 };
 
 Array<PlotSetting> plotSettings{ 1 };

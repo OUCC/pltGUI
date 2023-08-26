@@ -18,7 +18,7 @@ class PlotDataWindow : public MiniWindow
 
 		for (auto i : Range(0, plotSettings.size() - 1)) {
 			plotSettings[i].function.draw(pos);
-			RectF rect{ 0, pos.y - 5, windowRect.w, 46 };
+			RectF rect{ 0, pos.y - 5, windowRect.w, 10+ plotSettings[i].function.size.y };
 			rect.draw(selectingIndex == i || (rect.mouseOver() && mouseOverWindow) ? SelectedFrontColor : ColorF{0,0});
 			if (rect.mouseOver() && mouseOverWindow && MouseLeft.down()) {
 				selectingIndex = i;
@@ -26,9 +26,6 @@ class PlotDataWindow : public MiniWindow
 			}
 			pos.y += plotSettings[i].function.size.y + vSpace;
 		}
-
-		Print << selectingIndex;
-		Print << mouseOverWindow;
 
 		if (SimpleGUI::Button(app.Eng_Jp?U"Add Graph":U"グラフを追加", pos + Vec2(100, 0))) {
 			plotSettings.push_back(PlotSetting{});

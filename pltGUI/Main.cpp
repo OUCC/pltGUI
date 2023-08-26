@@ -20,9 +20,10 @@ void Main()
 
 	Window::SetTitle(U"pltGUI");
 	Window::SetStyle(WindowStyle::Sizable);
+	System::SetTerminationTriggers(UserAction::CloseButtonClicked);
 	Scene::SetBackground(ColorF{1});
 	Window::Maximize();
-
+	
 	while (System::Update())
 	{
 		ClearPrint();

@@ -809,5 +809,8 @@
     <ClInclude Include="PlotSettingWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PltFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
