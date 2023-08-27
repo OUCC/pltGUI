@@ -48,7 +48,7 @@ class MenuBar : public MiniWindow {
 	class FileMenu : public MenuPopupWindow {
 	public:
 		FileMenu() :MenuPopupWindow() {
-			itemNum = 5;
+			itemNum = 6;
 			windowRect.w = 200;
 		}
 		void menuPopupLayout() override {
@@ -66,6 +66,9 @@ class MenuBar : public MiniWindow {
 			}
 			if (MenuItemButton(app.Eng_Jp ? U"Open LoaclAppData Directory":U"LoaclAppDataディレクトリを開く", Vec2{0,120})) {
 				System::LaunchFile(FileSystem::GetFolderPath(SpecialFolder::LocalAppData)+U"/pltGUI");
+			}
+			if (MenuItemButton(app.Eng_Jp ? U"Execute .plt File":U".pltファイルを実行する", Vec2{0,150})) {
+				pltFile.execute();
 			}
 		}
 	};
