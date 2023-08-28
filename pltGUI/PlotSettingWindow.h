@@ -13,12 +13,13 @@ class GraphSettingWindow : public MiniWindow
 public:
 	int plotSettingsIndex = 0;
 
+	double textAreaWidth;
+
 	void layout() override {
-		windowRect = { 600, 30, 600, 1000 };
 		Rect{ windowRect.size }.drawFrame(2, FrameColor);
 		PlotSetting& plt = plotSettings[plotSettingsIndex];
 
-		Vec2 pos{ 50,50 + scroll.y };
+		Vec2 pos{ 50,50 - scroll.y };
 		Vec2 padding{ 150,0 };
 
 		SimpleGUI::CheckBox(plt.title.enabled,app.Eng_Jp ? U"Title" : U"凡例名", pos);

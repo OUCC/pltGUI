@@ -815,5 +815,8 @@
     <ClInclude Include="GraphViewWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AppLayout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

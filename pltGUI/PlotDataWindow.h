@@ -11,7 +11,6 @@ class PlotDataWindow : public MiniWindow
 	int selectingIndex = -1;//-1:graph 0~:plot
 
 	void layout() override {
-		windowRect = Rect{ 0,30,600,400 };
 		Rect{ windowRect.size }.drawFrame(1, FrameColor);
 
 		Vec2 pos{ 50,50 - scroll.y };
@@ -34,6 +33,9 @@ class PlotDataWindow : public MiniWindow
 
 		scrollY(pos.y);
 	}
+
+public:
+	double textAreaWidth;
 };
 
 PlotDataWindow plotDataWindow;

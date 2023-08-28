@@ -16,6 +16,8 @@
 #include "PlotSettingWindow.h"
 #include "GraphViewWindow.h"
 
+#include "AppLayout.h"
+
 void Main()
 {
 
@@ -28,6 +30,8 @@ void Main()
 	while (System::Update())
 	{
 		ClearPrint();
+
+		AppLayout::Update();
 
 		mouse.frontWindow = popupWindows.isEmpty();
 

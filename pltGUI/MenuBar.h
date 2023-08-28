@@ -80,10 +80,14 @@ class MenuBar : public MiniWindow {
 	};
 	class ViewMenu : public MenuPopupWindow {
 	public:
-		ViewMenu() :MenuPopupWindow() { itemNum = 1; }
+		ViewMenu() :MenuPopupWindow() { itemNum = 2; }
 		void menuPopupLayout() override {
 			if (MenuItemButton(app.Eng_Jp ? U"日本語" : U"English", Vec2{ 0,0 })) {
 				app.Eng_Jp ^= true;
+				close();
+			}
+			if (MenuItemButton(app.showGraphInApp ? (app.Eng_Jp?U"Hide Graph":U"グラフを非表示"):(app.Eng_Jp?U"Show Graph":U"グラフを表示"), Vec2{0,30})) {
+				app.showGraphInApp ^= true;
 				close();
 			}
 		}
