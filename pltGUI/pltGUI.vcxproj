@@ -317,6 +317,7 @@
   <ItemGroup>
     <ClInclude Include="AppSetting.h" />
     <ClInclude Include="Const.h" />
+    <ClInclude Include="GraphViewWindow.h" />
     <ClInclude Include="PlotSettingWindow.h" />
     <ClInclude Include="MousePlus.h" />
     <ClInclude Include="GUI.h" />

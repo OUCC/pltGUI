@@ -28,7 +28,7 @@ class PlotDataWindow : public MiniWindow
 		}
 
 		if (SimpleGUI::Button(app.Eng_Jp?U"Add Graph":U"グラフを追加", pos + Vec2(100, 0))) {
-			plotSettings.push_back(PlotSetting{});
+			plotSettings.push_back(PlotSetting());
 		}
 		pos.y += 40 + vSpace;
 

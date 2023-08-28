@@ -14,6 +14,7 @@
 #include "MenuBar.h"
 #include "PlotDataWindow.h"
 #include "PlotSettingWindow.h"
+#include "GraphViewWindow.h"
 
 void Main()
 {
@@ -35,6 +36,8 @@ void Main()
 		plotDataWindow.draw();
 
 		plotSettingWindow.draw();
+
+		graphViewWindow.draw();
 
 		//Popup描画
 		PopupWindow::update();

@@ -5,7 +5,10 @@
 class PlotSetting
 {
 public:
-	PlotSetting() {}
+	static FilePath GetOutputFilePath() {
+		return FileSystem::GetFolderPath(SpecialFolder::LocalAppData) + U"/pltGUI/cache/output.png";
+	}
+
 
 	enum class GraphSource {
 		function,dataFile
