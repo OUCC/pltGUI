@@ -3,7 +3,7 @@
 #define DEBUG if(true)
 
 #include "Const.h"
-#include "InputPlus.h"
+#include "MousePlus.h"
 #include "AppSetting.h"
 #include "GUI.h"
 #include "TextArea.h"
@@ -28,26 +28,20 @@ void Main()
 	{
 		ClearPrint();
 
-		MouseLeft.setGlobalLock(not popupWindows.empty());
+		mouse.frontWindow = popupWindows.isEmpty();
 
 		menuBar.draw();
-
-		//sampleWindow.draw();
 
 		plotDataWindow.draw();
 
 		plotSettingWindow.draw();
 
-		MouseLeft.setGlobalLock(false);//要調整
-
 		//Popup描画
-		for (auto itr = popupWindows.begin(); itr!=popupWindows.end();) {
-			if (not (*itr)->active) {
-				itr=popupWindows.erase(itr);
-				continue;
-			}
-			(*itr)->draw();
-			itr++;
+		PopupWindow::update();
+		popupWindows.remove_if([](PopupWindow* p) {return not p->active; });
+		for (auto [i, pw] : Indexed(popupWindows)) {
+			mouse.frontWindow = (i == popupWindows.size() - 1);
+			pw->draw();
 		}
 	}
 }

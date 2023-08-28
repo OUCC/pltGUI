@@ -14,9 +14,9 @@ class MenuBar : public MiniWindow {
 	ButtonInfo MenuBarButton(const String& text,Vec2 lc) {
 		DrawableText dtext{ Text(text) };
 		RectF rect = dtext.draw(Arg::leftCenter = lc+Vec2(5+dtext.region().x, 0), ColorF{0.2}).stretched(8, -2);
-		if (mouseOverWindow && rect.mouseOver()) {
+		if (mouse.onRect(rect)) {
 			rect.draw(ColorF{ 0.5,0.1 }).drawFrame(1,ColorF{0.5});
-			return ButtonInfo{MouseLeft.down(),rect.w};
+			return ButtonInfo{ mouse.left.down,rect.w };
 		}
 		return ButtonInfo{false,rect.w};
 	}
@@ -32,9 +32,9 @@ class MenuBar : public MiniWindow {
 		bool MenuItemButton(String text, Vec2 tl) {
 			DrawableText dtext{ Text(text) };
 			RectF rect = dtext.draw(tl, ColorF{ 0.2 }).setSize(windowRect.w, 30);
-			if (mouseOverWindow && rect.mouseOver()) {
+			if (mouse.onRect(rect)) {
 				rect.draw(ColorF{ 0.5,0.1 }).drawFrame(1, ColorF{ 0.5 });
-				return MouseLeft.down();
+				return mouse.left.down;
 			}
 			return false;
 		}
@@ -90,8 +90,16 @@ class MenuBar : public MiniWindow {
 	};
 	class HelpMenu : public MenuPopupWindow {
 	public:
-		HelpMenu() :MenuPopupWindow() { itemNum = 1; }
+		PopupMessage msg;
+		HelpMenu() :MenuPopupWindow() {
+			itemNum = 1;
+			msg.windowRect = Rect{ 200,100,300,300 };
+			msg.closeButtonPos = Vec2{ 0,0 };
+		}
 		void menuPopupLayout() override {
+			if (MenuItemButton(app.Eng_Jp ? U"Popup" : U"ポップアップ", Vec2{ 0,0 })) {
+				msg.open();
+			}
 		}
 	};
 
@@ -119,9 +127,10 @@ class MenuBar : public MiniWindow {
 		info=MenuBarButton(app.Eng_Jp?U"File":U"ファイル", lc);
 		if (info.pushed) {
 			fileMenu.windowRect.x = lc.x;
-			closeAllMenu();
+			//closeAllMenu();
 			fileMenu.open();
 			MouseL.clearInput();
+			Print <<U"fileMenu";
 		}
 
 		lc.x += info.width;

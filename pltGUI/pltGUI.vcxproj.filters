@@ -782,7 +782,7 @@
     <ClInclude Include="GUI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="InputPlus.h">
+    <ClInclude Include="MousePlus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MenuBar.h">

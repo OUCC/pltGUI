@@ -19,8 +19,8 @@ class PlotDataWindow : public MiniWindow
 		for (auto i : Range(0, plotSettings.size() - 1)) {
 			plotSettings[i].function.draw(pos);
 			RectF rect{ 0, pos.y - 5, windowRect.w, 10+ plotSettings[i].function.size.y };
-			rect.draw(selectingIndex == i || (rect.mouseOver() && mouseOverWindow) ? SelectedFrontColor : ColorF{0,0});
-			if (rect.mouseOver() && mouseOverWindow && MouseLeft.down()) {
+			rect.draw(selectingIndex == i || mouse.onRect(rect) ? SelectedFrontColor : ColorF{0,0});
+			if (mouse.clickedRect(rect)) {
 				selectingIndex = i;
 				plotSettingWindow.plotSettingsIndex = i;
 			}

@@ -212,7 +212,7 @@ public:
 			const RectF region{ pos, Max(size.x, 40), Max(size.y, 36) };
 
 			// 入力カーソルのアクティブ / 非アクティブを切り替える
-			if (MouseL.down() && (TextInput::GetEditingText().isEmpty()))
+			if (mouse.left.down && (TextInput::GetEditingText().isEmpty()))
 			{
 				if (Cursor::OnClientRect() && region.mouseOver())
 				{
@@ -613,7 +613,7 @@ public:
 
 			// テキストエリアクリックでテキストカーソルを移動させる
 			if (const Vec2 cursor = Cursor::PosF();
-				enabled && textRenderRegion.intersects(cursor) && MouseLeft.pressed())
+				enabled && textRenderRegion.intersects(cursor) && mouse.left.pressed)
 			{
 				if (clipInfos)
 				{
@@ -669,17 +669,17 @@ public:
 				}
 			}
 
-			if (MouseL.down() && not KeyShift.pressed() ||
+			if (mouse.left.down && not KeyShift.pressed() ||
 				(not KeyShift.pressed() && (KeyLeft | KeyRight | KeyUp | KeyDown).down()))
 			{
 				rangeSelecting = false;
 				//rangeSelectFrom = cursorPos;
 			}
-			else if (active && ((KeyShift.pressed() && (KeyLeft | KeyRight | KeyUp | KeyDown).down() || MouseL.down()) || (MouseL.pressed() && not MouseL.down())))
+			else if (active && ((KeyShift.pressed() && (KeyLeft | KeyRight | KeyUp | KeyDown).down() || mouse.left.down) || (mouse.left.pressed && not mouse.left.down)))
 			{
 				rangeSelecting = true;
 			}
-			else if (MouseL.up() && rangeSelectFrom == cursorPos)
+			else if (mouse.left.up && rangeSelectFrom == cursorPos)
 			{
 				rangeSelecting = false;
 			}
