@@ -327,6 +327,7 @@
     <ClInclude Include="PlotDataWindow.h" />
     <ClInclude Include="PlotSetting.h" />
     <ClInclude Include="PltFile.h" />
+    <ClInclude Include="PltFileViewWindow.h" />
     <ClInclude Include="PopupWindow.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TextArea.h" />

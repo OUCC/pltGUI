@@ -7,6 +7,7 @@
 class PltFile
 {
 
+public:
 	static FilePath GetCachePltFilePath() {
 		return FileSystem::GetFolderPath(SpecialFolder::LocalAppData) + U"/pltGUI/cache/plot.plt";
 	}
@@ -14,9 +15,6 @@ class PltFile
 		return FileSystem::GetFolderPath(SpecialFolder::LocalAppData) + U"/pltGUI/cache/execute.bat";
 	}
 
-	ChildProcess child;
-
-public:
 
 	void create() {
 		TextWriter w(GetCachePltFilePath(), TextEncoding::UTF8_NO_BOM);
@@ -31,7 +29,7 @@ public:
 		for (auto [i, plt] : Indexed(plotSettings)) {
 			w << (i == 0 ? U"plot " : U", ")
 				<< plt.function.text
-				<< (i != 0 ? U"\\" : U"")
+				<< (i != plotSettings.size() - 1 ? U"\\" : U"")
 				;
 		}
 

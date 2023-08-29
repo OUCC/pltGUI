@@ -15,6 +15,7 @@
 #include "PlotDataWindow.h"
 #include "PlotSettingWindow.h"
 #include "GraphViewWindow.h"
+#include "PltFileViewWindow.h"
 
 #include "AppLayout.h"
 
@@ -42,6 +43,8 @@ void Main()
 		plotSettingWindow.draw();
 
 		graphViewWindow.draw();
+
+		pltFileViewWindow.draw();
 
 		//Popup描画
 		PopupWindow::update();

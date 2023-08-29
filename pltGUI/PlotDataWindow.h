@@ -12,11 +12,12 @@ class PlotDataWindow : public MiniWindow
 
 	void layout() override {
 		Rect{ windowRect.size }.drawFrame(1, FrameColor);
+		bool changed = false;
 
 		Vec2 pos{ 50,50 - scroll.y };
 
 		for (auto i : Range(0, plotSettings.size() - 1)) {
-			plotSettings[i].function.draw(pos);
+			changed |= plotSettings[i].function.draw(pos);
 			RectF rect{ 0, pos.y - 5, windowRect.w, 10+ plotSettings[i].function.size.y };
 			rect.draw(selectingIndex == i || mouse.onRect(rect) ? SelectedFrontColor : ColorF{0,0});
 			if (mouse.clickedRect(rect)) {
@@ -30,6 +31,11 @@ class PlotDataWindow : public MiniWindow
 			plotSettings.push_back(PlotSetting());
 		}
 		pos.y += 40 + vSpace;
+
+		if (changed) {
+			pltFile.create();
+			pltFile.execute();
+		}
 
 		scrollY(pos.y);
 	}

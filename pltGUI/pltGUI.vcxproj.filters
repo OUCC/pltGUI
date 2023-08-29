@@ -818,5 +818,8 @@
     <ClInclude Include="AppLayout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PltFileViewWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
