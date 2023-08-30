@@ -2,6 +2,7 @@
 
 #include "MiniWindow.h"
 #include "PlotSetting.h"
+#include "PltFileViewWindow.h"
 
 class GraphViewWindow : public MiniWindow
 {
@@ -16,6 +17,7 @@ class GraphViewWindow : public MiniWindow
 			{
 				TextureRegion temp{ Texture(PlotSetting::GetOutputFilePath()).fitted(Min(windowRect.w - 40, 640), Min(windowRect.h - 50, 480)) };
 				if(temp.texture) graph = temp;
+				pltFileViewWindow.reloadPltFIle();
 				break;
 			}
 		}

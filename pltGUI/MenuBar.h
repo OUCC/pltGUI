@@ -94,15 +94,15 @@ class MenuBar : public MiniWindow {
 	};
 	class HelpMenu : public MenuPopupWindow {
 	public:
-		PopupMessage msg;
+		//PopupMessage msg;
 		HelpMenu() :MenuPopupWindow() {
 			itemNum = 1;
-			msg.windowRect = Rect{ 200,100,300,300 };
-			msg.closeButtonPos = Vec2{ 0,0 };
+			//msg.windowRect = Rect{ 200,100,300,300 };
+			//msg.closeButtonPos = Vec2{ 0,0 };
 		}
 		void menuPopupLayout() override {
 			if (MenuItemButton(app.Eng_Jp ? U"Popup" : U"ポップアップ", Vec2{ 0,0 })) {
-				msg.open();
+				//msg.open();
 			}
 		}
 	};

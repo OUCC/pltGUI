@@ -43,14 +43,3 @@ void PopupWindow::update() {
 	popupWindows.append(nextAddPopupWindows);
 	nextAddPopupWindows.clear();
 }
-
-class PopupMessage : public PopupWindow
-{
-	void popupLayout() override {
-		Rect{ windowRect.size }.draw(BackgroundColor).drawFrame(2,FrameColor);
-		//SimpleGUI::ButtonAt(closeButtonLabel, closeButtonPos);
-	}
-public:
-	Vec2 closeButtonPos;
-	String closeButtonLabel{U"OK"};
-};

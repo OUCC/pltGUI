@@ -27,7 +27,9 @@ void Main()
 	System::SetTerminationTriggers(UserAction::CloseButtonClicked);
 	Scene::SetBackground(ColorF{1});
 	Window::Maximize();
-	
+
+	TextureAsset::Register(U"trash", 0xf1f8_icon, 30);
+
 	while (System::Update())
 	{
 		ClearPrint();
@@ -47,12 +49,12 @@ void Main()
 		pltFileViewWindow.draw();
 
 		//Popup描画
-		PopupWindow::update();
-		popupWindows.remove_if([](PopupWindow* p) {return not p->active; });
 		for (auto [i, pw] : Indexed(popupWindows)) {
 			mouse.frontWindow = (i == popupWindows.size() - 1);
 			pw->draw();
 		}
+		PopupWindow::update();
+		popupWindows.remove_if([](PopupWindow* p) {return not p->active; });
 	}
 }
 

@@ -21,10 +21,6 @@ public:
 			pltFileViewWindow.windowRect = Rect{ 0,0,0,0 };
 		}
 
-		plotSettings.each([&](auto& plt) {
-			plt.function.size.x = plotDataWindow.windowRect.w * 0.8;
-			plt.title.size.x = plotSettingWindow.windowRect.w * 0.6;
-			});
 
 	}
 };

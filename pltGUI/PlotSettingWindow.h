@@ -15,7 +15,9 @@ public:
 
 	void layout() override {
 		Rect{ windowRect.size }.drawFrame(2, FrameColor);
-		PlotSetting& plt = plotSettings[plotSettingsIndex];
+		auto itr=plotSettings.begin();
+		for (auto i : Range(1, plotSettingsIndex)) ++itr;
+		PlotSetting& plt = *itr;
 		bool changed = false;
 
 		Vec2 pos{ 50,50 - scroll.y };

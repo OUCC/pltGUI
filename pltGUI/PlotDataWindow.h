@@ -16,18 +16,33 @@ class PlotDataWindow : public MiniWindow
 
 		Vec2 pos{ 50,50 - scroll.y };
 
-		for (auto i : Range(0, plotSettings.size() - 1)) {
-			changed |= plotSettings[i].function.draw(pos);
-			RectF rect{ 0, pos.y - 5, windowRect.w, 10+ plotSettings[i].function.size.y };
+		//for (auto [i,plt]:Indexed(plotSettings)) {
+		for (auto [i,plt]:IndexedRef(plotSettings)) {
+			RectF rect{ 0, pos.y - 5, windowRect.w, 10+ plt.function.size.y };
 			rect.draw(selectingIndex == i || mouse.onRect(rect) ? SelectedFrontColor : ColorF{0,0});
+			changed |= plt.function.draw(pos);
 			if (mouse.clickedRect(rect)) {
 				selectingIndex = i;
 				plotSettingWindow.plotSettingsIndex = i;
 			}
-			pos.y += plotSettings[i].function.size.y + vSpace;
+			if (plotSettings.size()!=1 && mouse.clickedRect(TextureAsset(U"trash").draw(rect.tr() + Vec2(-50, 5), FrameColor))) {
+				plt.deleteConfirmPopup.open();
+			}
+			pos.y += plt.function.size.y + vSpace;
 		}
+		plotSettings.remove_if([&changed](auto plt) {
+			bool del = plt.deleteConfirmPopup.closeButtonClicked;
+			if (del) {
+				changed = true;
+				plotSettingWindow.plotSettingsIndex --;
+			}
+			return del;
+			});
+		
+		
 
 		if (SimpleGUI::Button(app.Eng_Jp?U"Add Graph":U"グラフを追加", pos + Vec2(100, 0))) {
+			changed = true;
 			plotSettings.push_back(PlotSetting());
 		}
 		pos.y += 40 + vSpace;
