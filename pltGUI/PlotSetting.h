@@ -7,9 +7,6 @@
 class PlotSetting
 {
 public:
-	static FilePath GetOutputFilePath() {
-		return FileSystem::GetFolderPath(SpecialFolder::LocalAppData) + U"/pltGUI/cache/output.png";
-	}
 
 	class DeleteConfirmPopup : public PopupWindow
 	{

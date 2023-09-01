@@ -5,9 +5,15 @@ class MiniWindow
 protected:
 
 	Vec2 scroll;
+	void scrollX(double maxX) {
+		if (mouse.onWindow) {
+			double scroll_v = (Mouse::WheelH() + Mouse::Wheel() * (KeyShift.pressed() ? 1 : 0)) * scrollSpeedX;
+			scroll.x = Clamp(scroll.x + scroll_v, 0.0, Max(0.0, maxX + scroll.x - windowRect.w));
+		}
+	}
 	void scrollY(double maxY) {
 		if (mouse.onWindow) {
-			double scroll_v = Mouse::Wheel() * scrollSpeed;
+			double scroll_v = Mouse::Wheel() * scrollSpeedY * (KeyShift.pressed() ? 0 : 1);
 			scroll.y = Clamp(scroll.y + scroll_v, 0.0, Max(0.0, maxY + scroll.y - windowRect.h));
 		}
 	}

@@ -8,16 +8,9 @@ class PltFile
 {
 
 public:
-	static FilePath GetCachePltFilePath() {
-		return FileSystem::GetFolderPath(SpecialFolder::LocalAppData) + U"/pltGUI/cache/plot.plt";
-	}
-	static FilePath GetCacheExecuteBatFilePath() {
-		return FileSystem::GetFolderPath(SpecialFolder::LocalAppData) + U"/pltGUI/cache/execute.bat";
-	}
-
 
 	void create() {
-		TextWriter w(GetCachePltFilePath(), TextEncoding::UTF8_NO_BOM);
+		TextWriter w(app.GetCachePltFilePath(), TextEncoding::UTF8_NO_BOM);
 
 
 		{
@@ -38,13 +31,28 @@ public:
 
 	void execute() {
 		//gnuplot実行のバッチファイルを作成
-		if (not FileSystem::Exists(GetCacheExecuteBatFilePath())) {
-			TextWriter w(GetCacheExecuteBatFilePath(),TextEncoding::UTF8_NO_BOM);
+		if (not FileSystem::Exists(app.GetCacheExecuteBatFilePath())) {
+			TextWriter w(app.GetCacheExecuteBatFilePath(),TextEncoding::UTF8_NO_BOM);
 			w << U"cd %~dp0";//%~dp0=バッチファイルのあるディレクトリ に移動
 			w << U"gnuplot plot.plt";
 		}
 
-		ShellExecuteW(NULL, L"open", L"cmd.exe", (U"/c "+GetCacheExecuteBatFilePath()).toWstr().c_str(), L"", SW_HIDE);
+		ShellExecuteW(NULL, L"open", L"cmd.exe", (U"/c "+app.GetCacheExecuteBatFilePath()).toWstr().c_str(), L"", SW_HIDE);
+	}
+
+	//毎フレーム実行すると重いので、最大で1秒に1回実行する
+	void update(bool changed) {
+		static Stopwatch sw{ StartImmediately::Yes };
+		static bool changedInRestTime = false;
+		if (sw.s() < 1) {
+			if (changed) changedInRestTime = true;
+			return;
+		}
+		if (changed || changedInRestTime) {
+			create();
+			execute();
+			sw.restart();
+		}
 	}
 };
 

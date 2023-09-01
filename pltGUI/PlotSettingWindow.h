@@ -32,11 +32,9 @@ public:
 		changed|=SimpleGUI::ColorPicker(plt.color, pos + padding, plt.color_enabled);
 		pos.y += SimpleGUI::ColorPickerRegion(pos).h + vSpace;
 
-		if (changed) {
-			pltFile.create();
-			pltFile.execute();
-		}
 
+
+		pltFile.update(changed);
 
 		scrollY(pos.y);
 	}

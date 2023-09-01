@@ -47,10 +47,8 @@ class PlotDataWindow : public MiniWindow
 		}
 		pos.y += 40 + vSpace;
 
-		if (changed) {
-			pltFile.create();
-			pltFile.execute();
-		}
+
+		pltFile.update(changed);
 
 		scrollY(pos.y);
 	}

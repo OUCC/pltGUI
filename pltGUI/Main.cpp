@@ -5,6 +5,7 @@
 #include "Const.h"
 #include "MousePlus.h"
 #include "AppSetting.h"
+
 #include "GUI.h"
 #include "TextArea.h"
 #include "MiniWindow.h"
@@ -29,6 +30,8 @@ void Main()
 	Window::Maximize();
 
 	TextureAsset::Register(U"trash", 0xf1f8_icon, 30);
+
+	app.load();
 
 	while (System::Update())
 	{
@@ -56,6 +59,9 @@ void Main()
 		PopupWindow::update();
 		popupWindows.remove_if([](PopupWindow* p) {return not p->active; });
 	}
+
+	app.save();
+
 }
 
 //

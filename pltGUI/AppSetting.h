@@ -12,6 +12,15 @@ public:
 	static FilePath GetAppSettingPath() {
 		return FileSystem::GetFolderPath(SpecialFolder::LocalAppData)+U"/pltGUI/setting.json";
 	}
+	static FilePath GetOutputFilePath() {
+		return FileSystem::GetFolderPath(SpecialFolder::LocalAppData) + U"/pltGUI/cache/output.png";
+	}
+	static FilePath GetCachePltFilePath() {
+		return FileSystem::GetFolderPath(SpecialFolder::LocalAppData) + U"/pltGUI/cache/plot.plt";
+	}
+	static FilePath GetCacheExecuteBatFilePath() {
+		return FileSystem::GetFolderPath(SpecialFolder::LocalAppData) + U"/pltGUI/cache/execute.bat";
+	}
 
 	bool load() {
 		JSON json =  JSON::Load(GetAppSettingPath());
