@@ -821,5 +821,11 @@
     <ClInclude Include="PltFileViewWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WholeSetting.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WholeSettingWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

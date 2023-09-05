@@ -8,6 +8,7 @@ constexpr ColorF DisabledTextColor{ 0.67 };
 constexpr ColorF FrameColor{ 0.67 };
 constexpr ColorF DisabledFrameColor{ 0.8 };
 constexpr ColorF SelectedFrontColor{ 0.5, 0.1 };
+constexpr ColorF HighlightColor{ 0.9,0.95,1.0 };
 
 constexpr ColorF GetTextColor(bool enabled)
 {

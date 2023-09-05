@@ -15,6 +15,7 @@
 #include "MenuBar.h"
 #include "PlotDataWindow.h"
 #include "PlotSettingWindow.h"
+#include "WholeSettingWindow.h"
 #include "GraphViewWindow.h"
 #include "PltFileViewWindow.h"
 
@@ -45,7 +46,9 @@ void Main()
 
 		plotDataWindow.draw();
 
-		plotSettingWindow.draw();
+		plotDataWindow.selectingIndex == -1 ?
+			wholeSettingWindow.draw() :
+			plotSettingWindow.draw();
 
 		graphViewWindow.draw();
 

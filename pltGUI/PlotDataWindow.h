@@ -8,18 +8,25 @@
 
 class PlotDataWindow : public MiniWindow
 {
-	int selectingIndex = -1;//-1:graph 0~:plot
-
 	void layout() override {
 		Rect{ windowRect.size }.drawFrame(1, FrameColor);
 		bool changed = false;
 
 		Vec2 pos{ 50,50 - scroll.y };
 
-		//for (auto [i,plt]:Indexed(plotSettings)) {
+		{
+			RectF rect{ 0, pos.y - 5, windowRect.w, 10 + 30 };
+			rect.draw(selectingIndex == -1 || mouse.onRect(rect) ? HighlightColor : BackgroundColor);
+			SimpleGUI::GetFont()(app.Eng_Jp ? U"Whole Setting" : U"全体設定").draw(pos, ActiveTextColor);
+			if (mouse.clickedRect(rect)) {
+				selectingIndex = -1;
+			}
+			pos.y += 30 + vSpace;
+		}
+
 		for (auto [i,plt]:IndexedRef(plotSettings)) {
 			RectF rect{ 0, pos.y - 5, windowRect.w, 10+ plt.function.size.y };
-			rect.draw(selectingIndex == i || mouse.onRect(rect) ? SelectedFrontColor : ColorF{0,0});
+			rect.draw(selectingIndex == i || mouse.onRect(rect) ? HighlightColor : BackgroundColor);
 			changed |= plt.function.draw(pos);
 			if (mouse.clickedRect(rect)) {
 				selectingIndex = i;
@@ -54,6 +61,7 @@ class PlotDataWindow : public MiniWindow
 	}
 
 public:
+	int selectingIndex = -1;//-1:graph 0~:plot
 	double textAreaWidth;
 };
 

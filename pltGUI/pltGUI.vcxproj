@@ -331,6 +331,8 @@
     <ClInclude Include="PopupWindow.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TextArea.h" />
+    <ClInclude Include="WholeSetting.h" />
+    <ClInclude Include="WholeSettingWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App\example\obj\blacksmith.obj">

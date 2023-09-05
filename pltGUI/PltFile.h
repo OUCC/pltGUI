@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "PlotSetting.h"
+#include "WholeSetting.h"
 
 #include <Windows.h>
 
@@ -14,14 +15,24 @@ public:
 
 
 		{
+			auto& plt = wholeSetting;
+
 			w << U"set encoding utf8";
 			w << U"set terminal pngcairo enhanced ";
 			w << U"set output \"output.png\"";
+
+			if (plt.title.enabled) w << U"set title \"" + plt.title.text + U"\"";
+			if (plt.xlabel.enabled) w << U"set xlabel \"" + plt.xlabel.text + U"\"";
+			if (plt.ylabel.enabled) w << U"set ylabel \"" + plt.ylabel.text + U"\"";
+
 		}
 
 		for (auto [i, plt] : Indexed(plotSettings)) {
 			w << (i == 0 ? U"plot " : U", ")
 				<< plt.function.text
+				<< (plt.title.enabled ? U" title \"" + plt.title.text + U"\"" : U"")
+				<< (plt.color_enabled ? U" with lines" : U"")
+				<< (plt.color_enabled ? U" linecolor rgb \"#"+plt.color.toColor().toHex()+U"\"" : U"")
 				<< (i != plotSettings.size() - 1 ? U"\\" : U"")
 				;
 		}
