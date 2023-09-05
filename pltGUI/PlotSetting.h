@@ -28,10 +28,8 @@ public:
 	};
 	DeleteConfirmPopup deleteConfirmPopup;
 
-	enum class GraphSource {
-		function,dataFile
-	};
-	GraphSource graphSource;
+	//0:function, 1: dataFile
+	size_t graphSourceIndex = 0;
 	TextArea function;
 	FilePath dataFile;
 

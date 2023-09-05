@@ -22,7 +22,7 @@ public:
 
 	bool active = false;
 
-	bool enabled = true;
+	bool enabled = false;
 
 	bool textChanged = false;
 

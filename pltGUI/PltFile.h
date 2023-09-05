@@ -29,11 +29,11 @@ public:
 
 		for (auto [i, plt] : Indexed(plotSettings)) {
 			w << (i == 0 ? U"plot " : U", ")
-				<< plt.function.text
-				<< (plt.title.enabled ? U" title \"" + plt.title.text + U"\"" : U"")
-				<< (plt.color_enabled ? U" with lines" : U"")
-				<< (plt.color_enabled ? U" linecolor rgb \"#"+plt.color.toColor().toHex()+U"\"" : U"")
-				<< (i != plotSettings.size() - 1 ? U"\\" : U"")
+				<< (plt.graphSourceIndex == 0 ? plt.function.text+U"\\" : U"\"" + plt.dataFile + U"\"\\");
+			w << (plt.title.enabled ? U" title \"" + plt.title.text + U"\"\\"
+				: (plt.graphSourceIndex == 1 ? U" title \"" + FileSystem::FileName(plt.dataFile) + U"\"\\" : U""));
+			w << (plt.color_enabled ? U" with lines" : U"")
+				<< (plt.color_enabled ? U" linecolor rgb \"#" + plt.color.toColor().toHex() + U"\"\\" : U"")
 				;
 		}
 

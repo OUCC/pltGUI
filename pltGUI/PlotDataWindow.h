@@ -27,7 +27,15 @@ class PlotDataWindow : public MiniWindow
 		for (auto [i,plt]:IndexedRef(plotSettings)) {
 			RectF rect{ 0, pos.y - 5, windowRect.w, 10+ plt.function.size.y };
 			rect.draw(selectingIndex == i || mouse.onRect(rect) ? HighlightColor : BackgroundColor);
-			changed |= plt.function.draw(pos);
+			if (plt.graphSourceIndex == 0 && not plt.function.text.isEmpty()) {
+				SimpleGUI::GetFont()(plt.function.text).draw(pos, ActiveTextColor);
+			}
+			else if (plt.graphSourceIndex == 1 && not plt.dataFile.isEmpty()) {
+				SimpleGUI::GetFont()(FileSystem::FileName(plt.dataFile)).draw(pos, ActiveTextColor);
+			}
+			else {
+				SimpleGUI::GetFont()((app.Eng_Jp ? U"Graph" : U"グラフ") + Format(i+1)).draw(pos, ActiveTextColor);
+			}
 			if (mouse.clickedRect(rect)) {
 				selectingIndex = i;
 				plotSettingWindow.plotSettingsIndex = i;

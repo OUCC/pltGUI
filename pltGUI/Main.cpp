@@ -31,6 +31,8 @@ void Main()
 	Window::Maximize();
 
 	TextureAsset::Register(U"trash", 0xf1f8_icon, 30);
+	TextureAsset::Register(U"folder_close", 0xf07b_icon, 30);
+	TextureAsset::Register(U"folder_open", 0xf07c_icon, 30);
 
 	app.load();
 
