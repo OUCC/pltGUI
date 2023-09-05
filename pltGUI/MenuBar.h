@@ -59,7 +59,7 @@ class MenuBar : public MiniWindow {
 				app.save();
 			}
 			if (MenuItemButton(app.Eng_Jp ? U"Open AppSetting File":U"アプリ設定ファイルを開く", Vec2{0,60})) {
-				System::LaunchFile(AppSetting::GetAppSettingPath());
+				System::LaunchFile(app.GetAppSettingPath());
 			}
 			if (MenuItemButton(app.Eng_Jp ? U"Create .plt File":U".pltファイルを作成する", Vec2{0,90})) {
 				pltFile.create();

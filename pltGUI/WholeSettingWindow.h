@@ -13,7 +13,15 @@ class WholeSettingWindow : public MiniWindow
 
 		Vec2 pos{ 50,50 - scroll.y };
 		Vec2 padding{ 150,0 };
-
+		{
+			Array<String> items;
+			for (auto& t : plt.terminals) {
+				items.push_back(t.ext);
+			}
+			changed|=SimpleGUI::RadioButtons(plt.terminalIndex, items, pos);
+			app.extentionOfOutputFile = plt.terminals[plt.terminalIndex].ext;
+			pos.y += SimpleGUI::RadioButtonsRegion(items, pos + padding).h + vSpace;
+		}
 		SimpleGUI::CheckBox(plt.title.enabled, app.Eng_Jp ? U"Graph Title" : U"グラフタイトル", pos);
 		changed |= plt.title.draw(pos + padding);
 		pos.y += plt.title.size.y + vSpace;

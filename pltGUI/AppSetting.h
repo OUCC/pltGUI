@@ -9,16 +9,18 @@ public:
 
 	bool showGraphInApp = true;
 
-	static FilePath GetAppSettingPath() {
+	String extentionOfOutputFile;
+
+	FilePath GetAppSettingPath() {
 		return FileSystem::GetFolderPath(SpecialFolder::LocalAppData)+U"/pltGUI/setting.json";
 	}
-	static FilePath GetOutputFilePath() {
-		return FileSystem::GetFolderPath(SpecialFolder::LocalAppData) + U"/pltGUI/cache/output.png";
+	FilePath GetOutputFilePath() {
+		return FileSystem::GetFolderPath(SpecialFolder::LocalAppData) + U"/pltGUI/cache/output." + extentionOfOutputFile;
 	}
-	static FilePath GetCachePltFilePath() {
+	FilePath GetCachePltFilePath() {
 		return FileSystem::GetFolderPath(SpecialFolder::LocalAppData) + U"/pltGUI/cache/plot.plt";
 	}
-	static FilePath GetCacheExecuteBatFilePath() {
+	FilePath GetCacheExecuteBatFilePath() {
 		return FileSystem::GetFolderPath(SpecialFolder::LocalAppData) + U"/pltGUI/cache/execute.bat";
 	}
 

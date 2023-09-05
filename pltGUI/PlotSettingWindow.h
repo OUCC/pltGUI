@@ -30,7 +30,6 @@ public:
 			double width = SimpleGUI::GetFont()(FileSystem::FileName(plt.dataFile)).draw(pos + padding + Vec2(0, 40),ActiveTextColor).w;
 			RectF iconRect{ pos + padding + Vec2(width + 20, 40), Vec2(30, 30) };
 			TextureAsset(mouse.onRect(iconRect) ? U"folder_open" : U"folder_close").draw(iconRect.tl(), FrameColor);
-			Print << mouse.onRect(iconRect);
 			if (mouse.clickedRect(iconRect)) {
 				Optional<String> file = Dialog::OpenFile();
 				if (file) plt.dataFile = *file;

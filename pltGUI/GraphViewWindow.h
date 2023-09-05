@@ -34,8 +34,16 @@ class GraphViewWindow : public MiniWindow
 			lastWrite = t;
 		}
 
-		if(Graph().texture) {
-			Graph().draw(Vec2(20, 20)).drawFrame(1,1,FrameColor);
+		if (wholeSetting.terminals[wholeSetting.terminalIndex].viewable) {
+			if (Graph().texture) {
+				Graph().draw(Vec2(20, 20)).drawFrame(1, 1, FrameColor);
+			}
+		}
+		else {
+			SimpleGUI::GetFont()(wholeSetting.terminals[wholeSetting.terminalIndex].ext
+				  + (app.Eng_Jp ? U" file is not able to view in this app.\nChange to 2 Colmun Layout and use another viewer side by side."
+					  : U"ファイルはこのアプリで見ることができません。\n2列レイアウトに変更し、別のビューワーと並べて使用してください。"))
+				.draw(20, 20, ActiveTextColor);
 		}
 	}
 	DateTime lastWrite{};

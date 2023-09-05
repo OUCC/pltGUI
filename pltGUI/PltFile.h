@@ -18,8 +18,8 @@ public:
 			auto& plt = wholeSetting;
 
 			w << U"set encoding utf8";
-			w << U"set terminal pngcairo enhanced ";
-			w << U"set output \"output.png\"";
+			w << U"set terminal " + plt.terminals[plt.terminalIndex].command;
+			w << U"set output \"output." + plt.terminals[plt.terminalIndex].ext + U"\"";
 
 			if (plt.title.enabled) w << U"set title \"" + plt.title.text + U"\"";
 			if (plt.xlabel.enabled) w << U"set xlabel \"" + plt.xlabel.text + U"\"";
@@ -53,6 +53,7 @@ public:
 
 	//毎フレーム実行すると重いので、最大で1秒に1回実行する
 	void update(bool changed) {
+		Print << changed;
 		static Stopwatch sw{ StartImmediately::Yes };
 		static bool changedInRestTime = false;
 		if (sw.s() < 1) {
