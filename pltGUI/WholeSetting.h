@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "TextArea.h"
+#include "RadioButtons.h"
 
 class WholeSetting
 {
@@ -13,14 +14,13 @@ class WholeSetting
 	};
 
 public:
-	struct ImageType{
-		String display, command;
-	};
-	size_t terminalIndex = 0;
-	Array<Terminal> terminals{
+	Array<Terminal> terminalInfos{
 		Terminal{U"png",U"pngcairo enhanced",true},
+		Terminal{U"gif",U"gif enhanced",true},
 		Terminal{U"pdf",U"pdfcairo enhanced",false},
 	};
+	RadioButtons terminal{ {U"png",U"gif",U"pdf"}};
+
 
 	TextArea title;
 	TextArea xlabel;

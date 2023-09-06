@@ -24,8 +24,8 @@ public:
 		Vec2 padding{ 150,0 };
 
 		{
-			changed |= SimpleGUI::RadioButtons(plt.graphSourceIndex, { U"Function",U"DataFile" }, pos);
-			plt.function.enabled = plt.graphSourceIndex == 0;
+			changed|=plt.graphSource.draw(pos);
+			plt.function.enabled = plt.graphSource.index == 0;
 			changed |= plt.function.draw(pos + padding);
 			double width = SimpleGUI::GetFont()(FileSystem::FileName(plt.dataFile)).draw(pos + padding + Vec2(0, 40),ActiveTextColor).w;
 			RectF iconRect{ pos + padding + Vec2(width + 20, 40), Vec2(30, 30) };
@@ -34,7 +34,7 @@ public:
 				Optional<String> file = Dialog::OpenFile();
 				if (file) plt.dataFile = *file;
 			}
-			pos.y += 90;
+			pos.y += plt.graphSource.size.y + vSpace;
 		}
 
 		changed|=SimpleGUI::CheckBox(plt.title.enabled,app.Eng_Jp ? U"Title" : U"凡例名", pos);

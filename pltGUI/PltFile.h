@@ -18,8 +18,8 @@ public:
 			auto& plt = wholeSetting;
 
 			w << U"set encoding utf8";
-			w << U"set terminal " + plt.terminals[plt.terminalIndex].command;
-			w << U"set output \"output." + plt.terminals[plt.terminalIndex].ext + U"\"";
+			w << U"set terminal " + plt.terminalInfos[plt.terminal.index].command;
+			w << U"set output \"output." + plt.terminalInfos[plt.terminal.index].ext + U"\"";
 
 			if (plt.title.enabled) w << U"set title \"" + plt.title.text + U"\"";
 			if (plt.xlabel.enabled) w << U"set xlabel \"" + plt.xlabel.text + U"\"";
@@ -29,9 +29,9 @@ public:
 
 		for (auto [i, plt] : Indexed(plotSettings)) {
 			w << (i == 0 ? U"plot " : U", ")
-				<< (plt.graphSourceIndex == 0 ? plt.function.text+U"\\" : U"\"" + plt.dataFile + U"\"\\");
+				<< (plt.graphSource.index == 0 ? plt.function.text+U"\\" : U"\"" + plt.dataFile + U"\"\\");
 			w << (plt.title.enabled ? U" title \"" + plt.title.text + U"\"\\"
-				: (plt.graphSourceIndex == 1 ? U" title \"" + FileSystem::FileName(plt.dataFile) + U"\"\\" : U""));
+				: (plt.graphSource.index == 1 ? U" title \"" + FileSystem::FileName(plt.dataFile) + U"\"\\" : U""));
 			w << (plt.color_enabled ? U" with lines" : U"")
 				<< (plt.color_enabled ? U" linecolor rgb \"#" + plt.color.toColor().toHex() + U"\"\\" : U"")
 				;
@@ -64,6 +64,7 @@ public:
 			create();
 			execute();
 			sw.restart();
+			changedInRestTime = false;
 		}
 	}
 };

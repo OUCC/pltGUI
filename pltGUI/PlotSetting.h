@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "TextArea.h"
-
+#include "RadioButtons.h"
 #include "PopupWindow.h"
 
 class PlotSetting
@@ -29,7 +29,7 @@ public:
 	DeleteConfirmPopup deleteConfirmPopup;
 
 	//0:function, 1: dataFile
-	size_t graphSourceIndex = 0;
+	RadioButtons graphSource{ {U"Function",U"DataFile"},{U"関数",U"データファイル"} };
 	TextArea function;
 	FilePath dataFile;
 

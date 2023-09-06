@@ -27,10 +27,10 @@ class PlotDataWindow : public MiniWindow
 		for (auto [i,plt]:IndexedRef(plotSettings)) {
 			RectF rect{ 0, pos.y - 5, windowRect.w, 10+ plt.function.size.y };
 			rect.draw(selectingIndex == i || mouse.onRect(rect) ? HighlightColor : BackgroundColor);
-			if (plt.graphSourceIndex == 0 && not plt.function.text.isEmpty()) {
+			if (plt.graphSource.index == 0 && not plt.function.text.isEmpty()) {
 				SimpleGUI::GetFont()(plt.function.text).draw(pos, ActiveTextColor);
 			}
-			else if (plt.graphSourceIndex == 1 && not plt.dataFile.isEmpty()) {
+			else if (plt.graphSource.index == 1 && not plt.dataFile.isEmpty()) {
 				SimpleGUI::GetFont()(FileSystem::FileName(plt.dataFile)).draw(pos, ActiveTextColor);
 			}
 			else {
