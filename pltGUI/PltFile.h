@@ -29,12 +29,20 @@ public:
 
 		for (auto [i, plt] : Indexed(plotSettings)) {
 			w << (i == 0 ? U"plot " : U", ")
-				<< (plt.graphSource.index == 0 ? plt.function.text+U"\\" : U"\"" + plt.dataFile + U"\"\\");
-			w << (plt.title.enabled ? U" title \"" + plt.title.text + U"\"\\"
-				: (plt.graphSource.index == 1 ? U" title \"" + FileSystem::FileName(plt.dataFile) + U"\"\\" : U""));
-			w << (plt.color_enabled ? U" with lines" : U"")
-				<< (plt.color_enabled ? U" linecolor rgb \"#" + plt.color.toColor().toHex() + U"\"\\" : U"")
-				;
+				<< (plt.graphSource.index == 0 ? plt.function.text + U"\\" : U"\"" + plt.dataFile + U"\"\\");
+			if (plt.title.enabled)
+				w << U" title \"" + plt.title.text + U"\"\\";
+			else if (plt.graphSource.index == 1)
+				w << U" title \"" + FileSystem::FileName(plt.dataFile) + U"\"\\";
+			if (plt.lines.enabled || plt.points.enabled || plt.color.enabled) {
+				if (plt.lines.enabled || plt.points.enabled)w << U" with " << (plt.lines.enabled ? U"lines" : U"") << (plt.points.enabled ? U"points" : U"") << U"\\";
+				else w << U" with " << (plt.graphSource.index == 0 ? U"lines" : U"points") << U"\\";
+				if (plt.lines.enabled && plt.lines.type.enabled) w << U" linetype " << (plt.lines.type.value) << U"\\";
+				if (plt.lines.enabled && plt.lines.width.enabled) w << U" linewidth " << (plt.lines.width.value) << U"\\";
+				if (plt.points.enabled && plt.points.type.enabled) w << U" pointtype " << (plt.points.type.value) << U"\\";
+				if (plt.points.enabled && plt.points.size.enabled) w << U" pointsize " << (plt.points.size.value) << U"\\";
+				if (plt.color.enabled) w << (plt.color.enabled ? U" linecolor rgb \"#" + plt.color.toColor().toHex() + U"\"\\" : U"");
+			}
 		}
 
 	}

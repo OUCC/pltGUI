@@ -10,14 +10,18 @@ class GraphViewWindow : public MiniWindow
 		static TextureRegion graph;
 		FilePath graphPath = app.GetOutputFilePath();
 		static DirectoryWatcher watcher{ FileSystem::ParentPath(graphPath) };
-		for (auto [path, action] : watcher.retrieveChanges())
-		{
-			if (reload || ((path == graphPath)
-				/* && (action == FileAction::Added || action == FileAction::Modified)*/))
-			{
-				TextureRegion temp{ Texture(app.GetOutputFilePath()).fitted(Min(windowRect.w - 40, 640), Min(windowRect.h - 40, 480)) };
-				if(temp.texture) graph = temp;
-				pltFileViewWindow.reloadPltFIle();
+		const static auto f = [this]() {
+			TextureRegion temp{ Texture(app.GetOutputFilePath()).fitted(Min(windowRect.w - 40, 640), Min(windowRect.h - 40, 480)) };
+			if (temp.texture) graph = temp;
+			pltFileViewWindow.reloadPltFIle();
+			};
+		if (reload) {
+			f();
+			return graph;
+		}
+		for (auto [path, action] : watcher.retrieveChanges()) {
+			if (path == graphPath) {
+				f();
 				break;
 			}
 		}

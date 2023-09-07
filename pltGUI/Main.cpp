@@ -40,6 +40,9 @@ void Main()
 
 	app.load();
 
+	graphViewWindow.reloadGraph();
+	pltFileViewWindow.reloadPltFIle();
+
 	while (System::Update())
 	{
 		ClearPrint();
