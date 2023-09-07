@@ -8,6 +8,9 @@
 
 #include "GUI.h"
 #include "TextArea.h"
+#include "Button.h"
+#include "CheckBox.h"
+#include "RadioButtons.h"
 #include "MiniWindow.h"
 
 #include "PlotSetting.h"
@@ -33,6 +36,7 @@ void Main()
 	TextureAsset::Register(U"trash", 0xf1f8_icon, 30);
 	TextureAsset::Register(U"folder_close", 0xf07b_icon, 30);
 	TextureAsset::Register(U"folder_open", 0xf07c_icon, 30);
+	TextureAsset::Register(U"check", 0xf00c_icon, 25);
 
 	app.load();
 

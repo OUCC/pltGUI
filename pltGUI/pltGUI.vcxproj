@@ -317,6 +317,8 @@
   <ItemGroup>
     <ClInclude Include="AppLayout.h" />
     <ClInclude Include="AppSetting.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="CheckBox.h" />
     <ClInclude Include="Const.h" />
     <ClInclude Include="GraphViewWindow.h" />
     <ClInclude Include="PlotSettingWindow.h" />

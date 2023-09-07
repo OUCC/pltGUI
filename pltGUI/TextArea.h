@@ -209,7 +209,7 @@ public:
 		}
 
 		// テキストエリア
-		const RectF region{ pos, Max(size.x, 40), Max(size.y, 36) };
+		const RectF region{ pos+Vec2(2,2), Max(size.x, 40), Max(size.y, 36)};
 
 		// 入力カーソルのアクティブ / 非アクティブを切り替える
 		if (MouseL.down() && (TextInput::GetEditingText().isEmpty()))
@@ -714,8 +714,7 @@ public:
 			{
 				region
 					.draw()
-					.drawFrame(0.0, 1.5, ColorF{ 0.35, 0.7, 1.0, 0.75 })
-					.drawFrame(2.5, 0.0, ColorF{ 0.35, 0.7, 1.0 });
+					.drawFrame(2, 0.0, ColorF{ 0.35, 0.7, 1.0 });
 
 				// 範囲選択領域の背景色描画
 				for (const auto& clipInfo : clipInfos)

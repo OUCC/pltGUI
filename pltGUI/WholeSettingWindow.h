@@ -11,24 +11,27 @@ class WholeSettingWindow : public MiniWindow
 		WholeSetting& plt = wholeSetting;
 		bool changed = false;
 
-		Vec2 pos{ 50,50 - scroll.y };
-		Vec2 padding{ 150,0 };
+		Vec2 pos{ windowRect.w * 0.05,50 - scroll.y };
+		Vec2 padding{ windowRect.w * 0.3,0 };
+		double textAreaWidth = windowRect.w * 0.6;
 
-
-		plt.terminal.size.x = windowRect.w*0.5;
-		changed |= plt.terminal.draw(pos);
+		SimpleGUI::GetFont()(app.Eng_Jp ? U"Image Format" : U"画像形式").draw(pos + Vec2(40, 0), ActiveTextColor);
+		changed |= plt.terminal.draw(pos + padding);
 		app.extentionOfOutputFile = plt.terminalInfos[plt.terminal.index].ext;
-		pos.y+=plt.terminal.size.y+vSpace;
+		pos.y += plt.terminal.size.y + vSpace;
 
-		SimpleGUI::CheckBox(plt.title.enabled, app.Eng_Jp ? U"Graph Title" : U"グラフタイトル", pos);
+		plt.title.size.x = textAreaWidth;
+		changed |= CheckBox(plt.title.enabled, app.Eng_Jp ? U"Graph Title" : U"グラフタイトル", pos).changed;
 		changed |= plt.title.draw(pos + padding);
 		pos.y += plt.title.size.y + vSpace;
 
-		SimpleGUI::CheckBox(plt.xlabel.enabled, app.Eng_Jp ? U"x axis label" : U"x軸ラベル", pos);
+		plt.xlabel.size.x = textAreaWidth;
+		changed |= CheckBox(plt.xlabel.enabled, app.Eng_Jp ? U"x axis label" : U"x軸ラベル", pos).changed;
 		changed |= plt.xlabel.draw(pos + padding);
 		pos.y += plt.xlabel.size.y + vSpace;
 
-		SimpleGUI::CheckBox(plt.ylabel.enabled, app.Eng_Jp ? U"y axis label" : U"y軸ラベル", pos);
+		plt.ylabel.size.x = textAreaWidth;
+		changed |= CheckBox(plt.ylabel.enabled, app.Eng_Jp ? U"y axis label" : U"y軸ラベル", pos).changed;
 		changed |= plt.ylabel.draw(pos + padding);
 		pos.y += plt.ylabel.size.y + vSpace;
 

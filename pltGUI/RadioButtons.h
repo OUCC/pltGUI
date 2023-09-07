@@ -37,7 +37,7 @@ public:
 			if (mouseOver)
 			{
 				Cursor::RequestStyle(CursorStyle::Hand);
-				rect.draw(HighlightColor);
+				rect.rounded(5).draw(HighlightColor);
 			}
 
 			Line{ radioButton.center + Vec2(0,row != 0 ? -20 : 0) , radioButton.center + Vec2(0,row != labelNum - 1 ? 40 : 0) }.draw(2, FrameColor);
@@ -51,7 +51,7 @@ public:
 			else
 			{
 				radioButton.draw(DisabledBackgroundColor);
-				radioButton.drawFrame(2, 0.5, FrameColor);
+				radioButton.drawFrame(2, 0.5, mouseOver ? AccentColor : FrameColor);
 			}
 
 			if (enabled && mouse.clickedRect(rect))

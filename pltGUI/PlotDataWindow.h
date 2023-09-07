@@ -16,7 +16,9 @@ class PlotDataWindow : public MiniWindow
 
 		{
 			RectF rect{ 0, pos.y - 5, windowRect.w, 10 + 30 };
-			rect.draw(selectingIndex == -1 || mouse.onRect(rect) ? HighlightColor : BackgroundColor);
+			if (selectingIndex == -1 || mouse.onRect(rect)) {
+				rect.draw(HighlightColor);
+			}
 			SimpleGUI::GetFont()(app.Eng_Jp ? U"Whole Setting" : U"全体設定").draw(pos, ActiveTextColor);
 			if (mouse.clickedRect(rect)) {
 				selectingIndex = -1;
@@ -45,10 +47,11 @@ class PlotDataWindow : public MiniWindow
 			}
 			pos.y += plt.function.size.y + vSpace;
 		}
-		plotSettings.remove_if([&changed](auto plt) {
+		plotSettings.remove_if([&changed,this](auto plt) {
 			bool del = plt.deleteConfirmPopup.closeButtonClicked;
 			if (del) {
 				changed = true;
+				selectingIndex--;
 				plotSettingWindow.plotSettingsIndex --;
 			}
 			return del;
@@ -56,7 +59,8 @@ class PlotDataWindow : public MiniWindow
 		
 		
 
-		if (SimpleGUI::Button(app.Eng_Jp?U"Add Graph":U"グラフを追加", pos + Vec2(100, 0))) {
+		pos.y += 40 + vSpace;
+		if (Button(app.Eng_Jp ? U"Add Graph" : U"グラフを追加", pos += Vec2(100, 0)).down) {
 			changed = true;
 			plotSettings.push_back(PlotSetting());
 		}

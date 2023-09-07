@@ -20,7 +20,7 @@ public:
 		PlotSetting& plt = *itr;
 		bool changed = false;
 
-		Vec2 pos{ 50,50 - scroll.y };
+		Vec2 pos{ windowRect.w*0.1,50 - scroll.y };
 		Vec2 padding{ 150,0 };
 
 		{
@@ -37,11 +37,11 @@ public:
 			pos.y += plt.graphSource.size.y + vSpace;
 		}
 
-		changed|=SimpleGUI::CheckBox(plt.title.enabled,app.Eng_Jp ? U"Title" : U"凡例名", pos);
+		changed |= CheckBox(plt.title.enabled, app.Eng_Jp ? U"Title" : U"凡例名", pos).changed;
 		changed |= plt.title.draw(pos + padding);
 		pos.y += plt.title.size.y + vSpace;
 
-		changed|=SimpleGUI::CheckBox(plt.color_enabled,app.Eng_Jp ? U"Color" : U"色", pos);
+		changed |= CheckBox(plt.color_enabled, app.Eng_Jp ? U"Color" : U"色", pos).changed;
 		//CheckBoxLessText(app.Eng_Jp ? U"Color" : U"色", pos, true);
 		changed|=SimpleGUI::ColorPicker(plt.color, pos + padding, plt.color_enabled);
 		pos.y += SimpleGUI::ColorPickerRegion(pos).h + vSpace;
